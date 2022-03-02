@@ -406,3 +406,29 @@ function App() {
 }
 
 export default App;
+
+App Bar Account
+<IconButton
+  size="large"
+  aria-label="account of current user"
+  aria-controls="menu-appbar"
+  aria-haspopup="true"
+  onClick={handleMenu}
+  color="inherit"
+>
+  <AccountCircle />
+</IconButton>
+
+<div className="sidebar">
+      <Link href="#">
+        <Image src={FxLogo} alt="Logo" />
+      </Link>
+      <SideBarLink text="Dashboard" />
+      <SideBarLink text="Front Desk" />
+      <SideBarLink text="Bank" />
+      <SideBarLink text="Online" />
+      <SideBarLink text="Head of Marketing" />
+      <SideBarLink text="General Ledger" />
+      <SideBarLink text="Customer Ledger" />
+      <SideBarLink text="Logout" />
+    </div>
