@@ -1,11 +1,10 @@
 import React from "react";
-import MenuAppBar from "./AppBar";
+import ResponsiveDrawer from "./AppBar";
 
 function Dashboard() {
   return (
     <div>
-      <MenuAppBar />
-      This is the Dashboard
+      <ResponsiveDrawer>This is dashboard</ResponsiveDrawer>
     </div>
   );
 }

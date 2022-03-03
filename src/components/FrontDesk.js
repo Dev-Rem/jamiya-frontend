@@ -1,11 +1,11 @@
 import React from "react";
-import MenuAppBar from "./AppBar";
+import ResponsiveDrawer from "../components/AppBar";
 
 function FrontDesk() {
   return (
     <div>
-      <MenuAppBar />
-      This is the Front Desk Page
+      {" "}
+      <ResponsiveDrawer>This is the Front Desk Page</ResponsiveDrawer>{" "}
     </div>
   );
 }

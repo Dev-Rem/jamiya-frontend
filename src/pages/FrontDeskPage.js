@@ -9,4 +9,5 @@ function FrontDeskPage() {
   );
 }
 
+
 export default FrontDeskPage;

@@ -18,3 +18,8 @@ code {
 .section-title {
   width: auto;
 }
+.rates{
+  color: black;
+  margin: 0;
+  padding: 0;
+}
