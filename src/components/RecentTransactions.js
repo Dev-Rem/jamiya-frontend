@@ -4,6 +4,8 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
+import { styled } from "@mui/material/styles";
+import TransactionList from "./TransactionList";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -24,6 +26,16 @@ function TabPanel(props) {
     </div>
   );
 }
+const AltTabs = styled(Tabs)({
+  "& .MuiTabs-indicator": {
+    backgroundColor: "#925098",
+  },
+});
+const AltTab = styled(Tab)({
+  "&.Mui-selected": {
+    color: "#925098",
+  },
+});
 
 TabPanel.propTypes = {
   children: PropTypes.node,
@@ -56,36 +68,25 @@ export default function RecentTransactions() {
       </Typography>
       <Box sx={{ width: "100%", bgcolor: "white", borderRadius: 1 }}>
         <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-          <Tabs
+          <AltTabs
             value={value}
             onChange={handleChange}
             aria-label="basic tabs example"
             centered
           >
-            <Tab
-              label="Transaction Sent"
-              {...a11yProps(0)}
-              sx={{
-                "&.Mui-selected": {
-                  color: "#925098",
-                },
-                "& .MuiTabs-indicator": {
-                  backgroundColor: "#925098",
-                },
-              }}
-            />
-            <Tab label="Transaction Initiated" {...a11yProps(1)} />
-            <Tab label="Transaction Done" {...a11yProps(2)} />
-          </Tabs>
+            <AltTab label="Transaction Created" {...a11yProps(0)} />
+            <AltTab label="Transaction Initiated" {...a11yProps(1)} />
+            <AltTab label="Transaction Completed" {...a11yProps(2)} />
+          </AltTabs>
         </Box>
         <TabPanel value={value} index={0}>
-          Item One
+          <TransactionList />
         </TabPanel>
         <TabPanel value={value} index={1}>
-          Item Two
+          <TransactionList />
         </TabPanel>
         <TabPanel value={value} index={2}>
-          Item Three
+          <TransactionList />
         </TabPanel>
       </Box>
     </div>

@@ -8,7 +8,6 @@ import "../assets/css/drawer.css";
 import Image from "mui-image";
 import FxLogo from "../assets/images/logo.png";
 
-
 export default function DrawerList() {
   return (
     <List sx={{ padding: 0 }}>
@@ -27,19 +26,19 @@ export default function DrawerList() {
         </ListItemButton>
       </Link>
       <Divider />
-      <Link href="/front-desk" color="inherit" underline="none">
+      <Link href="/bank" color="inherit" underline="none">
         <ListItemButton button>
           <ListItemText primary="Bank" />
         </ListItemButton>
       </Link>
       <Divider />
-      <Link href="/front-desk" color="inherit" underline="none">
+      <Link href="/online" color="inherit" underline="none">
         <ListItemButton button>
           <ListItemText primary="Online" />
         </ListItemButton>
       </Link>
       <Divider />
-      <Link href="/front-desk" color="inherit" underline="none">
+      <Link href="/head-of-marketing" color="inherit" underline="none">
         <ListItemButton button>
           <ListItemText primary="Head of Marketing" />
         </ListItemButton>

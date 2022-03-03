@@ -7,7 +7,6 @@ import Drawer from "@mui/material/Drawer";
 import IconButton from "@mui/material/IconButton";
 import DrawerList from "./DrawerList";
 
-import Rates from "./Rates";
 import MenuIcon from "@mui/icons-material/Menu";
 import Toolbar from "@mui/material/Toolbar";
 import Title from "./Title";
@@ -41,7 +40,7 @@ function ResponsiveDrawer(props) {
           ml: { sm: `${drawerWidth}px` },
           bgcolor: "#925098",
           height: "45px",
-          // boxShadow: "none",
+          boxShadow: "none",
         }}
       >
         <Toolbar>
@@ -54,8 +53,6 @@ function ResponsiveDrawer(props) {
           >
             <MenuIcon />
           </IconButton>
-          <Title />
-          {/* <Rates /> */}
         </Toolbar>
       </AppBar>
       <Box

@@ -1,5 +1,5 @@
 import React from "react";
-import ResponsiveDrawer from "./AppBar";
+import ResponsiveDrawer from "../components/AppBar";
 
 function Dashboard() {
   return (
