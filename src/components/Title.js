@@ -1,12 +1,12 @@
 import React from "react";
-import Grid from "@material-ui/core/Grid";
-import Paper from "@mui/material/Paper";
-import SideBar from "./components/SideBar";
+import Typography from "@mui/material/Typography";
 
 function Title() {
   return (
     <div>
-      <p>Dashboard</p>
+      <Typography variant="h6" component="h6" sx={{ color: "white" }}>
+        Front Desk Report
+      </Typography>
     </div>
   );
 }

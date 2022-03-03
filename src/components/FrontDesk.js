@@ -1,11 +1,17 @@
 import React from "react";
 import ResponsiveDrawer from "../components/AppBar";
+import Report from "./Report";
+import RecentTransactions from "./RecentTransactions";
+
 
 function FrontDesk() {
   return (
     <div>
       {" "}
-      <ResponsiveDrawer>This is the Front Desk Page</ResponsiveDrawer>{" "}
+      <ResponsiveDrawer>
+        <Report />
+        <RecentTransactions />
+      </ResponsiveDrawer>{" "}
     </div>
   );
 }

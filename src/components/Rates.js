@@ -9,7 +9,7 @@ const Item = styled(Paper)(({ theme }) => ({
   ...theme.typography.body2,
   textAlign: "center",
   color: "black",
-  height: 60,
+  height: 40,
   lineHeight: "60px",
   marginRight: "30px",
 }));

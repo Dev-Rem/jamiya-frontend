@@ -10,9 +10,11 @@ import DrawerList from "./DrawerList";
 import Rates from "./Rates";
 import MenuIcon from "@mui/icons-material/Menu";
 import Toolbar from "@mui/material/Toolbar";
+import Title from "./Title";
 const drawerWidth = 240;
 
 function ResponsiveDrawer(props) {
+  console.log(props);
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
@@ -37,7 +39,9 @@ function ResponsiveDrawer(props) {
         sx={{
           width: { sm: `calc(100% - ${drawerWidth}px)` },
           ml: { sm: `${drawerWidth}px` },
-          bgcolor: "#be28cc",
+          bgcolor: "#925098",
+          height: "45px",
+          // boxShadow: "none",
         }}
       >
         <Toolbar>
@@ -50,7 +54,8 @@ function ResponsiveDrawer(props) {
           >
             <MenuIcon />
           </IconButton>
-          <Rates />
+          <Title />
+          {/* <Rates /> */}
         </Toolbar>
       </AppBar>
       <Box
@@ -97,6 +102,7 @@ function ResponsiveDrawer(props) {
           flexGrow: 1,
           p: 3,
           width: { sm: `calc(100% - ${drawerWidth}px)` },
+          bgcolor: "#F4F4F4",
         }}
       >
         <Toolbar />

@@ -1,12 +1,13 @@
 import * as React from "react";
 import List from "@mui/material/List";
 import Divider from "@mui/material/Divider";
-import ListItem from "@mui/material/ListItem";
+import ListItemButton from "@mui/material/ListItemButton";
 import Link from "@mui/material/Link";
 import ListItemText from "@mui/material/ListItemText";
 import "../assets/css/drawer.css";
 import Image from "mui-image";
 import FxLogo from "../assets/images/logo.png";
+
 
 export default function DrawerList() {
   return (
@@ -15,57 +16,57 @@ export default function DrawerList() {
         <Image src={FxLogo} alt="Logo" />
       </Link>
       <Link href="/dashboard" color="inherit" underline="none">
-        <ListItem button>
+        <ListItemButton button>
           <ListItemText primary="Dashboard" />
-        </ListItem>
+        </ListItemButton>
       </Link>
       <Divider />
       <Link href="/front-desk" color="inherit" underline="none">
-        <ListItem button>
+        <ListItemButton>
           <ListItemText primary="Front Desk" />
-        </ListItem>
+        </ListItemButton>
       </Link>
       <Divider />
       <Link href="/front-desk" color="inherit" underline="none">
-        <ListItem button>
+        <ListItemButton button>
           <ListItemText primary="Bank" />
-        </ListItem>
+        </ListItemButton>
       </Link>
       <Divider />
       <Link href="/front-desk" color="inherit" underline="none">
-        <ListItem button>
+        <ListItemButton button>
           <ListItemText primary="Online" />
-        </ListItem>
+        </ListItemButton>
       </Link>
       <Divider />
       <Link href="/front-desk" color="inherit" underline="none">
-        <ListItem button>
+        <ListItemButton button>
           <ListItemText primary="Head of Marketing" />
-        </ListItem>
+        </ListItemButton>
       </Link>
       <Divider />
       <Link href="/front-desk" color="inherit" underline="none">
-        <ListItem button>
+        <ListItemButton button>
           <ListItemText primary="General Ledger" />
-        </ListItem>
+        </ListItemButton>
       </Link>
       <Divider />
       <Link href="/front-desk" color="inherit" underline="none">
-        <ListItem button>
+        <ListItemButton button>
           <ListItemText primary="Customer Ledger" />
-        </ListItem>
+        </ListItemButton>
       </Link>
       <Divider />
       <Link href="/front-desk" color="inherit" underline="none">
-        <ListItem button>
+        <ListItemButton button>
           <ListItemText primary="Reports" />
-        </ListItem>
+        </ListItemButton>
       </Link>
       <Divider />
       <Link href="/front-desk" color="inherit" underline="none">
-        <ListItem button>
+        <ListItemButton button>
           <ListItemText primary="Transactions" />
-        </ListItem>
+        </ListItemButton>
       </Link>
     </List>
   );
