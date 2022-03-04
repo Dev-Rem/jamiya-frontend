@@ -1,0 +1,127 @@
+import React from "react";
+import { styled } from "@mui/material/styles";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell, { tableCellClasses } from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import Paper from "@mui/material/Paper";
+import Box from "@mui/material/Box";
+import Stack from "@mui/material/Stack";
+import Button from "@mui/material/Button";
+
+const StyledTableCell = styled(TableCell)(({ theme }) => ({
+  [`&.${tableCellClasses.head}`]: {
+    backgroundColor: theme.palette.common.white,
+    color: "#925098",
+  },
+  [`&.${tableCellClasses.body}`]: {
+    fontSize: 14,
+  },
+}));
+
+const StyledTableRow = styled(TableRow)(({ theme }) => ({
+  "&:nth-of-type(odd)": {
+    backgroundColor: theme.palette.action.hover,
+  },
+  // hide last border
+  "&:last-child td, &:last-child th": {
+    border: 0,
+  },
+}));
+
+function createData(bankName, accountName, naira, dollar, pound, euro) {
+  return { bankName, accountName, naira, dollar, pound, euro };
+}
+
+const rows = [
+  createData("Access bank", "Aremko Services", 159, 6.0, 24, 4.0),
+  createData("Access bank", "Biscom Logistics", 159, 6.0, 24, 4.0),
+  createData("Stanbic IBTC", "Jamiyafx  Enterprise", 159, 6.0, 24, 4.0),
+  createData("FCMB", "JamiyaFX Enterprise", 159, 6.0, 24, 4.0),
+  createData(
+    "Zenith bank",
+    "Jamiya Multi-Invesment Limited",
+    159,
+    6.0,
+    24,
+    4.0
+  ),
+];
+
+export default function Account() {
+  return (
+    <div>
+      <Box
+        sx={{
+          display: "flex",
+          flexWrap: "wrap",
+          backgroundColor: "inherit",
+          alignContent: "right",
+        }}
+      >
+        <Stack spacing={2} direction="row">
+          <Button variant="text" sx={{ color: "#303030" }}>
+            New Report
+          </Button>
+          <Button variant="text" sx={{ color: "#303030" }}>
+            Add Account
+          </Button>
+        </Stack>
+      </Box>
+      <TableContainer component={Paper}>
+        <Table
+          sx={{
+            minWidth: 700,
+          }}
+          aria-label="customized table"
+        >
+          <TableHead>
+            <TableRow>
+              <StyledTableCell>Bank Name</StyledTableCell>
+              <StyledTableCell>Account Name</StyledTableCell>
+              <StyledTableCell align="right">Naira</StyledTableCell>
+              <StyledTableCell align="right">Dollar</StyledTableCell>
+              <StyledTableCell align="right">Pound</StyledTableCell>
+              <StyledTableCell align="right">Euro</StyledTableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {rows.map((row) => (
+              <StyledTableRow key={row.accountName}>
+                <StyledTableCell component="th" scope="row">
+                  {row.bankName}
+                </StyledTableCell>
+                <StyledTableCell component="th" scope="row">
+                  {row.accountName}
+                </StyledTableCell>
+                <StyledTableCell align="right">
+                  &#8358; {row.naira}
+                </StyledTableCell>
+                <StyledTableCell align="right">
+                  &#36; {row.dollar}
+                </StyledTableCell>
+                <StyledTableCell align="right">
+                  {" "}
+                  &#163; {row.pound}
+                </StyledTableCell>
+                <StyledTableCell align="right">
+                  &#128; {row.euro}
+                </StyledTableCell>
+              </StyledTableRow>
+            ))}
+            <StyledTableRow>
+              <StyledTableCell>Total</StyledTableCell>
+              <StyledTableCell />
+              <StyledTableCell align="right">&#8358; 3000</StyledTableCell>
+              <StyledTableCell align="right">&#36; 3000</StyledTableCell>
+              <StyledTableCell align="right">&#163; 3000</StyledTableCell>
+              <StyledTableCell align="right">&#128; 3000</StyledTableCell>
+            </StyledTableRow>
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </div>
+  );
+}

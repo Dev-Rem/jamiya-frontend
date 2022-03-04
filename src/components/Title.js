@@ -9,7 +9,7 @@ function Title(props) {
         component="h6"
         sx={{ color: "#303030", marginTop: "30px", marginBottom: "10px" }}
       >
-        {props.section} Report
+        {props.section}
       </Typography>
     </div>
   );

@@ -38,6 +38,7 @@ function ResponsiveDrawer(props) {
         sx={{
           width: { sm: `calc(100% - ${drawerWidth}px)` },
           ml: { sm: `${drawerWidth}px` },
+          background: "linear-gradient(45deg, #C065C9 30%, #000000 90%)",
           bgcolor: "#925098",
           height: "45px",
           boxShadow: "none",

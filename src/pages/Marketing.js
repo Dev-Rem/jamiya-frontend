@@ -4,12 +4,12 @@ import Report from "../components/Report";
 import RecentTransactions from "../components/RecentTransactions";
 import Title from "../components/Title";
 
-export default function Bank() {
+export default function Marketing() {
   return (
     <div>
       {" "}
       <ResponsiveDrawer>
-        <Title section="Bank Report" />
+        <Title section="Marketing Report" />
         <Report />
         <RecentTransactions />
       </ResponsiveDrawer>{" "}

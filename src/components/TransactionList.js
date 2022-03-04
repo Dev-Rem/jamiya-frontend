@@ -53,7 +53,6 @@ export default function TransactionList() {
               key={row.recieptNo}
               sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
             >
-
               <TableCell align="right">{row.recieptNo}</TableCell>
               <TableCell align="right">{row.customerName}</TableCell>
               <TableCell align="right">{row.amountRecieved}</TableCell>

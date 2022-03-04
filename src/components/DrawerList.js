@@ -38,19 +38,19 @@ export default function DrawerList() {
         </ListItemButton>
       </Link>
       <Divider />
-      <Link href="/head-of-marketing" color="inherit" underline="none">
+      <Link href="/marketing" color="inherit" underline="none">
         <ListItemButton button>
-          <ListItemText primary="Head of Marketing" />
+          <ListItemText primary="Marketing" />
         </ListItemButton>
       </Link>
       <Divider />
-      <Link href="/front-desk" color="inherit" underline="none">
+      <Link href="/general-ledger" color="inherit" underline="none">
         <ListItemButton button>
           <ListItemText primary="General Ledger" />
         </ListItemButton>
       </Link>
       <Divider />
-      <Link href="/front-desk" color="inherit" underline="none">
+      <Link href="/customer-ledger" color="inherit" underline="none">
         <ListItemButton button>
           <ListItemText primary="Customer Ledger" />
         </ListItemButton>

@@ -1,15 +1,15 @@
 import React from "react";
 import ResponsiveDrawer from "../components/AppBar";
-import Report from "../components/Report";
-import RecentTransactions from "../components/RecentTransactions";
+import CustomerLedger from "../components/CustomerLedger";
+import Title from "../components/Title";
 
 export default function Hom() {
   return (
     <div>
       {" "}
       <ResponsiveDrawer>
-        <Report />
-        <RecentTransactions />
+        <Title section="Customer Ledger Report" />
+        <CustomerLedger />
       </ResponsiveDrawer>{" "}
     </div>
   );

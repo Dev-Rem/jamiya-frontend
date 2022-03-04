@@ -9,7 +9,7 @@ export default function Online() {
     <div>
       {" "}
       <ResponsiveDrawer>
-        <Title section="Online" />
+        <Title section="Online Report" />
         <Report />
         <RecentTransactions />
       </ResponsiveDrawer>{" "}
