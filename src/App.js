@@ -7,6 +7,8 @@ import Online from "./pages/Online";
 import Marketing from "./pages/Marketing";
 import CustomerLedger from "./pages/CustomerLedger";
 import GeneralLedger from "./pages/GeneralLedger";
+import Reports from "./pages/Reports";
+import TransactionLog from "./pages/TransactionLog";
 
 export default function App() {
   return (
@@ -17,8 +19,10 @@ export default function App() {
         <Route exact path={"/bank"} element={<Bank />} />
         <Route exact path={"/online"} element={<Online />} />
         <Route exact path={"/marketing"} element={<Marketing />} />
+        <Route exact path={"/reports"} element={<Reports />} />
         <Route exact path={"/customer-ledger"} element={<CustomerLedger />} />
         <Route exact path={"/general-ledger"} element={<GeneralLedger />} />
+        <Route exact path={"/transaction-log"} element={<TransactionLog />} />
       </Routes>
     </Router>
   );

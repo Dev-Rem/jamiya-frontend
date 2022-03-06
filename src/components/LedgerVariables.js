@@ -4,7 +4,7 @@ import TableBody from "@mui/material/TableBody";
 import TableContainer from "@mui/material/TableContainer";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import { TableCell, tableCellClasses } from "@mui/material";
+import { TableCell } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
 
@@ -47,7 +47,7 @@ export default function LedgerVariables() {
             </TableRow>
             <TableRow>
               <TableCell>Recievable</TableCell>
-              <Divider orientation="vertical" flexItem="true"/>
+              <Divider orientation="vertical" flexItem="true" />
               <TableCell align="right">{rows.recievable}</TableCell>
             </TableRow>
             <TableRow>

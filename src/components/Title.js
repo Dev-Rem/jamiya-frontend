@@ -7,7 +7,7 @@ function Title(props) {
       <Typography
         variant="h6"
         component="h6"
-        sx={{ color: "#303030", marginTop: "30px", marginBottom: "10px" }}
+        sx={{ color: "#303030", marginBottom: "10px" }}
       >
         {props.section}
       </Typography>

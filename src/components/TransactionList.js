@@ -33,7 +33,7 @@ const rows = [
   createData(34786, "Aremu Oluwaseyi", 500, 50000, 40000, "+2349065002380"),
 ];
 
-export default function TransactionList() {
+export default function TransactionList(props) {
   return (
     <TableContainer component={Paper} sx={{ boxShadow: "none" }}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -53,7 +53,7 @@ export default function TransactionList() {
               key={row.recieptNo}
               sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
             >
-              <TableCell align="right">{row.recieptNo}</TableCell>
+              <TableCell>{row.recieptNo}</TableCell>
               <TableCell align="right">{row.customerName}</TableCell>
               <TableCell align="right">{row.amountRecieved}</TableCell>
               <TableCell align="right">{row.amountGiven}</TableCell>

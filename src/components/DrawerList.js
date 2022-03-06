@@ -56,15 +56,15 @@ export default function DrawerList() {
         </ListItemButton>
       </Link>
       <Divider />
-      <Link href="/front-desk" color="inherit" underline="none">
+      <Link href="/reports" color="inherit" underline="none">
         <ListItemButton button>
-          <ListItemText primary="Reports" />
+          <ListItemText primary="Report Log" />
         </ListItemButton>
       </Link>
       <Divider />
-      <Link href="/front-desk" color="inherit" underline="none">
+      <Link href="/transaction-log" color="inherit" underline="none">
         <ListItemButton button>
-          <ListItemText primary="Transactions" />
+          <ListItemText primary="Transaction Log" />
         </ListItemButton>
       </Link>
     </List>

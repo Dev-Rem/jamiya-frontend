@@ -54,11 +54,31 @@ function Report() {
           alignContent: "right",
         }}
       >
-        <Stack spacing={2} direction="row">
-          <Button variant="text" sx={{ color: "#303030" }}>
+        <Stack spacing={2} direction="row" mb={2}>
+          <Button
+            variant="text"
+            sx={{
+              bgcolor: "#c065c9",
+              color: "#EBEBEB",
+              "&:hover": {
+                color: "#c065c9",
+                backgroundColor: "#EBEBEB",
+              },
+            }}
+          >
             New Report
           </Button>
-          <Button variant="text" sx={{ color: "#303030" }}>
+          <Button
+            variant="text"
+            sx={{
+              bgcolor: "#c065c9",
+              color: "#EBEBEB",
+              "&:hover": {
+                color: "#c065c9",
+                backgroundColor: "#EBEBEB",
+              },
+            }}
+          >
             New Transaction
           </Button>
         </Stack>
