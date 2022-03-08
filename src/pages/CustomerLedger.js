@@ -1,7 +1,7 @@
 import React from "react";
-import ResponsiveDrawer from "../components/AppBar";
-import CustomerLedger from "../components/CustomerLedger";
-import Title from "../components/Title";
+import ResponsiveDrawer from "../components/appbar/AppBar";
+import CustomerLedger from "../components/ledgers/CustomerLedger";
+import Title from "../components/utils/Title";
 
 export default function Hom() {
   return (

@@ -2,7 +2,7 @@ import * as React from "react";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
-import Title from "./Title";
+import Title from "./utils/Title";
 import Icon from "@mui/material/Icon";
 
 function Boxes(props) {

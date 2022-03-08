@@ -7,7 +7,7 @@ import Box from "@mui/material/Box";
 import { styled } from "@mui/material/styles";
 import CustomerLedgerList from "./CustomerLedgerList";
 import Stack from "@mui/material/Stack";
-import { PurpleButton } from "./Button";
+import { PurpleButton } from "../utils/Button";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;

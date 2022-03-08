@@ -1,8 +1,8 @@
 import React from "react";
-import ResponsiveDrawer from "../components/AppBar";
-import Title from "../components/Title";
-import { Filters } from "../components/Filters";
-import ReportsList from "../components/ReportsList";
+import ResponsiveDrawer from "../components/appbar/AppBar";
+import Title from "../components/utils/Title";
+import { Filters } from "../components/utils/Filters";
+import ReportsList from "../components/Report/ReportsList";
 export default function Reports() {
   return (
     <div>

@@ -1,8 +1,8 @@
 import React from "react";
-import ResponsiveDrawer from "../components/AppBar";
-import Report from "../components/Report";
-import RecentTransactions from "../components/RecentTransactions";
-import Title from "../components/Title";
+import ResponsiveDrawer from "../components/appbar/AppBar";
+import Report from "../components/Report/Report";
+import RecentTransactions from "../components/Report/RecentTransactions";
+import Title from "../components/utils/Title";
 
 export default function Bank() {
   return (

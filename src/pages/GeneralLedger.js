@@ -1,8 +1,8 @@
 import React from "react";
-import ResponsiveDrawer from "../components/AppBar";
-import Accounts from "../components/Account";
-import Title from "../components/Title";
-import LedgerVariables from "../components/LedgerVariables";
+import ResponsiveDrawer from "../components/appbar/AppBar";
+import Accounts from "../components/ledgers/Account";
+import Title from "../components/utils/Title";
+import LedgerVariables from "../components/ledgers/LedgerVariables";
 
 export default function GeneralLedger() {
   return (

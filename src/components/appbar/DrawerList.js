@@ -4,9 +4,9 @@ import Divider from "@mui/material/Divider";
 import ListItemButton from "@mui/material/ListItemButton";
 import Link from "@mui/material/Link";
 import ListItemText from "@mui/material/ListItemText";
-import "../assets/css/drawer.css";
+import "../../assets/css/drawer.css";
 import Image from "mui-image";
-import FxLogo from "../assets/images/logo.png";
+import FxLogo from "../../assets/images/logo.png";
 
 export default function DrawerList() {
   return (
