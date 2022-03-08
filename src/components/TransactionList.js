@@ -8,7 +8,7 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 
 export default function TransactionList(props) {
-  console.log(props.data);
+  console.log(props.data[0].customerPhone);
   return (
     <TableContainer component={Paper} sx={{ boxShadow: "none" }}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -19,7 +19,7 @@ export default function TransactionList(props) {
             <TableCell align="right">Amount Recieved</TableCell>
             <TableCell align="right">Amount Given</TableCell>
             <TableCell align="right">Amount Transfered</TableCell>
-            {props.data.hasOwnProperty("customerPhone") ? (
+            {props.data[0].hasOwnProperty("customerPhone") ? (
               <TableCell align="right">Customer Phone</TableCell>
             ) : (
               <TableCell align="right">Station</TableCell>
@@ -37,7 +37,7 @@ export default function TransactionList(props) {
               <TableCell align="right">{data.amountRecieved}</TableCell>
               <TableCell align="right">{data.amountGiven}</TableCell>
               <TableCell align="right">{data.amountTransfered}</TableCell>
-              {props.data.hasOwnProperty("customerPhone") ? (
+              {props.data[0].hasOwnProperty("customerPhone") ? (
                 <TableCell align="right">{data.customerPhone}</TableCell>
               ) : (
                 <TableCell align="right">{data.station}</TableCell>

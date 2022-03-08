@@ -24,12 +24,12 @@ export function CancelButton(props) {
   return (
     <Button
       variant="outlined"
-      // color="#EBEBEB"
       sx={{
-        bgcolor: "#EBEBEB",
+        bgcolor: "white",
         color: "#773E7C",
         borderColor: "#773E7C",
         "&:hover": {
+          bgColor: "#EBEBEB",
           borderColor: "#773E7C",
         },
         height: "30px",
