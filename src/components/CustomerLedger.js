@@ -7,11 +7,7 @@ import Box from "@mui/material/Box";
 import { styled } from "@mui/material/styles";
 import CustomerLedgerList from "./CustomerLedgerList";
 import Stack from "@mui/material/Stack";
-import Button from "@mui/material/Button";
-import TableCell from "@mui/material/TableCell";
-import TableRow from "@mui/material/TableRow";
-import TableHead from "@mui/material/TableHead";
-import Divider from "@mui/material/Divider";
+import { PurpleButton } from "./Button";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -66,12 +62,8 @@ export default function RecentTransactions() {
   return (
     <div>
       <Stack spacing={2} direction="row">
-        <Button variant="text" sx={{ color: "#303030" }}>
-          New Report
-        </Button>
-        <Button variant="text" sx={{ color: "#303030" }}>
-          Add New
-        </Button>
+        <PurpleButton name="new report" />
+        <PurpleButton name="add new" />
       </Stack>
       <Box sx={{ width: "100%", bgcolor: "white", borderRadius: 1 }}>
         <Box sx={{ borderBottom: 1, borderColor: "divider" }}>

@@ -1,15 +1,15 @@
 import * as React from "react";
-import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import TextField from "@mui/material/TextField";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
-import DesktopDatePicker from "@mui/lab/DesktopDatePicker";
-import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import Divider from "@mui/material/Divider";
+import {PurpleButton} from "./Button";
+import DateRangePicker from "@mui/lab/DateRangePicker";
+import Box from "@mui/material/Box";
 
 export function SelectSection() {
   const [section, setSection] = React.useState("");
@@ -19,16 +19,13 @@ export function SelectSection() {
   };
 
   return (
-    <FormControl
-      variant="standard"
-      sx={{ m: 1, minWidth: 200, height: "inherit" }}
-      direction="row"
-    >
+    <FormControl variant="standard" sx={{ minWidth: 200 }} direction="row">
       <Select
         value={section}
         onChange={handleSectionChange}
         displayEmpty
         inputProps={{ "aria-label": "Without label" }}
+        sx={{ height: "30px" }}
       >
         <MenuItem value="">
           <em>Select Section</em>
@@ -44,44 +41,36 @@ export function SelectSection() {
   );
 }
 export function DatePicker() {
-  const [value, setValue] = React.useState(new Date("2014-08-18T21:11:54"));
-
-  const handleChange = (newValue) => {
-    setValue(newValue);
-  };
+  const [value, setValue] = React.useState([null, null]);
 
   return (
-    <LocalizationProvider dateAdapter={AdapterDateFns}>
-      <DesktopDatePicker
+    <LocalizationProvider dateAdapter={AdapterDateFns} sx={{ height: 20 }}>
+      <DateRangePicker
         inputFormat="MM/dd/yyyy"
         value={value}
-        onChange={handleChange}
-        renderInput={(params) => (
-          <TextField variant="standard" {...params} size="small" />
+        onChange={(newValue) => {
+          setValue(newValue);
+        }}
+        endText=""
+        startText=""
+        allowSameDateSelection="true"
+        clearable="true"
+        renderInput={(startProps, endProps) => (
+          <React.Fragment>
+            <TextField
+              variant="standard"
+              {...startProps}
+              size="small"
+            />
+            <Box sx={{ mx: 1 }}> to </Box>
+            <TextField variant="standard" {...endProps} size="small" />
+          </React.Fragment>
         )}
       />
     </LocalizationProvider>
   );
 }
-export function FilterButton() {
-  return (
-    <>
-      <Button
-        variant="text"
-        sx={{
-          bgcolor: "#c065c9",
-          color: "#EBEBEB",
-          "&:hover": {
-            color: "#c065c9",
-            backgroundColor: "#EBEBEB",
-          },
-        }}
-      >
-        Add Filter
-      </Button>
-    </>
-  );
-}
+
 export function Filters() {
   return (
     <div>
@@ -89,11 +78,11 @@ export function Filters() {
         spacing={3}
         direction="row"
         divider={<Divider orientation="vertical" flexItem />}
-        sx={{ height: 30, mb:2 }}
+        sx={{ height: 30, mb: 2 }}
       >
-        <DatePicker />
         <SelectSection />
-        <FilterButton />
+        <DatePicker />
+        <PurpleButton name="add filter" />
       </Stack>
     </div>
   );

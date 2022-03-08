@@ -6,6 +6,31 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import { styled } from "@mui/material/styles";
 import TransactionList from "./TransactionList";
+function createData(
+  recieptNo,
+  customerName,
+  amountRecieved,
+  amountGiven,
+  amountTransfered,
+  customerPhone
+) {
+  return {
+    recieptNo,
+    customerName,
+    amountRecieved,
+    amountGiven,
+    amountTransfered,
+    customerPhone,
+  };
+}
+
+const data = [
+  createData(34786, "Aremu Oluwaseyi", 500, 50000, 40000, "+2349065002380"),
+  createData(34786, "Aremu Oluwaseyi", 500, 50000, 40000, "+2349065002380"),
+  createData(34786, "Aremu Oluwaseyi", 500, 50000, 40000, "+2349065002380"),
+  createData(34786, "Aremu Oluwaseyi", 500, 50000, 40000, "+2349065002380"),
+  createData(34786, "Aremu Oluwaseyi", 500, 50000, 40000, "+2349065002380"),
+];
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -80,13 +105,13 @@ export default function RecentTransactions() {
           </AltTabs>
         </Box>
         <TabPanel value={value} index={0}>
-          <TransactionList />
+          <TransactionList data={data} />
         </TabPanel>
         <TabPanel value={value} index={1}>
-          <TransactionList />
+          <TransactionList data={data} />
         </TabPanel>
         <TabPanel value={value} index={2}>
-          <TransactionList />
+          <TransactionList data={data} />
         </TabPanel>
       </Box>
     </div>

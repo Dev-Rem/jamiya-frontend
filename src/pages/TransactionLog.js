@@ -3,7 +3,31 @@ import ResponsiveDrawer from "../components/AppBar";
 import TransactionList from "../components/TransactionList";
 import Title from "../components/Title";
 import { Filters } from "../components/Filters";
+function createData(
+  recieptNo,
+  customerName,
+  amountRecieved,
+  amountGiven,
+  amountTransfered,
+  station
+) {
+  return {
+    recieptNo,
+    customerName,
+    amountRecieved,
+    amountGiven,
+    amountTransfered,
+    station,
+  };
+}
 
+const rows = [
+  createData(34786, "Aremu Oluwaseyi", 500, 50000, 40000, "Front Desk"),
+  createData(34786, "Aremu Oluwaseyi", 500, 50000, 40000, "Online"),
+  createData(34786, "Aremu Oluwaseyi", 500, 50000, 40000, "Bank"),
+  createData(34786, "Aremu Oluwaseyi", 500, 50000, 40000, "Front Desk"),
+  createData(34786, "Aremu Oluwaseyi", 500, 50000, 40000, "Front Desk"),
+];
 export default function TransactionLog() {
   return (
     <div>
@@ -11,7 +35,7 @@ export default function TransactionLog() {
       <ResponsiveDrawer>
         <Title section="Transaction Log" />
         <Filters />
-        <TransactionList />
+        <TransactionList data={rows} />
       </ResponsiveDrawer>{" "}
     </div>
   );

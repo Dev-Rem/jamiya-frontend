@@ -9,12 +9,11 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
-import Button from "@mui/material/Button";
-
+import {PurpleButton} from "./Button";
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
     backgroundColor: theme.palette.common.white,
-    color: "#925098",
+    color: "#773E7C",
   },
   [`&.${tableCellClasses.body}`]: {
     fontSize: 14,
@@ -59,15 +58,12 @@ export default function Account() {
           flexWrap: "wrap",
           backgroundColor: "inherit",
           alignContent: "right",
+          mb: 2,
         }}
       >
         <Stack spacing={2} direction="row">
-          <Button variant="text" sx={{ color: "#303030" }}>
-            New Report
-          </Button>
-          <Button variant="text" sx={{ color: "#303030" }}>
-            Add Account
-          </Button>
+          <PurpleButton name="new report" />
+          <PurpleButton name="add account" />
         </Stack>
       </Box>
       <TableContainer component={Paper}>

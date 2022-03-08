@@ -9,12 +9,13 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
-import Button from "@mui/material/Button";
+import {PurpleButton} from "./Button";
+import Link from "@mui/material/Link";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
     backgroundColor: theme.palette.common.white,
-    color: "#925098",
+    color: "#773E7C",
   },
   [`&.${tableCellClasses.body}`]: {
     fontSize: 14,
@@ -55,32 +56,10 @@ function Report() {
         }}
       >
         <Stack spacing={2} direction="row" mb={2}>
-          <Button
-            variant="text"
-            sx={{
-              bgcolor: "#c065c9",
-              color: "#EBEBEB",
-              "&:hover": {
-                color: "#c065c9",
-                backgroundColor: "#EBEBEB",
-              },
-            }}
-          >
-            New Report
-          </Button>
-          <Button
-            variant="text"
-            sx={{
-              bgcolor: "#c065c9",
-              color: "#EBEBEB",
-              "&:hover": {
-                color: "#c065c9",
-                backgroundColor: "#EBEBEB",
-              },
-            }}
-          >
-            New Transaction
-          </Button>
+          <PurpleButton name="New Report" />
+          <Link href="/new-transaction" underline="none">
+            <PurpleButton name="New Transaction" />
+          </Link>
         </Stack>
       </Box>
       <TableContainer component={Paper}>

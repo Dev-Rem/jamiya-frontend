@@ -7,7 +7,7 @@ export default function Reports() {
   return (
     <div>
       <ResponsiveDrawer>
-        <Title section="Reports" />
+        <Title section="Report Log" />
         <Filters />
         <ReportsList />
       </ResponsiveDrawer>

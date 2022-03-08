@@ -2,11 +2,9 @@ import * as React from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import CssBaseline from "@mui/material/CssBaseline";
-
 import Drawer from "@mui/material/Drawer";
 import IconButton from "@mui/material/IconButton";
 import DrawerList from "./DrawerList";
-
 import MenuIcon from "@mui/icons-material/Menu";
 import Toolbar from "@mui/material/Toolbar";
 const drawerWidth = 240;
@@ -37,7 +35,7 @@ function ResponsiveDrawer(props) {
         sx={{
           width: { sm: `calc(100% - ${drawerWidth}px)` },
           ml: { sm: `${drawerWidth}px` },
-          background: "linear-gradient(45deg, #C065C9 30%, #000000 90%)",
+          background: "linear-gradient(45deg, #773E7C 30%, #000000 90%)",
           bgcolor: "#925098",
           height: "45px",
           boxShadow: "none",
@@ -102,7 +100,7 @@ function ResponsiveDrawer(props) {
           bgcolor: "#F4F4F4",
         }}
       >
-        <Toolbar />
+        <Toolbar variant="dense" />
         {props.children}
       </Box>
     </Box>

@@ -7,33 +7,8 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 
-function createData(
-  recieptNo,
-  customerName,
-  amountRecieved,
-  amountGiven,
-  amountTransfered,
-  customerPhone
-) {
-  return {
-    recieptNo,
-    customerName,
-    amountRecieved,
-    amountGiven,
-    amountTransfered,
-    customerPhone,
-  };
-}
-
-const rows = [
-  createData(34786, "Aremu Oluwaseyi", 500, 50000, 40000, "+2349065002380"),
-  createData(34786, "Aremu Oluwaseyi", 500, 50000, 40000, "+2349065002380"),
-  createData(34786, "Aremu Oluwaseyi", 500, 50000, 40000, "+2349065002380"),
-  createData(34786, "Aremu Oluwaseyi", 500, 50000, 40000, "+2349065002380"),
-  createData(34786, "Aremu Oluwaseyi", 500, 50000, 40000, "+2349065002380"),
-];
-
 export default function TransactionList(props) {
+  console.log(props.data);
   return (
     <TableContainer component={Paper} sx={{ boxShadow: "none" }}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -44,21 +19,29 @@ export default function TransactionList(props) {
             <TableCell align="right">Amount Recieved</TableCell>
             <TableCell align="right">Amount Given</TableCell>
             <TableCell align="right">Amount Transfered</TableCell>
-            <TableCell align="right">Customer Phone</TableCell>
+            {props.data.hasOwnProperty("customerPhone") ? (
+              <TableCell align="right">Customer Phone</TableCell>
+            ) : (
+              <TableCell align="right">Station</TableCell>
+            )}
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
+          {props.data.map((data) => (
             <TableRow
-              key={row.recieptNo}
+              key={data.recieptNo}
               sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
             >
-              <TableCell>{row.recieptNo}</TableCell>
-              <TableCell align="right">{row.customerName}</TableCell>
-              <TableCell align="right">{row.amountRecieved}</TableCell>
-              <TableCell align="right">{row.amountGiven}</TableCell>
-              <TableCell align="right">{row.amountTransfered}</TableCell>
-              <TableCell align="right">{row.customerPhone}</TableCell>
+              <TableCell>{data.recieptNo}</TableCell>
+              <TableCell align="right">{data.customerName}</TableCell>
+              <TableCell align="right">{data.amountRecieved}</TableCell>
+              <TableCell align="right">{data.amountGiven}</TableCell>
+              <TableCell align="right">{data.amountTransfered}</TableCell>
+              {props.data.hasOwnProperty("customerPhone") ? (
+                <TableCell align="right">{data.customerPhone}</TableCell>
+              ) : (
+                <TableCell align="right">{data.station}</TableCell>
+              )}
             </TableRow>
           ))}
         </TableBody>
