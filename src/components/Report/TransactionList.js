@@ -8,7 +8,6 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 
 export default function TransactionList(props) {
-  console.log(props.data[0].customerPhone);
   return (
     <TableContainer component={Paper} sx={{ boxShadow: "none" }}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
