@@ -10,22 +10,50 @@ import GeneralLedger from "./pages/GeneralLedger";
 import Reports from "./pages/Reports";
 import TransactionLog from "./pages/TransactionLog";
 import NewTransaction from "./pages/NewTransaction";
+import NewCustomerLedger from "./pages/NewCustomerLedger";
+import NewAccount from "./pages/NewAccount";
+import UpdateMoneyIn from "./pages/UpdateMoneyIn";
 
 export default function App() {
+  const customerLedger = {
+    customer: "Aremu",
+    naira: "300",
+    dollar: "",
+    pound: "",
+    euro: "",
+    description: "",
+    status: "",
+  };
   return (
     <Router basename={"/"}>
       <Routes>
-        <Route exact path={"/dashboard"} element={<Dashboard />} />
+        <Route exact path={"/"} element={<Dashboard />} />
         <Route exact path={"/front-desk"} element={<FrontDesk />} />
         <Route exact path={"/bank"} element={<Bank />} />
         <Route exact path={"/online"} element={<Online />} />
         <Route exact path={"/marketing"} element={<Marketing />} />
-        <Route exact path={"/reports"} element={<Reports />} />
+        <Route exact path={"/report-logs"} element={<Reports />} />
         <Route exact path={"/customer-ledger"} element={<CustomerLedger />} />
         <Route exact path={"/general-ledger"} element={<GeneralLedger />} />
-        <Route exact path={"/transaction-log"} element={<TransactionLog />} />
-        <Route exact path={"/new-transaction"} element={<NewTransaction />} />
-        
+        <Route exact path={"/transaction-logs"} element={<TransactionLog />} />
+        <Route
+          exact
+          path={"/:section/new-transaction"}
+          element={<NewTransaction />}
+        />
+        <Route
+          exact
+          path={"/:section/update-balances"}
+          element={<UpdateMoneyIn />}
+        />
+
+        <Route exact path={"/:section/add-account"} element={<NewAccount />} />
+
+        <Route
+          exact
+          path={"/:section/add"}
+          element={<NewCustomerLedger customerLedger={customerLedger} />}
+        />
       </Routes>
     </Router>
   );
