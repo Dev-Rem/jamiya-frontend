@@ -1,5 +1,6 @@
 import React from "react";
 import Button from "@mui/material/Button";
+import { useNavigate } from "react-router-dom";
 
 export function PurpleButton(props) {
   return (
@@ -21,6 +22,7 @@ export function PurpleButton(props) {
 }
 
 export function CancelButton(props) {
+  const navigate = useNavigate();
   return (
     <Button
       variant="outlined"
@@ -34,6 +36,7 @@ export function CancelButton(props) {
         },
         height: "30px",
       }}
+      onClick={() => navigate(-1)}
     >
       {props.name}
     </Button>
