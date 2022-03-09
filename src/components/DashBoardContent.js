@@ -23,8 +23,7 @@ function Boxes(props) {
               $
             </Icon>
           </Stack>
-          <Typography sx={{ textAlign: "right", mt: -6 }}> Dollar</Typography>
-          <Typography sx={{ textAlign: "right", mt: 2 }}>
+          <Typography sx={{ textAlign: "right", mt: -4, fontSize: "25px" }}>
             {props.data.dollar}
           </Typography>
         </Paper>
@@ -38,8 +37,7 @@ function Boxes(props) {
               £
             </Icon>
           </Stack>
-          <Typography sx={{ textAlign: "right", mt: -6 }}> Pound</Typography>
-          <Typography sx={{ textAlign: "right", mt: 2 }}>
+          <Typography sx={{ textAlign: "right", mt: -4, fontSize: "25px" }}>
             {props.data.pound}
           </Typography>
         </Paper>
@@ -53,8 +51,7 @@ function Boxes(props) {
               €
             </Icon>
           </Stack>
-          <Typography sx={{ textAlign: "right", mt: -6 }}> Euro</Typography>
-          <Typography sx={{ textAlign: "right", mt: 2 }}>
+          <Typography sx={{ textAlign: "right", mt: -4, fontSize: "25px" }}>
             {props.data.euro}
           </Typography>
         </Paper>
