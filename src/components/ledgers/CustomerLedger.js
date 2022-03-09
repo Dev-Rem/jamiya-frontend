@@ -8,7 +8,7 @@ import { styled } from "@mui/material/styles";
 import CustomerLedgerList from "./CustomerLedgerList";
 import Stack from "@mui/material/Stack";
 import { PurpleButton } from "../utils/Button";
-
+import { Link, useLocation } from "react-router-dom";
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -54,6 +54,7 @@ function a11yProps(index) {
 
 export default function RecentTransactions() {
   const [value, setValue] = React.useState(0);
+  const currentUrl = useLocation();
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -62,10 +63,22 @@ export default function RecentTransactions() {
   return (
     <div>
       <Stack spacing={2} direction="row">
-        <PurpleButton name="new report" />
-        <PurpleButton name="add new" />
+        <Link
+          to={`${currentUrl.pathname}/#`}
+          style={{ textDecoration: "none" }}
+        >
+          <PurpleButton name="new report" />
+        </Link>
+
+        <Link
+          to={`${currentUrl.pathname}/add`}
+          style={{ textDecoration: "none" }}
+        >
+          <PurpleButton name="add new" />
+        </Link>
       </Stack>
-      <Box sx={{ width: "100%", bgcolor: "white", borderRadius: 1 }}>
+
+      <Box mt={2} sx={{ width: "100%", bgcolor: "white", borderRadius: 1 }}>
         <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
           <AltTabs
             value={value}

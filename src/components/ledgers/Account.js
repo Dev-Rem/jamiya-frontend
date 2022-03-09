@@ -9,7 +9,9 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
-import {PurpleButton} from "../utils/Button";
+import { PurpleButton } from "../utils/Button";
+import { Link, useLocation } from "react-router-dom";
+
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
     backgroundColor: theme.palette.common.white,
@@ -50,6 +52,7 @@ const rows = [
 ];
 
 export default function Account() {
+  const currentUrl = useLocation();
   return (
     <div>
       <Box
@@ -62,8 +65,18 @@ export default function Account() {
         }}
       >
         <Stack spacing={2} direction="row">
-          <PurpleButton name="new report" />
-          <PurpleButton name="add account" />
+          <Link
+            to={`${currentUrl.pathname}/#`}
+            style={{ textDecoration: "none" }}
+          >
+            <PurpleButton name="new report" />
+          </Link>
+          <Link
+            to={`${currentUrl.pathname}/add-account`}
+            style={{ textDecoration: "none" }}
+          >
+            <PurpleButton name="add account" />
+          </Link>
         </Stack>
       </Box>
       <TableContainer component={Paper}>

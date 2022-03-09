@@ -9,8 +9,8 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
-import {PurpleButton} from "../utils/Button";
-import Link from "@mui/material/Link";
+import { PurpleButton } from "../utils/Button";
+import { Link, useLocation } from "react-router-dom";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -45,6 +45,8 @@ const rows = [
 ];
 
 function Report() {
+  const currentUrl = useLocation();
+  console.log(currentUrl);
   return (
     <div>
       <Box
@@ -56,9 +58,24 @@ function Report() {
         }}
       >
         <Stack spacing={2} direction="row" mb={2}>
-          <PurpleButton name="New Report" />
-          <Link href="/new-transaction" underline="none">
+          <Link
+            to={`${currentUrl.pathname}/#`}
+            style={{ textDecoration: "none" }}
+          >
+            <PurpleButton name="New Report" />
+          </Link>
+
+          <Link
+            to={`${currentUrl.pathname}/new-transaction`}
+            style={{ textDecoration: "none" }}
+          >
             <PurpleButton name="New Transaction" />
+          </Link>
+          <Link
+            to={`${currentUrl.pathname}/update-balances`}
+            style={{ textDecoration: "none" }}
+          >
+            <PurpleButton name="Update Balance" />
           </Link>
         </Stack>
       </Box>
