@@ -1,7 +1,7 @@
 import React from "react";
 import ResponsiveDrawer from "../components/appbar/AppBar";
 import Title from "../components/utils/Title";
-import NewTransaction from "../components/utils/CreateTransaction";
+import NewTransaction from "../components/AddTransaction";
 
 export default function AddNew() {
   return (
@@ -9,7 +9,7 @@ export default function AddNew() {
       {" "}
       <ResponsiveDrawer>
         <Title section="New Transaction" />
-        <NewTransaction/>
+        <NewTransaction />
       </ResponsiveDrawer>{" "}
     </div>
   );
