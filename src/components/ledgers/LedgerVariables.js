@@ -7,6 +7,7 @@ import Paper from "@mui/material/Paper";
 import { TableCell } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
+import { styled, experimental_sx as sx } from "@mui/system";
 
 const rows = {
   ledgerTotal: 10000,
@@ -19,6 +20,13 @@ const rows = {
   calculatedProfit: 8000,
   variance: 9000,
 };
+
+const StyledTableCell = styled(TableCell)(
+  sx({
+    fontWeight: "bold",
+    color: "#925098",
+  })
+);
 
 export default function LedgerVariables() {
   return (
@@ -39,51 +47,68 @@ export default function LedgerVariables() {
         >
           <TableBody>
             <TableRow>
-              <TableCell sx={{ fontWeight: "bold", color: "#925098" }}>
-                Currency Total
+              <StyledTableCell>Currency Total</StyledTableCell>
+              <Divider orientation="vertical" />
+              <TableCell align="right" sx={{ fontWeight: "bold" }}>
+                {rows.ledgerTotal}
               </TableCell>
-              <Divider orientation="vertical" />
-              <TableCell align="right">{rows.ledgerTotal}</TableCell>
             </TableRow>
             <TableRow>
-              <TableCell>Recievable</TableCell>
+              <StyledTableCell>Recievable</StyledTableCell>
               <Divider orientation="vertical" flexItem="true" />
-              <TableCell align="right">{rows.recievable}</TableCell>
+              <TableCell align="right" sx={{ fontWeight: "bold" }}>
+                {rows.recievable}
+              </TableCell>
             </TableRow>
             <TableRow>
-              <TableCell>Grand Total</TableCell>
+              <StyledTableCell>Grand Total</StyledTableCell>
               <Divider orientation="vertical" />
-              <TableCell align="right">{rows.grandTotal}</TableCell>
+              <TableCell align="right" sx={{ fontWeight: "bold" }}>
+                {rows.grandTotal}
+              </TableCell>
             </TableRow>
             <TableRow>
-              <TableCell>Prrevious Total</TableCell>
+              <StyledTableCell>Prrevious Total</StyledTableCell>
               <Divider orientation="vertical" />
-              <TableCell align="right">{rows.previousTotal}</TableCell>
+              <TableCell align="right" sx={{ fontWeight: "bold" }}>
+                {rows.previousTotal}
+              </TableCell>
             </TableRow>
             <TableRow>
-              <TableCell>Difference</TableCell>
+              <StyledTableCell>Difference</StyledTableCell>
               <Divider orientation="vertical" />
-              <TableCell align="right">{rows.difference}</TableCell>
+              <TableCell align="right" sx={{ fontWeight: "bold" }}>
+                {rows.difference}
+              </TableCell>
             </TableRow>
             <TableRow>
-              <TableCell>Expenses</TableCell>
+              <StyledTableCell>Expenses</StyledTableCell>
               <Divider orientation="vertical" />
-              <TableCell align="right">{rows.expenses}</TableCell>
+              <TableCell align="right" sx={{ fontWeight: "bold" }}>
+                {" "}
+                {rows.expenses}
+              </TableCell>
             </TableRow>
             <TableRow>
-              <TableCell>Book Profit</TableCell>
+              <StyledTableCell>Book Profit</StyledTableCell>
               <Divider orientation="vertical" />
-              <TableCell align="right">{rows.bookProfit}</TableCell>
+              <TableCell align="right" sx={{ fontWeight: "bold" }}>
+                {rows.bookProfit}
+              </TableCell>
             </TableRow>
             <TableRow>
-              <TableCell>Calculated profit</TableCell>
+              <StyledTableCell>Calculated profit</StyledTableCell>
               <Divider orientation="vertical" />
-              <TableCell align="right">{rows.calculatedProfit}</TableCell>
+              <TableCell align="right" sx={{ fontWeight: "bold" }}>
+                {rows.calculatedProfit}
+              </TableCell>
             </TableRow>
             <TableRow>
-              <TableCell>Variance</TableCell>
+              <StyledTableCell>Variance</StyledTableCell>
               <Divider orientation="vertical" />
-              <TableCell align="right">{rows.variance}</TableCell>
+              <TableCell align="right" sx={{ fontWeight: "bold" }}>
+                {rows.variance}
+              </TableCell>
             </TableRow>
           </TableBody>
         </Table>

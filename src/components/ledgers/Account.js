@@ -120,14 +120,22 @@ export default function Account() {
                 </StyledTableCell>
               </StyledTableRow>
             ))}
-            <StyledTableRow>
-              <StyledTableCell>Total</StyledTableCell>
-              <StyledTableCell />
-              <StyledTableCell align="right">&#8358; 3000</StyledTableCell>
-              <StyledTableCell align="right">&#36; 3000</StyledTableCell>
-              <StyledTableCell align="right">&#163; 3000</StyledTableCell>
-              <StyledTableCell align="right">&#128; 3000</StyledTableCell>
-            </StyledTableRow>
+            <TableRow>
+              <TableCell sx={{ fontWeight: "bold" }}>Total</TableCell>
+              <TableCell />
+              <TableCell align="right" sx={{ fontWeight: "bold" }}>
+                &#8358; 3000
+              </TableCell>
+              <TableCell align="right" sx={{ fontWeight: "bold" }}>
+                &#36; 3000
+              </TableCell>
+              <TableCell align="right" sx={{ fontWeight: "bold" }}>
+                &#163; 3000
+              </TableCell>
+              <TableCell align="right" sx={{ fontWeight: "bold" }}>
+                &#128; 3000
+              </TableCell>
+            </TableRow>
           </TableBody>
         </Table>
       </TableContainer>
