@@ -4,6 +4,8 @@ import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
 import Title from "./utils/Title";
 import Icon from "@mui/material/Icon";
+import Image from "mui-image";
+import DashboardBanner from "../assets/images/dashboard1.jpeg";
 
 function Boxes(props) {
   return (
@@ -65,6 +67,8 @@ export default function DashBoardContent() {
   const purchasesData = { dollar: 23434, pound: 3400, euro: 10200 };
   return (
     <>
+      <Image src={DashboardBanner} alt="Logo" height="500px" fit="fit" />
+
       <Title section="Rates for Today" />
       <Boxes data={ratesData} />
 
