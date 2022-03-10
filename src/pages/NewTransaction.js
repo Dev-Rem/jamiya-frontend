@@ -1,7 +1,7 @@
 import React from "react";
 import ResponsiveDrawer from "../components/appbar/AppBar";
 import Title from "../components/utils/Title";
-import NewTransaction from "../components/AddTransaction";
+import NewTransaction from "../components/addComponents/AddTransaction";
 
 export default function AddNew() {
   return (

@@ -4,9 +4,9 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import TextField from "@mui/material/TextField";
 import InputLabel from "@mui/material/InputLabel";
-import { PurpleButton, CancelButton } from "./utils/Button";
-import PageBox from "./utils/Box";
-import FormStack from "./utils/FormStack";
+import { PurpleButton, CancelButton } from "../utils/Button";
+import PageBox from "../utils/Box";
+import FormStack from "../utils/FormStack";
 
 const currencies = [
   {
