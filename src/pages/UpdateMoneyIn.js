@@ -1,8 +1,8 @@
 import React from "react";
 import ResponsiveDrawer from "../components/appbar/AppBar";
 import Title from "../components/utils/Title";
-import MoneyIn from "../components/report/MoneyIn";
-import MoneyOut from "../components/report/MoneyOut";
+import MoneyIn from "../components/Report/MoneyIn";
+import MoneyOut from "../components/Report/MoneyOut";
 import Toolbar from "@mui/material/Toolbar";
 
 export default function UpdateMoneyIn() {
