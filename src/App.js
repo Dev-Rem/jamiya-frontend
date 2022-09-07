@@ -11,8 +11,11 @@ import Reports from "./pages/Reports";
 import TransactionLog from "./pages/TransactionLog";
 import NewTransaction from "./pages/NewTransaction";
 import NewCustomerLedger from "./pages/NewCustomerLedger";
-import NewAccount from "./pages/NewAccount";
+import { NewAccount, EditOrDeleteAccount } from "./pages/NewAccount";
 import UpdateMoneyIn from "./pages/UpdateMoneyIn";
+import { ReportDetails } from "./pages/ReportDetails";
+import TransactionDetails from "./pages/TransactionDetails";
+import { LoginPage, RegisterPage } from "./pages/Auth";
 
 export default function App() {
   const customerLedger = {
@@ -27,7 +30,9 @@ export default function App() {
   return (
     <Router basename={"/"}>
       <Routes>
-        <Route exact path={"/"} element={<Dashboard />} />
+        <Route exact path={"/"} element={<LoginPage />} />
+        <Route exact path={"/register"} element={<RegisterPage />} />
+        <Route exact path={"/dashboard"} element={<Dashboard />} />
         <Route exact path={"/front-desk"} element={<FrontDesk />} />
         <Route exact path={"/bank"} element={<Bank />} />
         <Route exact path={"/online"} element={<Online />} />
@@ -36,6 +41,25 @@ export default function App() {
         <Route exact path={"/customer-ledger"} element={<CustomerLedger />} />
         <Route exact path={"/general-ledger"} element={<GeneralLedger />} />
         <Route exact path={"/transaction-logs"} element={<TransactionLog />} />
+        <Route exact path={"/:section/add-account"} element={<NewAccount />} />
+        <Route
+          exact
+          path={"/:section/view-transaction-details"}
+          element={<TransactionDetails />}
+        />
+
+        <Route
+          exact
+          path={"/:section/update-account"}
+          element={<EditOrDeleteAccount />}
+        />
+
+        <Route
+          exact
+          path={"/:section/report-details"}
+          element={<ReportDetails />}
+        />
+
         <Route
           exact
           path={"/:section/new-transaction"}
@@ -46,9 +70,6 @@ export default function App() {
           path={"/:section/update-balances"}
           element={<UpdateMoneyIn />}
         />
-
-        <Route exact path={"/:section/add-account"} element={<NewAccount />} />
-
         <Route
           exact
           path={"/:section/add"}

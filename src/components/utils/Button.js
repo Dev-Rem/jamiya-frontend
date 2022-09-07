@@ -42,3 +42,23 @@ export function CancelButton(props) {
     </Button>
   );
 }
+
+export function DeleteButton(props) {
+  return (
+    <Button
+      variant="outlined"
+      sx={{
+        bgcolor: "#EBEBEB",
+        color: "#773E7C",
+        borderColor: "#773E7C",
+        "&:hover": {
+          bgColor: "white",
+          borderColor: "#773E7C",
+        },
+        height: "30px",
+      }}
+    >
+      {props.name}
+    </Button>
+  );
+}

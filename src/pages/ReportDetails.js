@@ -1,8 +1,7 @@
 import React from "react";
-import ResponsiveDrawer from "../components/appbar/AppBar";
-import {Report} from "../components/report/Report";
-import RecentTransactions from "../components/report/RecentTransactions";
+import { ReportDetails as ReportDetail } from "../components/report/Report";
 import Title from "../components/utils/Title";
+import ResponsiveDrawer from "../components/appbar/AppBar";
 
 function createData(name, naira, dollar, pound, euro) {
   return { name, naira, dollar, pound, euro };
@@ -15,18 +14,19 @@ const data = [
   createData("Money Out", 305, 3.7, 67, 4.3),
   createData("Closing Balance", 356, 16.0, 49, 3.9),
 ];
-
-function FrontDesk() {
+export function ReportDetails() {
   return (
-    <div>
-      {" "}
-      <ResponsiveDrawer>
-        <Title section="Front Desk Report" />
-        <Report data={data} />
-        <RecentTransactions />
-      </ResponsiveDrawer>
-    </div>
+    <ResponsiveDrawer>
+      <Title section="Report Details" />
+      <ReportDetail data={data} />
+    </ResponsiveDrawer>
   );
 }
 
-export default FrontDesk;
+export function CustomerLedgerDetails() {
+  return <></>;
+}
+
+export function GeneralLedgerDetails() {
+  return <></>;
+}

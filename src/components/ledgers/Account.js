@@ -100,7 +100,12 @@ export default function Account() {
             {rows.map((row) => (
               <StyledTableRow key={row.accountName}>
                 <StyledTableCell component="th" scope="row">
-                  {row.bankName}
+                  <Link
+                    to={`${currentUrl.pathname}/update-account`}
+                    style={{ textDecoration: "none", color: "#925098" }}
+                  >
+                    {row.bankName}
+                  </Link>
                 </StyledTableCell>
                 <StyledTableCell component="th" scope="row">
                   {row.accountName}

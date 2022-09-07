@@ -1,19 +1,11 @@
 import React from "react";
 import TextField from "@mui/material/TextField";
-import { PurpleButton, CancelButton } from "../utils/Button";
+import { PurpleButton, CancelButton, DeleteButton } from "../utils/Button";
 import PageBox from "../utils/Box";
 import FormStack from "../utils/FormStack";
 
-const account = {
-  bank_name: "",
-  account_name: "",
-  naira: "",
-  dollar: "",
-  pound: "",
-  euro: "",
-};
-export default function AddAccount() {
-  const [value, setValue] = React.useState(account);
+function AccountForm(props) {
+  const [value, setValue] = React.useState(props.data);
 
   const handleChange = (event) => {
     const val = event.target.value;
@@ -94,11 +86,30 @@ export default function AddAccount() {
             onChange={handleChange}
           />
         </FormStack>
-        <FormStack>
-          <PurpleButton name="Add" />
-          <CancelButton name="cancel" />
-        </FormStack>
       </PageBox>
+    </>
+  );
+}
+export function AddAccount(props) {
+  return (
+    <>
+      <AccountForm data={props.data} />
+      <FormStack>
+        <PurpleButton name="Add" />
+        <CancelButton name="cancel" />
+      </FormStack>
+    </>
+  );
+}
+export function UpdateAccount(props) {
+  return (
+    <>
+      <AccountForm data={props.data} />
+      <FormStack>
+        <PurpleButton name="Edit" />
+        <DeleteButton name="Delete" />
+        <CancelButton name="cancel" />
+      </FormStack>
     </>
   );
 }

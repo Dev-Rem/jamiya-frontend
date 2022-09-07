@@ -32,21 +32,51 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-function createData(name, naira, dollar, pound, euro) {
-  return { name, naira, dollar, pound, euro };
+export function ReportDetails(props) {
+  const [values, setValues] = React.useState(props.data);
+  return (
+    <>
+      <TableContainer component={Paper}>
+        <Table sx={{ minWidth: 700 }} aria-label="customized table">
+          <TableHead>
+            <TableRow>
+              <StyledTableCell>REPORT</StyledTableCell>
+              <StyledTableCell align="right">Naira</StyledTableCell>
+              <StyledTableCell align="right">Dollar</StyledTableCell>
+              <StyledTableCell align="right">Pound</StyledTableCell>
+              <StyledTableCell align="right">Euro</StyledTableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {values.map((value) => (
+              <StyledTableRow key={value.name}>
+                <StyledTableCell component="th" scope="row">
+                  {value.name}
+                </StyledTableCell>
+                <StyledTableCell align="right">
+                  &#8358; {value.naira}
+                </StyledTableCell>
+                <StyledTableCell align="right">
+                  &#36; {value.dollar}
+                </StyledTableCell>
+                <StyledTableCell align="right">
+                  {" "}
+                  &#163; {value.pound}
+                </StyledTableCell>
+                <StyledTableCell align="right">
+                  &#128; {value.euro}
+                </StyledTableCell>
+              </StyledTableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </>
+  );
 }
 
-const rows = [
-  createData("Opening Balance", 159, 6.0, 24, 4.0),
-  createData("Money In", 237, 9.0, 37, 4.3),
-  createData("Report Balance", 262, 16.0, 24, 6.0),
-  createData("Money Out", 305, 3.7, 67, 4.3),
-  createData("Closing Balance", 356, 16.0, 49, 3.9),
-];
-
-function Report() {
+export function Report(props) {
   const currentUrl = useLocation();
-  console.log(currentUrl);
   return (
     <div>
       <Box
@@ -79,43 +109,7 @@ function Report() {
           </Link>
         </Stack>
       </Box>
-      <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 700 }} aria-label="customized table">
-          <TableHead>
-            <TableRow>
-              <StyledTableCell>REPORT</StyledTableCell>
-              <StyledTableCell align="right">Naira</StyledTableCell>
-              <StyledTableCell align="right">Dollar</StyledTableCell>
-              <StyledTableCell align="right">Pound</StyledTableCell>
-              <StyledTableCell align="right">Euro</StyledTableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {rows.map((row) => (
-              <StyledTableRow key={row.name}>
-                <StyledTableCell component="th" scope="row">
-                  {row.name}
-                </StyledTableCell>
-                <StyledTableCell align="right">
-                  &#8358; {row.naira}
-                </StyledTableCell>
-                <StyledTableCell align="right">
-                  &#36; {row.dollar}
-                </StyledTableCell>
-                <StyledTableCell align="right">
-                  {" "}
-                  &#163; {row.pound}
-                </StyledTableCell>
-                <StyledTableCell align="right">
-                  &#128; {row.euro}
-                </StyledTableCell>
-              </StyledTableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
+      <ReportDetails data={props.data} />
     </div>
   );
 }
-
-export default Report;
