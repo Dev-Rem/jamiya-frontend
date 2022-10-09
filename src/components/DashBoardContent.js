@@ -5,7 +5,8 @@ import Stack from "@mui/material/Stack";
 import Title from "./utils/Title";
 import Icon from "@mui/material/Icon";
 import Image from "mui-image";
-import DashboardBanner from "../assets/images/dashboard1.jpeg";
+import DashboardBanner from "../assets/images/dashboard2.png";
+import Toolbar from "@mui/material/Toolbar";
 
 function Boxes(props) {
   return (
@@ -64,18 +65,13 @@ function Boxes(props) {
 
 export default function DashBoardContent() {
   const ratesData = { dollar: "575/579", pound: "745/765", euro: "620/635" };
-  const purchasesData = { dollar: 23434, pound: 3400, euro: 10200 };
   return (
     <>
-      <Image src={DashboardBanner} alt="Logo" height="500px" fit="fit" />
+      <Image src={DashboardBanner} alt="Logo" height="600px" fit="fit" />
 
+      <Toolbar />
       <Title section="Rates for Today" />
       <Boxes data={ratesData} />
-
-      <Title section="Total purchases" />
-      <Boxes data={purchasesData} />
-      <Title section="Total Sales" />
-      <Boxes data={purchasesData} />
     </>
   );
 }
