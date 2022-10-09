@@ -23,7 +23,7 @@ export default function Marketing() {
       <ResponsiveDrawer>
         <Title section="Marketing Report" />
         <Report data={data} />
-        <RecentTransactions />
+        {/* <RecentTransactions /> */}
       </ResponsiveDrawer>{" "}
     </div>
   );

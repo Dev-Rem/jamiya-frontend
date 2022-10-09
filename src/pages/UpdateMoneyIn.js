@@ -10,7 +10,7 @@ export default function UpdateMoneyIn() {
     <div>
       {" "}
       <ResponsiveDrawer>
-        <Title section="Money Out" />
+        <Title section="Money In" />
         <MoneyIn />
         <Toolbar />
         <Title section="Money Out" />

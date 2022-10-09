@@ -6,11 +6,13 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
+import { Link, useLocation } from "react-router-dom";
+import VisibilityIcon from "@mui/icons-material/Visibility";
 
-function createData(date, customerName, naira, dollar, pound, euro) {
+function createData(date, customer_name, naira, dollar, pound, euro) {
   return {
     date,
-    customerName,
+    customer_name,
     naira,
     dollar,
     pound,
@@ -26,7 +28,8 @@ const rows = [
   createData("02/03/2022", "Aremu Oluwaseyi", 500, 500, 400, 200),
 ];
 
-export default function TransactionList() {
+export function CustomerLedgerList() {
+  const currentUrl = useLocation();
   return (
     <TableContainer component={Paper} sx={{ boxShadow: "none" }}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -47,11 +50,20 @@ export default function TransactionList() {
               sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
             >
               <TableCell>{row.date}</TableCell>
-              <TableCell align="right">{row.customerName}</TableCell>
+              <TableCell align="right">{row.customer_name}</TableCell>
               <TableCell align="right">{row.naira}</TableCell>
               <TableCell align="right">{row.dollar}</TableCell>
               <TableCell align="right">{row.pound}</TableCell>
               <TableCell align="right">{row.euro}</TableCell>
+              <TableCell alight="right">
+                <Link
+                  to={`${currentUrl.pathname}/view`}
+                  style={{ textDecoration: "none" }}
+                  state={{ row: row }}
+                >
+                  <VisibilityIcon sx={{ color: "#bab8b8" }} />
+                </Link>
+              </TableCell>
             </TableRow>
           ))}
 

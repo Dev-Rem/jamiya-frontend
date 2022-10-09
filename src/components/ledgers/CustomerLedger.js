@@ -5,7 +5,7 @@ import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import { styled } from "@mui/material/styles";
-import CustomerLedgerList from "./CustomerLedgerList";
+import { CustomerLedgerList } from "./CustomerLedgerList";
 import Stack from "@mui/material/Stack";
 import { PurpleButton } from "../utils/Button";
 import { Link, useLocation } from "react-router-dom";
@@ -52,7 +52,7 @@ function a11yProps(index) {
   };
 }
 
-export default function RecentTransactions() {
+export default function CustomerLedger() {
   const [value, setValue] = React.useState(0);
   const currentUrl = useLocation();
 

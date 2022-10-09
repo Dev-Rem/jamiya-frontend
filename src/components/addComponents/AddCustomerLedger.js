@@ -4,7 +4,9 @@ import FormStack from "../utils/FormStack";
 import MenuItem from "@mui/material/MenuItem";
 import TextField from "@mui/material/TextField";
 import { PurpleButton, CancelButton } from "../utils/Button";
-export default function AddNewCustomerLedger(props) {
+import { useLocation } from "react-router-dom";
+
+export function CustomerLedgerForm(props) {
   const [value, setValue] = React.useState(props.customerLedger);
 
   const handleChange = (event) => {
@@ -13,6 +15,7 @@ export default function AddNewCustomerLedger(props) {
     setValue((prevState) => {
       return { ...prevState, [key]: val };
     });
+    console.log(val);
   };
   return (
     <>
@@ -40,6 +43,7 @@ export default function AddNewCustomerLedger(props) {
             name="customer"
             onChange={handleChange}
             size="small"
+            value={value.customer_name}
           />
         </FormStack>
         <FormStack>
@@ -88,11 +92,33 @@ export default function AddNewCustomerLedger(props) {
             onChange={handleChange}
           />
         </FormStack>
-        <FormStack>
-          <PurpleButton name="Add" />
-          <CancelButton name="cancel" />
-        </FormStack>
       </PageBox>
     </>
+  );
+}
+
+export function NewCustomerLedger(props) {
+  return (
+    <>
+      <CustomerLedgerForm customerLedger={props} />
+      <FormStack>
+        <PurpleButton name="Add" />
+        <CancelButton name="cancel" />
+      </FormStack>
+    </>
+  );
+}
+
+export function ViewEditDeleteCustomerLedger(props) {
+  const location = useLocation();
+  const data = location.state;
+  return (
+    <div>
+      <CustomerLedgerForm customerLedger={data.row} />
+      <FormStack>
+        <PurpleButton name="edit" />
+        <CancelButton name="delete" />
+      </FormStack>
+    </div>
   );
 }

@@ -11,13 +11,16 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Copyright from "../utils/Copyright";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { signupUser } from "../../actions/userAuth";
+import { useNavigate } from "react-router-dom";
+import SimpleBackdrop from "../utils/Backdrop";
 
 const theme = createTheme();
 
 export default function SignUp() {
   // set initialState for register component form
+  const [loading, setLoading] = React.useState(false);
   const [value, setValue] = React.useState({
     username: "",
     password: "",
@@ -26,6 +29,7 @@ export default function SignUp() {
   });
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   // handle user register submit button
   const handleChange = (event) => {
@@ -34,10 +38,10 @@ export default function SignUp() {
     setValue((prevState) => {
       return { ...prevState, [key]: val };
     });
-    console.log(value);
   };
 
   const handleSubmit = (event) => {
+    setLoading(true);
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     const credentials = {
@@ -48,13 +52,13 @@ export default function SignUp() {
       last_name: data.get("last_name"),
     };
 
-    dispatch(signupUser(credentials),(res) => {
-      console.log(res);
-    });
+    dispatch(signupUser(credentials));
+    navigate("/login");
   };
 
   return (
     <ThemeProvider theme={theme}>
+      {loading ? <SimpleBackdrop /> : <></>}
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <Box

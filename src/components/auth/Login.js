@@ -6,29 +6,47 @@ import TextField from "@mui/material/TextField";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 import Paper from "@mui/material/Paper";
-import { Link } from "react-router-dom";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import FxLogo from "../../assets/images/logo1.png";
 import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-
 import Copyright from "../utils/Copyright";
+import { useDispatch, useSelector } from "react-redux";
+import { loginUser } from "../../actions/userAuth";
+import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { SuccessAlert } from "../utils/Alerts";
 
 const theme = createTheme();
 
 export default function SignInSide() {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const registered = useSelector((state) => state.registered);
+  console.log(registered);
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
+
+    let credentials = {
+      username: data.get("username"),
       password: data.get("password"),
-    });
+    };
+    dispatch(loginUser(credentials));
+    navigate("/dashboard");
   };
 
   return (
     <ThemeProvider theme={theme}>
+      {setTimeout(() => {})}
+      <>
+        {registered ? (
+          <SuccessAlert meessage="Registration Successful" />
+        ) : (
+          <></>
+        )}
+      </>
       <Grid container component="main" sx={{ height: "100vh" }}>
         <CssBaseline />
         <Grid
@@ -59,10 +77,9 @@ export default function SignInSide() {
           >
             <Avatar
               src={FxLogo}
-              sx={{ width: 75, height: 56 }}
+              sx={{ width: 75, height: 56, margin: 3 }}
               variant="rounded"
             />
-
             <Typography component="h1" variant="h5">
               Sign in
             </Typography>
@@ -76,10 +93,10 @@ export default function SignInSide() {
                 margin="normal"
                 required
                 fullWidth
-                id="email"
-                label="Email Address"
-                name="email"
-                autoComplete="email"
+                id="username"
+                label="Username"
+                name="username"
+                autoComplete="username"
                 autoFocus
               />
               <TextField
@@ -106,18 +123,10 @@ export default function SignInSide() {
               </Button>
               <Grid container>
                 <Grid item xs>
-                  <Link href="#" variant="body2">
-                    Forgot password?
-                  </Link>
+                  <Link to="#">Forgot password?</Link>
                 </Grid>
-                              <Grid item>
-                                  <Link to="register" style={{ textDecoration: "none", color: "blue" }}></Link>
-                  {/* <Link
-                    to="register"
-                    style={{ textDecoration: "none", color: "black" }}
-                  >
-                    Don't have an account? Sign Up
-                  </Link> */}
+                <Grid item>
+                  <Link to="/register">{"Don't have an account? Sign Up"}</Link>
                 </Grid>
               </Grid>
               <Copyright sx={{ mt: 5 }} />
