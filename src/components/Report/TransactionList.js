@@ -60,9 +60,7 @@ export function TransactionList(props) {
                   <Link
                     to={`${currentUrl.pathname}/view-transaction-details`}
                     style={{ textDecoration: "none" }}
-                    onClick={() => {
-                      dispatch(viewTransaction(data.id));
-                    }}
+                    state={{ data: data }}
                   >
                     <PurpleButton name="View" />
                   </Link>
@@ -77,29 +75,11 @@ export function TransactionList(props) {
 }
 
 export function ViewEditDeleteTransaction() {
-  const [loading, setLoading] = React.useState(true);
-
-  const transactionDetails = useSelector(
-    (state) => state.transactions
-  ).transactionDetails;
-
-  React.useEffect(() => {
-    setTimeout(() => {
-      setLoading(false);
-    }, 3000);
-  }, []);
-
+  const location = useLocation();
+  const { data } = location.state;
   return (
     <>
-      {loading ? (
-        <Dialog>
-          <DialogContent>
-            <CachedRoundedIcon />
-          </DialogContent>
-        </Dialog>
-      ) : (
-        <TransactionForm data={transactionDetails} use="edit" />
-      )}
+      <TransactionForm data={data} use="edit" />
     </>
   );
 }
