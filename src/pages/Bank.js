@@ -22,7 +22,7 @@ export default function Bank() {
       <ResponsiveDrawer>
         <Title section="Bank Report" />
         <Report data={data} />
-        {/* <RecentTransactions /> */}
+        <RecentTransactions />
       </ResponsiveDrawer>{" "}
     </div>
   );

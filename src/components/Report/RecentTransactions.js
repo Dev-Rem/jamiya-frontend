@@ -5,31 +5,51 @@ import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import { styled } from "@mui/material/styles";
-import {TransactionList} from "./TransactionList";
-function createData(
-  recieptNo,
-  customerName,
-  amountRecieved,
-  amountGiven,
-  amountTransfered,
-  customerPhone
-) {
-  return {
-    recieptNo,
-    customerName,
-    amountRecieved,
-    amountGiven,
-    amountTransfered,
-    customerPhone,
-  };
-}
+import { TransactionList } from "./TransactionList";
 
 const data = [
-  createData(34786, "Aremu Oluwaseyi", 500, 50000, 40000, "+2349065002380"),
-  createData(34786, "Aremu Oluwaseyi", 500, 50000, 40000, "+2349065002380"),
-  createData(34786, "Aremu Oluwaseyi", 500, 50000, 40000, "+2349065002380"),
-  createData(34786, "Aremu Oluwaseyi", 500, 50000, 40000, "+2349065002380"),
-  createData(34786, "Aremu Oluwaseyi", 500, 50000, 40000, "+2349065002380"),
+  {
+    beneficiaries: "SINGLE_PAYMENT",
+    customer_name1: "Aremu Oluwaseyi Festus",
+    account_number1: "0235770003",
+    bank_name1: "GTB",
+    phone_number: "08034164740",
+    address: "No. 5 Adiss Aluminium Crescent, Kubwa Anuja",
+    recieve_mode: "CASH",
+    currency_recieved: "DOLLAR",
+    amount_recieved: 100,
+    give_mode: "CASH",
+    rate: 575,
+    currency_given: "NAIRA",
+    cash_given: 57500,
+    amount_transfered: 0,
+    description: "TEST",
+    initiator: "FRONTDESK",
+    status: "SENT",
+    categories: "PURCHASE",
+    profit: 0.0,
+  },
+  {
+    beneficiaries: "SINGLE_PAYMENT",
+    customer_name1: "Aremu Oluwaseyi Festus",
+    account_number1: "0235770003",
+    bank_name1: "GTB",
+    phone_number: "08034164740",
+    address: "No. 5 Adiss Aluminium Crescent, Kubwa Anuja",
+    recieve_mode: "CASH",
+    currency_recieved: "DOLLAR",
+    amount_recieved: 100,
+    give_mode: "CASH",
+    rate: 575,
+    currency_given: "NAIRA",
+    cash_given: 57500,
+    amount_transfered: 0,
+    description: "TEST",
+    initiator: "FRONTDESK",
+    status: "SENT",
+    categories: "PURCHASE",
+    profit: 0.0,
+  },
 ];
 
 function TabPanel(props) {

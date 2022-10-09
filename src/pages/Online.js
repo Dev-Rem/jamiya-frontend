@@ -21,7 +21,7 @@ export default function Online() {
       <ResponsiveDrawer>
         <Title section="Online Report" />
         <Report data={data} />
-        {/* <RecentTransactions /> */}
+        <RecentTransactions />
       </ResponsiveDrawer>{" "}
     </div>
   );

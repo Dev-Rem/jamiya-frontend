@@ -23,7 +23,7 @@ function FrontDesk() {
       <ResponsiveDrawer>
         <Title section="Front Desk Report" />
         <Report data={data} />
-        {/* <RecentTransactions /> */}
+        <RecentTransactions />
       </ResponsiveDrawer>
     </div>
   );

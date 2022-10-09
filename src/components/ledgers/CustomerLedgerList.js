@@ -59,7 +59,7 @@ export function CustomerLedgerList() {
                 <Link
                   to={`${currentUrl.pathname}/view`}
                   style={{ textDecoration: "none" }}
-                  state={{ row: row }}
+                  state={{ row: row }} //https://ui.dev/react-router-pass-props-to-link
                 >
                   <VisibilityIcon sx={{ color: "#bab8b8" }} />
                 </Link>
