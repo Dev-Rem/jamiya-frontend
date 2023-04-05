@@ -11,9 +11,6 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Copyright from "../utils/Copyright";
-import { useDispatch, useSelector } from "react-redux";
-import { signupUser } from "../../actions/userAuth";
-import { useNavigate } from "react-router-dom";
 import SimpleBackdrop from "../utils/Backdrop";
 
 const theme = createTheme();
@@ -27,9 +24,6 @@ export default function SignUp() {
     first_name: "",
     last_name: "",
   });
-
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   // handle user register submit button
   const handleChange = (event) => {

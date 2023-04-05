@@ -6,20 +6,14 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import { useSelector, useDispatch } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
-import { viewTransaction } from "../../actions/transaction";
 import { PurpleButton } from "../utils/Button";
-import CachedRoundedIcon from "@mui/icons-material/CachedRounded";
-import Dialog from "@mui/material/Dialog";
-import DialogContent from "@mui/material/DialogContent";
 import TransactionForm from "../utils/TransactionForm";
 
 export function TransactionList(props) {
   const data = props.data;
   console.log(data);
   const currentUrl = useLocation();
-  const dispatch = useDispatch();
 
   return (
     <>

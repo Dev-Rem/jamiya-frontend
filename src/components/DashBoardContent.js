@@ -16,7 +16,7 @@ function Boxes(props) {
         spacing={{ xs: 1, sm: 2, md: 2 }}
         mt={1.8}
       >
-        <Paper sx={{ height: 100, minWidth: 280, padding: 2 }}>
+        <Paper sx={{ height: 150, minWidth: 280, padding: 2 }}>
           <Stack width={80} sx={{ margin: 0 }}>
             <Icon
               align="left"
@@ -30,7 +30,7 @@ function Boxes(props) {
             {props.data.dollar}
           </Typography>
         </Paper>
-        <Paper sx={{ height: 100, minWidth: 280, padding: 2 }}>
+        <Paper sx={{ height: 150, minWidth: 280, padding: 2 }}>
           <Stack width={80} sx={{ margin: 0 }}>
             <Icon
               align="left"
@@ -44,7 +44,7 @@ function Boxes(props) {
             {props.data.pound}
           </Typography>
         </Paper>
-        <Paper sx={{ height: 100, minWidth: 280, padding: 2 }}>
+        <Paper sx={{ height: 150, minWidth: 280, padding: 2 }}>
           <Stack width={80} sx={{ margin: 0 }}>
             <Icon
               align="left"

@@ -6,6 +6,7 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import { styled } from "@mui/material/styles";
 import { TransactionList } from "./TransactionList";
+import axios from "axios";
 
 const data = [
   {
@@ -97,6 +98,28 @@ function a11yProps(index) {
 
 export default function RecentTransactions() {
   const [value, setValue] = React.useState(0);
+  const [transactions, setTransactions] = React.useState([]);
+
+  async function fetchTransactionData() {
+    try {
+      let transactionData = await axios.get(
+        `http://127.0.0.1:8000/api/transactions/`,
+        {
+          headers: {
+            Authorization: `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjgwNzM5NDU0LCJpYXQiOjE2ODA3Mjg2NTQsImp0aSI6IjYwMjA4Nzc2OGMzNjQ0NjVhMWU4YTI2YTYyMmZhMGExIiwidXNlcl9pZCI6Mn0.sIWEascaGCFr6PS-vOJHOeUs0hjkgIjOfCf8W-TZWmg`,
+          },
+        }
+      );
+      console.log(transactionData);
+      setTransactions(transactionData.data.results);
+    } catch {
+      setTransactions("No Transactions posted yet");
+    }
+  }
+
+  React.useEffect(() => {
+    fetchTransactionData();
+  }, []);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -125,7 +148,7 @@ export default function RecentTransactions() {
           </AltTabs>
         </Box>
         <TabPanel value={value} index={0}>
-          <TransactionList data={data} />
+          <TransactionList data={transactions} />
         </TabPanel>
         <TabPanel value={value} index={1}>
           <TransactionList data={data} />

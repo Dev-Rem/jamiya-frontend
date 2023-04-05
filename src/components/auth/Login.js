@@ -12,17 +12,12 @@ import FxLogo from "../../assets/images/logo1.png";
 import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Copyright from "../utils/Copyright";
-import { useDispatch, useSelector } from "react-redux";
-import { loginUser } from "../../actions/userAuth";
-import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { SuccessAlert } from "../utils/Alerts";
 
 const theme = createTheme();
 
 export default function SignInSide() {
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
   const registered = useSelector((state) => state.registered);
   console.log(registered);
   const handleSubmit = (event) => {
