@@ -6,29 +6,13 @@ import {
   UpdateAccount,
 } from "../components/addComponents/AddAccount";
 
-const newAccount = {
-  bank_name: "",
-  account_name: "",
-  naira: "",
-  dollar: "",
-  pound: "",
-  euro: "",
-};
-const updateAccount = {
-  bank_name: "Access bank",
-  account_name: "Aremko Services",
-  naira: "2342",
-  dollar: "23413",
-  pound: "34323",
-  euro: "544532",
-};
 export function NewAccount() {
   return (
     <div>
       {" "}
       <ResponsiveDrawer>
         <Title section="Add Account" />
-        <AddAccount data={newAccount} />
+        <AddAccount />
       </ResponsiveDrawer>{" "}
     </div>
   );
@@ -40,7 +24,7 @@ export function EditOrDeleteAccount() {
       {" "}
       <ResponsiveDrawer>
         <Title section="Edit or Delete Account" />
-        <UpdateAccount data={updateAccount} />
+        <UpdateAccount />
       </ResponsiveDrawer>{" "}
     </div>
   );

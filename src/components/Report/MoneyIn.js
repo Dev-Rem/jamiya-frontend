@@ -1,28 +1,45 @@
-import React from "react";
-import PageBox from "../utils/Box";
+import React, { useEffect } from "react";
 import FormStack from "../utils/FormStack";
 import TextField from "@mui/material/TextField";
-import { PurpleButton, CancelButton } from "../utils/Button";
-
-const moneyIn = {
-  naira: 200,
-  dollar: 300,
-  pound: 240,
-  euro: 390,
-};
+import Button from "@mui/material/Button";
+import { purpleButton, CancelButton } from "../utils/Button";
+import { axiosInstance } from "../utils/AxiosInstance";
+import { useLocation, useNavigate } from "react-router-dom";
+import Box from "@mui/material/Box";
 
 export default function MoneyIn() {
-  const [value, setValue] = React.useState(moneyIn);
+  const navigate = useNavigate();
+  const currentUrl = useLocation();
+  const [value, setValue] = React.useState({});
 
   const handleChange = (event) => {
     const val = event.target.value;
     const key = event.target.name;
     setValue((prevState) => {
-      return { ...prevState, [key]: val };
+      return { ...prevState, [key]: parseInt(val) };
     });
   };
+
+  const handleSubmit = async () => {
+    let id = localStorage.getItem(`/${currentUrl.pathname.split("/")[1]}`);
+    navigate(`/${currentUrl.pathname.split("/")[1]}`);
+    const moneyin = await axiosInstance.patch(
+      `/moneyins/${id}/`,
+      value,
+      { headers: { "Content-Type": "application/json" } },
+      { withCredentials: true }
+    );
+  };
   return (
-    <PageBox>
+    <Box
+      component="form"
+      onSubmit={handleSubmit}
+      sx={{
+        backgroundColor: "white",
+        borderRadius: 1,
+        padding: 3,
+      }}
+    >
       <FormStack>
         <TextField
           id="standard-number"
@@ -70,9 +87,11 @@ export default function MoneyIn() {
         />
       </FormStack>
       <FormStack>
-        <PurpleButton name="Update" />
+        <Button variant="text" type="submit" sx={purpleButton}>
+          Update
+        </Button>
         <CancelButton name="cancel" />
       </FormStack>
-    </PageBox>
+    </Box>
   );
 }

@@ -5,10 +5,12 @@ import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import { styled } from "@mui/material/styles";
-import { CustomerLedgerList } from "./CustomerLedgerList";
+import { Recievable, Payable } from "./CustomerLedgerList";
 import Stack from "@mui/material/Stack";
-import { PurpleButton } from "../utils/Button";
+import { purpleButton } from "../utils/Button";
 import { Link, useLocation } from "react-router-dom";
+import Button from "@mui/material/Button";
+
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -64,17 +66,12 @@ export default function CustomerLedger() {
     <div>
       <Stack spacing={2} direction="row">
         <Link
-          to={`${currentUrl.pathname}/#`}
-          style={{ textDecoration: "none" }}
-        >
-          <PurpleButton name="new report" />
-        </Link>
-
-        <Link
           to={`${currentUrl.pathname}/add`}
           style={{ textDecoration: "none" }}
         >
-          <PurpleButton name="add new" />
+          <Button variant="text" type="submit" sx={purpleButton}>
+            Add new
+          </Button>
         </Link>
       </Stack>
 
@@ -91,10 +88,10 @@ export default function CustomerLedger() {
           </AltTabs>
         </Box>
         <TabPanel value={value} index={0}>
-          <CustomerLedgerList />
+          <Recievable />
         </TabPanel>
         <TabPanel value={value} index={1}>
-          <CustomerLedgerList />
+          <Payable />
         </TabPanel>
       </Box>
     </div>

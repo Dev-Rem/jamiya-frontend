@@ -8,7 +8,7 @@ import { TableCell } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
 import { styled, experimental_sx as sx } from "@mui/system";
-
+import { axiosInstance } from "../utils/AxiosInstance";
 const rows = {
   ledgerTotal: 10000,
   recievable: 20000,
@@ -29,6 +29,22 @@ const StyledTableCell = styled(TableCell)(
 );
 
 export default function LedgerVariables() {
+  const [ledgerVariables, setLedgerVariables] = React.useState({});
+  async function fetchLedgerVariables() {
+    try {
+      let ledgerVariables = await axiosInstance.get(
+        `/generalledger`,
+        { headers: { "Content-Type": "application/json" } },
+        { withCredentials: true }
+      );
+      setLedgerVariables(ledgerVariables.data.results[0]);
+    } catch {
+      setLedgerVariables("You need to create a new report");
+    }
+  }
+  React.useEffect(() => {
+    fetchLedgerVariables();
+  }, []);
   return (
     <div>
       <Typography
@@ -50,35 +66,35 @@ export default function LedgerVariables() {
               <StyledTableCell>Currency Total</StyledTableCell>
               <Divider orientation="vertical" />
               <TableCell align="right" sx={{ fontWeight: "bold" }}>
-                {rows.ledgerTotal}
+                {ledgerVariables.currency_total}
               </TableCell>
             </TableRow>
             <TableRow>
               <StyledTableCell>Recievable</StyledTableCell>
               <Divider orientation="vertical" flexItem="true" />
               <TableCell align="right" sx={{ fontWeight: "bold" }}>
-                {rows.recievable}
+                {ledgerVariables.recievable}
               </TableCell>
             </TableRow>
             <TableRow>
               <StyledTableCell>Grand Total</StyledTableCell>
               <Divider orientation="vertical" />
               <TableCell align="right" sx={{ fontWeight: "bold" }}>
-                {rows.grandTotal}
+                {ledgerVariables.grand_total}
               </TableCell>
             </TableRow>
             <TableRow>
               <StyledTableCell>Prrevious Total</StyledTableCell>
               <Divider orientation="vertical" />
               <TableCell align="right" sx={{ fontWeight: "bold" }}>
-                {rows.previousTotal}
+                {ledgerVariables.previous_total}
               </TableCell>
             </TableRow>
             <TableRow>
               <StyledTableCell>Difference</StyledTableCell>
               <Divider orientation="vertical" />
               <TableCell align="right" sx={{ fontWeight: "bold" }}>
-                {rows.difference}
+                {ledgerVariables.difference}
               </TableCell>
             </TableRow>
             <TableRow>
@@ -86,28 +102,28 @@ export default function LedgerVariables() {
               <Divider orientation="vertical" />
               <TableCell align="right" sx={{ fontWeight: "bold" }}>
                 {" "}
-                {rows.expenses}
+                {ledgerVariables.expense}
               </TableCell>
             </TableRow>
             <TableRow>
               <StyledTableCell>Book Profit</StyledTableCell>
               <Divider orientation="vertical" />
               <TableCell align="right" sx={{ fontWeight: "bold" }}>
-                {rows.bookProfit}
+                {ledgerVariables.book_profit}
               </TableCell>
             </TableRow>
             <TableRow>
               <StyledTableCell>Calculated profit</StyledTableCell>
               <Divider orientation="vertical" />
               <TableCell align="right" sx={{ fontWeight: "bold" }}>
-                {rows.calculatedProfit}
+                {ledgerVariables.calculated_profit}
               </TableCell>
             </TableRow>
             <TableRow>
               <StyledTableCell>Variance</StyledTableCell>
               <Divider orientation="vertical" />
               <TableCell align="right" sx={{ fontWeight: "bold" }}>
-                {rows.variance}
+                {ledgerVariables.variance}
               </TableCell>
             </TableRow>
           </TableBody>

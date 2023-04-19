@@ -7,10 +7,14 @@ import IconButton from "@mui/material/IconButton";
 import DrawerList from "./DrawerList";
 import MenuIcon from "@mui/icons-material/Menu";
 import Toolbar from "@mui/material/Toolbar";
+import LogoutIcon from "@mui/icons-material/Logout";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import { Link } from "react-router-dom";
+import { axiosInstance } from "../utils/AxiosInstance";
+
 const drawerWidth = 240;
 
 function ResponsiveDrawer(props) {
-  console.log(props);
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
@@ -24,9 +28,15 @@ function ResponsiveDrawer(props) {
     </div>
   );
 
+  const handleLogout = async () => {
+    await axiosInstance.post(
+      "/users/logout",
+      { headers: { "Content-Type": "application/json" } },
+      { withCredentials: true }
+    );
+  };
   const container =
     window !== undefined ? () => window().document.body : undefined;
-
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
@@ -51,6 +61,25 @@ function ResponsiveDrawer(props) {
           >
             <MenuIcon />
           </IconButton>
+          <Box sx={{ flexGrow: 30 }} />
+
+          <Link
+            to={"/profile"}
+            style={{ textDecoration: "none", color: "white" }}
+          >
+            <AccountCircleIcon sx={{ mr: 2, mb: 1 }} />
+          </Link>
+
+          <Link
+            to={"/login"}
+            style={{ textDecoration: "none", color: "white" }}
+          >
+            <LogoutIcon
+              fontSize="medium"
+              sx={{ mb: 1 }}
+              onClick={handleLogout}
+            />
+          </Link>
         </Toolbar>
       </AppBar>
       <Box

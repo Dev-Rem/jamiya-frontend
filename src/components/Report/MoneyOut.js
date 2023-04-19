@@ -1,28 +1,44 @@
 import React from "react";
-import PageBox from "../utils/Box";
 import FormStack from "../utils/FormStack";
 import TextField from "@mui/material/TextField";
-import { PurpleButton, CancelButton } from "../utils/Button";
-
-const moneyOut = {
-  naira: 100,
-  dollar: 100,
-  pound: 140,
-  euro: 190,
-};
+import { purpleButton, CancelButton } from "../utils/Button";
+import Button from "@mui/material/Button";
+import { axiosInstance } from "../utils/AxiosInstance";
+import { useLocation, useNavigate } from "react-router-dom";
+import Box from "@mui/material/Box";
 
 export default function MoneyIn() {
-  const [value, setValue] = React.useState(moneyOut);
+  const navigate = useNavigate();
+  const currentUrl = useLocation();
+  const [value, setValue] = React.useState({});
 
   const handleChange = (event) => {
     const val = event.target.value;
     const key = event.target.name;
     setValue((prevState) => {
-      return { ...prevState, [key]: val };
+      return { ...prevState, [key]: parseInt(val) };
     });
   };
+  const handleSubmit = async () => {
+    let id = localStorage.getItem(`/${currentUrl.pathname.split("/")[1]}`);
+    navigate(`/${currentUrl.pathname.split("/")[1]}`);
+    const moneyouts = await axiosInstance.patch(
+      `/moneyouts/${id}/`,
+      value,
+      { headers: { "Content-Type": "application/json" } },
+      { withCredentials: true }
+    );
+  };
   return (
-    <PageBox>
+    <Box
+      component="form"
+      onSubmit={handleSubmit}
+      sx={{
+        backgroundColor: "white",
+        borderRadius: 1,
+        padding: 3,
+      }}
+    >
       <FormStack>
         <TextField
           id="standard-number"
@@ -70,9 +86,11 @@ export default function MoneyIn() {
         />
       </FormStack>
       <FormStack>
-        <PurpleButton name="Update" />
+        <Button variant="text" type="submit" sx={purpleButton}>
+          Update
+        </Button>
         <CancelButton name="cancel" />
       </FormStack>
-    </PageBox>
+    </Box>
   );
 }

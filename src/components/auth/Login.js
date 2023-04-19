@@ -3,9 +3,6 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
-import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import FxLogo from "../../assets/images/logo1.png";
@@ -13,122 +10,161 @@ import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Copyright from "../utils/Copyright";
 import { Link } from "react-router-dom";
-import { SuccessAlert } from "../utils/Alerts";
+import axios from "axios";
+import Container from "@mui/material/Container";
+import InputLabel from "@mui/material/InputLabel";
+import FormControl from "@mui/material/FormControl";
+import InputAdornment from "@mui/material/InputAdornment";
+import Input from "@mui/material/Input";
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import IconButton from "@mui/material/IconButton";
+import { ErrorAlert } from "../utils/Alerts";
+import { useNavigate } from "react-router-dom";
 
 const theme = createTheme();
 
 export default function SignInSide() {
-  const registered = useSelector((state) => state.registered);
-  console.log(registered);
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
+  const navigate = useNavigate();
+  const [alert, setAlert] = React.useState(false);
+  const [showPassword, setShowPassword] = React.useState(false);
+  const [value, setValue] = React.useState({
+    username: "",
+    password: "",
+  });
 
-    let credentials = {
-      username: data.get("username"),
-      password: data.get("password"),
-    };
-    dispatch(loginUser(credentials));
-    navigate("/dashboard");
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    try {
+      const { data } = await axios.post(
+        `http://127.0.0.1:8000/api/tokens/`,
+        value,
+        { headers: { "Content-Type": "application/json" } },
+        { withCredentials: true }
+      );
+      navigate("/");
+      localStorage.clear();
+
+      localStorage.setItem("access_token", data.access);
+      localStorage.setItem("refresh_token", data.refresh);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
+  const handleChange = (event) => {
+    const val = event.target.value;
+    const key = event.target.name;
+    setValue((prevState) => {
+      return { ...prevState, [key]: val };
+    });
+  };
   return (
     <ThemeProvider theme={theme}>
-      {setTimeout(() => {})}
       <>
-        {registered ? (
-          <SuccessAlert meessage="Registration Successful" />
+        {/* {alert ? (
+          <ErrorAlert message="Incorrect username or password" />
         ) : (
           <></>
-        )}
+        )} */}
       </>
-      <Grid container component="main" sx={{ height: "100vh" }}>
+      <Container component="main" maxWidth="xs">
         <CssBaseline />
-        <Grid
-          item
-          xs={false}
-          sm={4}
-          md={7}
+        <Box
           sx={{
-            backgroundImage: "url(https://source.unsplash.com/random)",
-            backgroundRepeat: "no-repeat",
-            backgroundColor: (t) =>
-              t.palette.mode === "light"
-                ? t.palette.grey[50]
-                : t.palette.grey[900],
-            backgroundSize: "cover",
-            backgroundPosition: "center",
+            my: 8,
+            mx: 4,
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
           }}
-        />
-        <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+        >
+          <Avatar
+            src={FxLogo}
+            sx={{ width: 75, height: 56, margin: 3 }}
+            variant="rounded"
+          />
+          <Typography component="h1" variant="h5">
+            Sign in
+          </Typography>
           <Box
-            sx={{
-              my: 8,
-              mx: 4,
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-            }}
+            component="form"
+            noValidate
+            onSubmit={handleSubmit}
+            sx={{ mt: 1 }}
           >
-            <Avatar
-              src={FxLogo}
-              sx={{ width: 75, height: 56, margin: 3 }}
-              variant="rounded"
-            />
-            <Typography component="h1" variant="h5">
-              Sign in
-            </Typography>
-            <Box
-              component="form"
-              noValidate
-              onSubmit={handleSubmit}
-              sx={{ mt: 1 }}
-            >
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                id="username"
-                label="Username"
-                name="username"
-                autoComplete="username"
-                autoFocus
-              />
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                name="password"
-                label="Password"
-                type="password"
-                id="password"
-                autoComplete="current-password"
-              />
-              <FormControlLabel
-                control={<Checkbox value="remember" color="primary" />}
-                label="Remember me"
-              />
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                sx={{ mt: 3, mb: 2 }}
-              >
-                Sign In
-              </Button>
-              <Grid container>
-                <Grid item xs>
-                  <Link to="#">Forgot password?</Link>
-                </Grid>
-                <Grid item>
-                  <Link to="/register">{"Don't have an account? Sign Up"}</Link>
-                </Grid>
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  id="standard-basic"
+                  variant="standard"
+                  label="Username"
+                  name="username"
+                  autoComplete="username"
+                  onChange={handleChange}
+                />
               </Grid>
-              <Copyright sx={{ mt: 5 }} />
-            </Box>
+              <Grid item xs={12}>
+                <FormControl variant="standard" fullWidth required>
+                  <InputLabel htmlFor="standard-adornment-password">
+                    Password
+                  </InputLabel>
+                  <Input
+                    id="standard-adornment-password"
+                    type={showPassword ? "text" : "password"}
+                    onChange={handleChange}
+                    variant="standard"
+                    label="Password"
+                    name="password"
+                    endAdornment={
+                      <InputAdornment position="end">
+                        <IconButton
+                          aria-label="toggle password visibility"
+                          onClick={handleClickShowPassword}
+                          onMouseDown={handleMouseDownPassword}
+                        >
+                          {showPassword ? <VisibilityOff /> : <Visibility />}
+                        </IconButton>
+                      </InputAdornment>
+                    }
+                  />
+                </FormControl>
+              </Grid>
+            </Grid>
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{
+                mt: 3,
+                mb: 2,
+                background: "linear-gradient(45deg, #773E7C 30%, #000000 90%)",
+                bgcolor: "#925098",
+                height: 50,
+              }}
+            >
+              Sign In
+            </Button>
+            <Grid container>
+              <Grid item xs>
+                <Link to="#">Forgot password?</Link>
+              </Grid>
+              <Grid item>
+                Don't have an account?
+                <Link to="/register">{"Sign Up"}</Link>
+              </Grid>
+            </Grid>
+            <Copyright sx={{ mt: 5 }} />
           </Box>
-        </Grid>
-      </Grid>
+        </Box>
+      </Container>
     </ThemeProvider>
   );
 }

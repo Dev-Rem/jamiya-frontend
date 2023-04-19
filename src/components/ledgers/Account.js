@@ -9,8 +9,10 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
-import { PurpleButton } from "../utils/Button";
+import { purpleButton } from "../utils/Button";
 import { Link, useLocation } from "react-router-dom";
+import { axiosInstance } from "../utils/AxiosInstance";
+import Button from "@mui/material/Button";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -32,27 +34,74 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-function createData(bankName, accountName, naira, dollar, pound, euro) {
-  return { bankName, accountName, naira, dollar, pound, euro };
-}
-
-const rows = [
-  createData("Access bank", "Aremko Services", 159, 6.0, 24, 4.0),
-  createData("Access bank", "Biscom Logistics", 159, 6.0, 24, 4.0),
-  createData("Stanbic IBTC", "Jamiyafx  Enterprise", 159, 6.0, 24, 4.0),
-  createData("FCMB", "JamiyaFX Enterprise", 159, 6.0, 24, 4.0),
-  createData(
-    "Zenith bank",
-    "Jamiya Multi-Invesment Limited",
-    159,
-    6.0,
-    24,
-    4.0
-  ),
-];
-
 export default function Account() {
   const currentUrl = useLocation();
+  const [accounts, setAccounts] = React.useState([]);
+  const [totals, setTotals] = React.useState({});
+
+  function calcTotals(accounts) {
+    const nairaTotal = accounts.reduce(
+      (accumulator, curentValue) => accumulator + curentValue["naira"],
+      0
+    );
+    const dollarTotal = accounts.reduce(
+      (accumulator, curentValue) => accumulator + curentValue["dollar"],
+      0
+    );
+
+    const poundTotal = accounts.reduce(
+      (accumulator, curentValue) => accumulator + curentValue["pound"],
+      0
+    );
+    const euroTotal = accounts.reduce(
+      (accumulator, curentValue) => accumulator + curentValue["euro"],
+      0
+    );
+    setTotals({ nairaTotal, dollarTotal, poundTotal, euroTotal });
+  }
+
+  async function fetchAccountData() {
+    try {
+      let accounts = await axiosInstance.get(
+        `/accounts`,
+        { headers: { "Content-Type": "application/json" } },
+        { withCredentials: true }
+      );
+      calcTotals(accounts.data.results);
+      setAccounts(accounts.data.results);
+    } catch {
+      setAccounts("there are no accounts to display");
+    }
+  }
+  const createNewLegder = async () => {
+    window.location.reload();
+    const ledgerData = {
+      naira: 0.0,
+      dollar: 0.0,
+      pound: 0.0,
+      euro: 0.0,
+      currency_total: 0.0,
+      grand_total: 0.0,
+      previous_total: 0.0,
+      difference: 0.0,
+      expense: 0.0,
+      book_profit: 0.0,
+      calculated_profit: 0.0,
+      variance: 0.0,
+    };
+
+    await axiosInstance.post(
+      `/generalledger/`,
+      ledgerData,
+      { headers: { "Content-Type": "application/json" } },
+      { withCredentials: true }
+    );
+  };
+
+  React.useEffect(() => {
+    fetchAccountData();
+  }, []);
+
   return (
     <div>
       <Box
@@ -65,17 +114,29 @@ export default function Account() {
         }}
       >
         <Stack spacing={2} direction="row">
-          <Link
-            to={`${currentUrl.pathname}/#`}
-            style={{ textDecoration: "none" }}
+          <Button
+            onClick={createNewLegder}
+            variant="text"
+            type="submit"
+            sx={purpleButton}
           >
-            <PurpleButton name="new report" />
-          </Link>
+            New Report
+          </Button>
           <Link
             to={`${currentUrl.pathname}/add-account`}
             style={{ textDecoration: "none" }}
           >
-            <PurpleButton name="add account" />
+            <Button variant="text" type="submit" sx={purpleButton}>
+              Add account
+            </Button>
+          </Link>
+          <Link
+            to={`${currentUrl.pathname}/update-rates`}
+            style={{ textDecoration: "none" }}
+          >
+            <Button variant="text" type="submit" sx={purpleButton}>
+              Update Rate
+            </Button>
           </Link>
         </Stack>
       </Box>
@@ -97,31 +158,32 @@ export default function Account() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map((row) => (
-              <StyledTableRow key={row.accountName}>
+            {accounts.map((account) => (
+              <StyledTableRow key={account.url}>
                 <StyledTableCell component="th" scope="row">
                   <Link
-                    to={`${currentUrl.pathname}/update-account`}
+                    to={`${currentUrl.pathname}/update-account/${account.id}`}
                     style={{ textDecoration: "none", color: "#925098" }}
+                    state={{ account: account }}
                   >
-                    {row.bankName}
+                    {account.bank_name}
                   </Link>
                 </StyledTableCell>
                 <StyledTableCell component="th" scope="row">
-                  {row.accountName}
+                  {account.account_name}
                 </StyledTableCell>
                 <StyledTableCell align="right">
-                  &#8358; {row.naira}
+                  &#8358; {account.naira}
                 </StyledTableCell>
                 <StyledTableCell align="right">
-                  &#36; {row.dollar}
+                  &#36; {account.dollar}
                 </StyledTableCell>
                 <StyledTableCell align="right">
                   {" "}
-                  &#163; {row.pound}
+                  &#163; {account.pound}
                 </StyledTableCell>
                 <StyledTableCell align="right">
-                  &#128; {row.euro}
+                  &#128; {account.euro}
                 </StyledTableCell>
               </StyledTableRow>
             ))}
@@ -129,16 +191,16 @@ export default function Account() {
               <TableCell sx={{ fontWeight: "bold" }}>Total</TableCell>
               <TableCell />
               <TableCell align="right" sx={{ fontWeight: "bold" }}>
-                &#8358; 3000
+                &#8358; {totals.nairaTotal}
               </TableCell>
               <TableCell align="right" sx={{ fontWeight: "bold" }}>
-                &#36; 3000
+                &#36; {totals.dollarTotal}
               </TableCell>
               <TableCell align="right" sx={{ fontWeight: "bold" }}>
-                &#163; 3000
+                &#163; {totals.poundTotal}
               </TableCell>
               <TableCell align="right" sx={{ fontWeight: "bold" }}>
-                &#128; 3000
+                &#128; {totals.euroTotal}
               </TableCell>
             </TableRow>
           </TableBody>

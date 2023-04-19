@@ -3,7 +3,6 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import FxLogo from "../../assets/images/logo1.png";
@@ -12,17 +11,23 @@ import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Copyright from "../utils/Copyright";
 import SimpleBackdrop from "../utils/Backdrop";
+import axios from "axios";
+import { ErrorAlert } from "../utils/Alerts";
+import { Link, useNavigate, useParams } from "react-router-dom";
 
 const theme = createTheme();
 
 export default function SignUp() {
+  const navigate = useNavigate();
   // set initialState for register component form
+  const [alert, setAlert] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
   const [value, setValue] = React.useState({
     username: "",
     password: "",
     first_name: "",
     last_name: "",
+    confirm_password: "",
   });
 
   // handle user register submit button
@@ -34,24 +39,25 @@ export default function SignUp() {
     });
   };
 
-  const handleSubmit = (event) => {
-    setLoading(true);
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    const credentials = {
-      email: data.get("email"),
-      username: data.get("username"),
-      password: data.get("password"),
-      first_name: data.get("first_name"),
-      last_name: data.get("last_name"),
-    };
-
-    dispatch(signupUser(credentials));
-    navigate("/login");
+  const handleSubmit = async (event) => {
+    if (value.password === value.confirm_password) {
+      delete value.confirm_password;
+      navigate("/login");
+      const user = await axios.post(
+        "http://127.0.0.1:8000/api/users/register/",
+        value,
+        { headers: { "Content-Type": "application/json" } },
+        { withCredentials: true }
+      );
+    } else {
+      event.preventDefault();
+      setAlert(true);
+    }
   };
 
   return (
     <ThemeProvider theme={theme}>
+      <>{alert ? <ErrorAlert message="Passwords do not match" /> : <></>}</>
       {loading ? <SimpleBackdrop /> : <></>}
       <Container component="main" maxWidth="xs">
         <CssBaseline />
@@ -141,6 +147,19 @@ export default function SignUp() {
                   onChange={handleChange}
                 />
               </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  name="confirm_password"
+                  label="Confirm Password"
+                  type="password"
+                  id="standard-basic"
+                  variant="standard"
+                  autoComplete="new-password"
+                  onChange={handleChange}
+                />
+              </Grid>
             </Grid>
             <Button
               type="submit"
@@ -156,10 +175,10 @@ export default function SignUp() {
             >
               Sign Up
             </Button>
-            <Grid container justifyContent="flex-end">
+            <Grid container justifyContent="center">
               <Grid item>
                 Already have an account?
-                <Link href="#" variant="body2">
+                <Link to="/login" variant="body2">
                   Sign in
                 </Link>
               </Grid>

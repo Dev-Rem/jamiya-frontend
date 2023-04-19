@@ -7,9 +7,10 @@ import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import Stack from "@mui/material/Stack";
 import Divider from "@mui/material/Divider";
-import {PurpleButton} from "./Button";
+import { purpleButton } from "./Button";
 import DateRangePicker from "@mui/lab/DateRangePicker";
 import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
 
 export function SelectSection() {
   const [section, setSection] = React.useState("");
@@ -57,11 +58,7 @@ export function DatePicker() {
         clearable="true"
         renderInput={(startProps, endProps) => (
           <React.Fragment>
-            <TextField
-              variant="standard"
-              {...startProps}
-              size="small"
-            />
+            <TextField variant="standard" {...startProps} size="small" />
             <Box sx={{ mx: 1 }}> to </Box>
             <TextField variant="standard" {...endProps} size="small" />
           </React.Fragment>
@@ -82,7 +79,9 @@ export function Filters() {
       >
         <SelectSection />
         <DatePicker />
-        <PurpleButton name="add filter" />
+        <Button variant="text" type="submit" sx={purpleButton}>
+          Add Filter
+        </Button>
       </Stack>
     </div>
   );

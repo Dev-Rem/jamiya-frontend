@@ -7,12 +7,11 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { Link, useLocation } from "react-router-dom";
-import { PurpleButton } from "../utils/Button";
 import TransactionForm from "../utils/TransactionForm";
+import VisibilityIcon from "@mui/icons-material/Visibility";
 
 export function TransactionList(props) {
   const data = props.data;
-  console.log(data);
   const currentUrl = useLocation();
 
   return (
@@ -52,11 +51,11 @@ export function TransactionList(props) {
                 )}
                 <TableCell alighn="right">
                   <Link
-                    to={`${currentUrl.pathname}/view-transaction-details`}
+                    to={`${currentUrl.pathname}/view-transaction`}
                     style={{ textDecoration: "none" }}
-                    state={{ data: data }}
+                    state={{ data: data }} //https://ui.dev/react-router-pass-props-to-link
                   >
-                    <PurpleButton name="View" />
+                    <VisibilityIcon sx={{ color: "#bab8b8" }} />
                   </Link>
                 </TableCell>
               </TableRow>

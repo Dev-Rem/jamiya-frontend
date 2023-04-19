@@ -10,14 +10,15 @@ import {
   AddCustomerLedger,
   ViewCustomerLedger,
 } from "./pages/CustomerLedger";
-import GeneralLedger from "./pages/GeneralLedger";
+import { GeneralLedger, Rate } from "./pages/GeneralLedger";
 import { Reports, ReportDetails } from "./pages/Reports";
 import TransactionLog from "./pages/TransactionLog";
 import NewTransaction from "./pages/NewTransaction";
 import { NewAccount, EditOrDeleteAccount } from "./pages/NewAccount";
 import UpdateMoneyIn from "./pages/UpdateMoneyIn";
 import TransactionDetails from "./pages/TransactionDetails";
-import { LoginPage, RegisterPage } from "./pages/Auth";
+import { LoginPage, RegisterPage, ProfilePage } from "./pages/Auth";
+import { PreviewReceipt } from "./pages/PreviewReceipt";
 
 export default function App() {
   const customerLedger = {
@@ -34,15 +35,23 @@ export default function App() {
       <Routes>
         <Route exact path={"/login"} element={<LoginPage />} />
         <Route exact path={"/register"} element={<RegisterPage />} />
-        <Route exact path={"/dashboard"} element={<Dashboard />} />
-        <Route exact path={"/front-desk"} element={<FrontDesk />} />
+        <Route exact path={"/profile"} element={<ProfilePage />} />
+
+        <Route exact path={"/"} element={<Dashboard />} />
+
+        <Route exact path={"/frontdesk"} element={<FrontDesk />} />
         <Route exact path={"/bank"} element={<Bank />} />
         <Route exact path={"/online"} element={<Online />} />
         <Route exact path={"/marketing"} element={<Marketing />} />
+
         <Route exact path={"/report-logs"} element={<Reports />} />
         <Route exact path={"/general-ledger"} element={<GeneralLedger />} />
         <Route exact path={"/transaction-logs"} element={<TransactionLog />} />
+
         <Route exact path={"/:section/add-account"} element={<NewAccount />} />
+        <Route exact path={"/:section/update-rates"} element={<Rate />} />
+        <Route exact path={"/:receipt"} element={<PreviewReceipt />} />
+
         <Route
           exact
           path={"/customer-ledger"}
@@ -50,13 +59,13 @@ export default function App() {
         />
         <Route
           exact
-          path={"/:section/view-transaction-details"}
+          path={"/:section/view-transaction"}
           element={<TransactionDetails />}
         />
 
         <Route
           exact
-          path={"/:section/update-account"}
+          path={"/:section/update-account/:id"}
           element={<EditOrDeleteAccount />}
         />
 

@@ -7,8 +7,14 @@ import Icon from "@mui/material/Icon";
 import Image from "mui-image";
 import DashboardBanner from "../assets/images/dashboard2.png";
 import Toolbar from "@mui/material/Toolbar";
+import { axiosInstance } from "./utils/AxiosInstance";
 
 function Boxes(props) {
+  React.useEffect(() => {
+    if (localStorage.getItem("access_token") === null) {
+      window.location.href = "/login";
+    }
+  });
   return (
     <>
       <Stack
@@ -67,7 +73,7 @@ export default function DashBoardContent() {
   const ratesData = { dollar: "575/579", pound: "745/765", euro: "620/635" };
   return (
     <>
-      <Image src={DashboardBanner} alt="Logo" height="600px" fit="fit" />
+      <Image src={DashboardBanner} alt="Logo" height="600px" fit="cover" />
 
       <Toolbar />
       <Title section="Rates for Today" />

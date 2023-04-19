@@ -11,16 +11,16 @@ import FxLogo from "../../assets/images/logo.png";
 export default function DrawerList() {
   return (
     <List sx={{ padding: 0 }}>
-      <Link to="/dashboard" style={{ textDecoration: "none", color: "black" }}>
+      <Link to="/" style={{ textDecoration: "none", color: "black" }}>
         <Image src={FxLogo} alt="Logo" />
       </Link>
-      <Link to="/dashboard" style={{ textDecoration: "none", color: "black" }}>
+      <Link to="/" style={{ textDecoration: "none", color: "black" }}>
         <ListItemButton button>
           <ListItemText primary="Dashboard" />
         </ListItemButton>
       </Link>
       <Divider />
-      <Link to="/front-desk" style={{ textDecoration: "none", color: "black" }}>
+      <Link to="/frontdesk" style={{ textDecoration: "none", color: "black" }}>
         <ListItemButton>
           <ListItemText primary="Front Desk" />
         </ListItemButton>
