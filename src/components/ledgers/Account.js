@@ -13,11 +13,12 @@ import { purpleButton } from "../utils/Button";
 import { Link, useLocation } from "react-router-dom";
 import { axiosInstance } from "../utils/AxiosInstance";
 import Button from "@mui/material/Button";
+import { NumericFormat } from "react-number-format";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
     backgroundColor: theme.palette.common.white,
-    color: "#773E7C",
+    color: "#C9037F",
   },
   [`&.${tableCellClasses.body}`]: {
     fontSize: 14,
@@ -40,46 +41,36 @@ export default function Account() {
   const [totals, setTotals] = React.useState({});
 
   function calcTotals(accounts) {
-    const nairaTotal = accounts.reduce(
-      (accumulator, curentValue) => accumulator + curentValue["naira"],
-      0
-    );
-    const dollarTotal = accounts.reduce(
-      (accumulator, curentValue) => accumulator + curentValue["dollar"],
-      0
-    );
+    const nairaTotal = accounts
+      .map((account) => Object.values(account)[3].naira)
+      .reduce((acc, curr) => acc + curr, 0);
 
-    const poundTotal = accounts.reduce(
-      (accumulator, curentValue) => accumulator + curentValue["pound"],
-      0
-    );
-    const euroTotal = accounts.reduce(
-      (accumulator, curentValue) => accumulator + curentValue["euro"],
-      0
-    );
+    const dollarTotal = accounts
+      .map((account) => Object.values(account)[3].dollar)
+      .reduce((acc, curr) => acc + curr, 0);
+
+    const poundTotal = accounts
+      .map((account) => Object.values(account)[3].pound)
+      .reduce((acc, curr) => acc + curr, 0);
+
+    const euroTotal = accounts
+      .map((account) => Object.values(account)[3].euro)
+      .reduce((acc, curr) => acc + curr, 0);
     setTotals({ nairaTotal, dollarTotal, poundTotal, euroTotal });
   }
 
-  async function fetchAccountData() {
+  async function getAccounts() {
     try {
-      let accounts = await axiosInstance.get(
-        `/accounts`,
-        { headers: { "Content-Type": "application/json" } },
-        { withCredentials: true }
-      );
-      calcTotals(accounts.data.results);
-      setAccounts(accounts.data.results);
+      const response = await axiosInstance.get(`/accounts`);
+      setAccounts(response.data.results);
+      calcTotals(response.data.results);
     } catch {
       setAccounts("there are no accounts to display");
     }
   }
   const createNewLegder = async () => {
-    window.location.reload();
     const ledgerData = {
-      naira: 0.0,
-      dollar: 0.0,
-      pound: 0.0,
-      euro: 0.0,
+      currencies: { naira: 0.0, dollar: 0.0, pound: 0.0, euro: 0.0 },
       currency_total: 0.0,
       grand_total: 0.0,
       previous_total: 0.0,
@@ -90,16 +81,11 @@ export default function Account() {
       variance: 0.0,
     };
 
-    await axiosInstance.post(
-      `/generalledger/`,
-      ledgerData,
-      { headers: { "Content-Type": "application/json" } },
-      { withCredentials: true }
-    );
+    await axiosInstance.post(`/generalledger/`, ledgerData);
   };
 
   React.useEffect(() => {
-    fetchAccountData();
+    setTimeout(getAccounts, 2000);
   }, []);
 
   return (
@@ -159,11 +145,11 @@ export default function Account() {
           </TableHead>
           <TableBody>
             {accounts.map((account) => (
-              <StyledTableRow key={account.url}>
+              <StyledTableRow key={account.id}>
                 <StyledTableCell component="th" scope="row">
                   <Link
                     to={`${currentUrl.pathname}/update-account/${account.id}`}
-                    style={{ textDecoration: "none", color: "#925098" }}
+                    style={{ textDecoration: "none", color: "#C9037F" }}
                     state={{ account: account }}
                   >
                     {account.bank_name}
@@ -173,17 +159,45 @@ export default function Account() {
                   {account.account_name}
                 </StyledTableCell>
                 <StyledTableCell align="right">
-                  &#8358; {account.naira}
+                  <NumericFormat
+                    value={account.currencies.naira}
+                    thousandSeparator={true}
+                    displayType="text"
+                    renderText={(formattedValue) => (
+                      <span>&#8358; {formattedValue}</span>
+                    )}
+                  />
                 </StyledTableCell>
                 <StyledTableCell align="right">
-                  &#36; {account.dollar}
+                  <NumericFormat
+                    value={account.currencies.dollar}
+                    thousandSeparator={true}
+                    displayType="text"
+                    renderText={(formattedValue) => (
+                      <span>&#36; {formattedValue}</span>
+                    )}
+                  />
                 </StyledTableCell>
                 <StyledTableCell align="right">
                   {" "}
-                  &#163; {account.pound}
+                  <NumericFormat
+                    value={account.currencies.pound}
+                    thousandSeparator={true}
+                    displayType="text"
+                    renderText={(formattedValue) => (
+                      <span>&#163; {formattedValue}</span>
+                    )}
+                  />
                 </StyledTableCell>
                 <StyledTableCell align="right">
-                  &#128; {account.euro}
+                  <NumericFormat
+                    value={account.currencies.euro}
+                    thousandSeparator={true}
+                    displayType="text"
+                    renderText={(formattedValue) => (
+                      <span>&#128; {formattedValue}</span>
+                    )}
+                  />
                 </StyledTableCell>
               </StyledTableRow>
             ))}
@@ -191,16 +205,44 @@ export default function Account() {
               <TableCell sx={{ fontWeight: "bold" }}>Total</TableCell>
               <TableCell />
               <TableCell align="right" sx={{ fontWeight: "bold" }}>
-                &#8358; {totals.nairaTotal}
+                <NumericFormat
+                  value={totals.nairaTotal}
+                  thousandSeparator={true}
+                  displayType="text"
+                  renderText={(formattedValue) => (
+                    <span>&#8358; {formattedValue}</span>
+                  )}
+                />
               </TableCell>
               <TableCell align="right" sx={{ fontWeight: "bold" }}>
-                &#36; {totals.dollarTotal}
+                <NumericFormat
+                  value={totals.nairaTotal}
+                  thousandSeparator={true}
+                  displayType="text"
+                  renderText={(formattedValue) => (
+                    <span>&#36; {formattedValue}</span>
+                  )}
+                />
               </TableCell>
               <TableCell align="right" sx={{ fontWeight: "bold" }}>
-                &#163; {totals.poundTotal}
+                <NumericFormat
+                  value={totals.nairaTotal}
+                  thousandSeparator={true}
+                  displayType="text"
+                  renderText={(formattedValue) => (
+                    <span>&#163; {formattedValue}</span>
+                  )}
+                />
               </TableCell>
               <TableCell align="right" sx={{ fontWeight: "bold" }}>
-                &#128; {totals.euroTotal}
+                <NumericFormat
+                  value={totals.nairaTotal}
+                  thousandSeparator={true}
+                  displayType="text"
+                  renderText={(formattedValue) => (
+                    <span>&#128; {formattedValue}</span>
+                  )}
+                />
               </TableCell>
             </TableRow>
           </TableBody>

@@ -29,11 +29,7 @@ function ResponsiveDrawer(props) {
   );
 
   const handleLogout = async () => {
-    await axiosInstance.post(
-      "/users/logout",
-      { headers: { "Content-Type": "application/json" } },
-      { withCredentials: true }
-    );
+    await axiosInstance.post("/users/logout/");
   };
   const container =
     window !== undefined ? () => window().document.body : undefined;
@@ -45,7 +41,7 @@ function ResponsiveDrawer(props) {
         sx={{
           width: { sm: `calc(100% - ${drawerWidth}px)` },
           ml: { sm: `${drawerWidth}px` },
-          background: "linear-gradient(45deg, #773E7C 30%, #000000 90%)",
+          background: "linear-gradient(45deg, #C9037F 30%, #000000 90%)",
           bgcolor: "#925098",
           height: "45px",
           boxShadow: "none",

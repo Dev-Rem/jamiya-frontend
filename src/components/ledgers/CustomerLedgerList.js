@@ -7,29 +7,33 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { Link, useLocation } from "react-router-dom";
-import VisibilityIcon from "@mui/icons-material/Visibility";
 import { axiosInstance } from "../utils/AxiosInstance";
+import { NumericFormat } from "react-number-format";
+
+function calcTotals(accounts) {
+  const nairaTotal = accounts
+    .map((account) => account.currencies.naira)
+    .reduce((acc, curr) => acc + curr, 0);
+
+  const dollarTotal = accounts
+    .map((account) => account.currencies.dollar)
+    .reduce((acc, curr) => acc + curr, 0);
+
+  const poundTotal = accounts
+    .map((account) => account.currencies.pound)
+    .reduce((acc, curr) => acc + curr, 0);
+
+  const euroTotal = accounts
+    .map((account) => account.currencies.euro)
+    .reduce((acc, curr) => acc + curr, 0);
+  return { nairaTotal, dollarTotal, poundTotal, euroTotal };
+}
 
 function ListCustomerLedgers(props) {
   const currentUrl = useLocation();
   const data = props.ledger;
-  const nairaTotal = data.reduce(
-    (accumulator, curentValue) => accumulator + curentValue["naira"],
-    0
-  );
-  const dollarTotal = data.reduce(
-    (accumulator, curentValue) => accumulator + curentValue["dollar"],
-    0
-  );
+  const totals = props.totals;
 
-  const poundTotal = data.reduce(
-    (accumulator, curentValue) => accumulator + curentValue["pound"],
-    0
-  );
-  const euroTotal = data.reduce(
-    (accumulator, curentValue) => accumulator + curentValue["euro"],
-    0
-  );
   return (
     <>
       <TableContainer component={Paper} sx={{ boxShadow: "none" }}>
@@ -50,20 +54,56 @@ function ListCustomerLedgers(props) {
                 key={row.recieptNo}
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
               >
-                <TableCell>{row.last_updated}</TableCell>
-                <TableCell align="right">{row.customer}</TableCell>
-                <TableCell align="right">{row.naira}</TableCell>
-                <TableCell align="right">{row.dollar}</TableCell>
-                <TableCell align="right">{row.pound}</TableCell>
-                <TableCell align="right">{row.euro}</TableCell>
-                <TableCell alight="right">
+                <TableCell>
                   <Link
                     to={`${currentUrl.pathname}/view`}
-                    style={{ textDecoration: "none" }}
+                    style={{ textDecoration: "none", color: "#C9037E" }}
                     state={{ row: row }} //https://ui.dev/react-router-pass-props-to-link
                   >
-                    <VisibilityIcon sx={{ color: "#bab8b8" }} />
+                    {row.date_created}
                   </Link>
+                </TableCell>
+
+                <TableCell align="right">{row.customer}</TableCell>
+                <TableCell align="right">
+                  <NumericFormat
+                    value={row.currencies.naira}
+                    thousandSeparator={true}
+                    displayType="text"
+                    renderText={(formattedValue) => (
+                      <span>&#8358; {formattedValue}</span>
+                    )}
+                  />
+                </TableCell>
+                <TableCell align="right">
+                  <NumericFormat
+                    value={row.currencies.dollar}
+                    thousandSeparator={true}
+                    displayType="text"
+                    renderText={(formattedValue) => (
+                      <span>&#36; {formattedValue}</span>
+                    )}
+                  />
+                </TableCell>
+                <TableCell align="right">
+                  <NumericFormat
+                    value={row.currencies.pound}
+                    thousandSeparator={true}
+                    displayType="text"
+                    renderText={(formattedValue) => (
+                      <span>&#163; {formattedValue}</span>
+                    )}
+                  />
+                </TableCell>
+                <TableCell align="right">
+                  <NumericFormat
+                    value={row.currencies.euro}
+                    thousandSeparator={true}
+                    displayType="text"
+                    renderText={(formattedValue) => (
+                      <span>&#128; {formattedValue}</span>
+                    )}
+                  />
                 </TableCell>
               </TableRow>
             ))}
@@ -77,16 +117,44 @@ function ListCustomerLedgers(props) {
               <TableCell />
 
               <TableCell align="right" sx={{ fontWeight: "bold" }}>
-                &#8358; {nairaTotal}
+                <NumericFormat
+                  value={totals.nairaTotal}
+                  thousandSeparator={true}
+                  displayType="text"
+                  renderText={(formattedValue) => (
+                    <span>&#8358; {formattedValue}</span>
+                  )}
+                />
               </TableCell>
               <TableCell align="right" sx={{ fontWeight: "bold" }}>
-                &#36; {dollarTotal}
+                <NumericFormat
+                  value={totals.dollarTotal}
+                  thousandSeparator={true}
+                  displayType="text"
+                  renderText={(formattedValue) => (
+                    <span>&#36; {formattedValue}</span>
+                  )}
+                />
               </TableCell>
               <TableCell align="right" sx={{ fontWeight: "bold" }}>
-                &#163; {poundTotal}
+                <NumericFormat
+                  value={totals.poundTotal}
+                  thousandSeparator={true}
+                  displayType="text"
+                  renderText={(formattedValue) => (
+                    <span>&#163; {formattedValue}</span>
+                  )}
+                />
               </TableCell>
               <TableCell align="right" sx={{ fontWeight: "bold" }}>
-                &#128; {euroTotal}
+                <NumericFormat
+                  value={totals.euroTotal}
+                  thousandSeparator={true}
+                  displayType="text"
+                  renderText={(formattedValue) => (
+                    <span>&#128; {formattedValue}</span>
+                  )}
+                />
               </TableCell>
             </TableRow>
           </TableBody>
@@ -98,50 +166,45 @@ function ListCustomerLedgers(props) {
 
 export function Recievable() {
   const [receivable, setRecievable] = React.useState([]);
+  const [totals, setTotals] = React.useState({});
 
-  const getRecievable = async () => {
-    const receivableReq = await axiosInstance.get(
-      "/customerledgers",
-      { headers: { "Content-Type": "application/json" } },
-      { withCredentials: true }
-    );
-    setRecievable(
-      receivableReq.data.results.filter((ledger) => {
-        return ledger.status === "RECIEVABLE";
-      })
-    );
+  const getRecievables = async () => {
+    const response = await axiosInstance.get(`/customerledgers`);
+    const filteredResponse = response.data.results.filter((ledger) => {
+      return ledger.status === "RECIEVABLE";
+    });
+    setTotals(calcTotals(filteredResponse));
+    setRecievable(filteredResponse);
   };
   React.useEffect(() => {
-    getRecievable();
-  });
+    setTimeout(getRecievables, 2000);
+  }, []);
   return (
     <>
-      <ListCustomerLedgers ledger={receivable} />
+      <ListCustomerLedgers ledger={receivable} totals={totals} />
     </>
   );
 }
 
 export function Payable() {
   const [payable, setPayable] = React.useState([]);
+  const [totals, setTotals] = React.useState({});
 
-  const getPayable = async () => {
-    const payableReq = await axiosInstance.get(
-      "/customerledgers",
-      { headers: { "Content-Type": "application/json" } },
-      { withCredentials: true }
-    );
-    setPayable(
-      payableReq.data.results.filter((ledger) => {
-        return ledger.status === "PAYABLE";
-      })
-    );
+  const getPayables = async () => {
+    const response = await axiosInstance.get("/customerledgers");
+    const filteredResponse = response.data.results.filter((ledger) => {
+      return ledger.status === "PAYABLE";
+    });
+    setPayable(filteredResponse);
+
+    setTotals(calcTotals(filteredResponse));
   };
   React.useEffect(() => {
-    getPayable();
-  });
+    setTimeout(getPayables, 2000);
+  }, []);
   return (
     <>
-      <ListCustomerLedgers ledger={payable} />
+      <ListCustomerLedgers ledger={payable} totals={totals} />
     </>
   );
 }

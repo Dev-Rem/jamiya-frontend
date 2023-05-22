@@ -1,11 +1,10 @@
 import * as React from "react";
 import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
-import FxLogo from "../../assets/images/logo1.png";
+import FxLogo from "../../assets/images/jamiyafx.png";
 import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Copyright from "../utils/Copyright";
@@ -19,14 +18,14 @@ import Input from "@mui/material/Input";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import IconButton from "@mui/material/IconButton";
-import { ErrorAlert } from "../utils/Alerts";
 import { useNavigate } from "react-router-dom";
+import LoadingButton from "@mui/lab/LoadingButton";
 
 const theme = createTheme();
 
 export default function SignInSide() {
   const navigate = useNavigate();
-  const [alert, setAlert] = React.useState(false);
+  const [loading, setLoading] = React.useState(false);
   const [showPassword, setShowPassword] = React.useState(false);
   const [value, setValue] = React.useState({
     username: "",
@@ -37,21 +36,20 @@ export default function SignInSide() {
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
-
     try {
-      const { data } = await axios.post(
+      navigate("/");
+      const response = await axios.post(
         `http://127.0.0.1:8000/api/tokens/`,
         value,
         { headers: { "Content-Type": "application/json" } },
         { withCredentials: true }
       );
-      navigate("/");
-      localStorage.clear();
 
-      localStorage.setItem("access_token", data.access);
-      localStorage.setItem("refresh_token", data.refresh);
+      localStorage.setItem("access_token", response.data.access);
+      localStorage.setItem("refresh_token", response.data.refresh);
     } catch (error) {
       console.log(error);
     }
@@ -66,13 +64,6 @@ export default function SignInSide() {
   };
   return (
     <ThemeProvider theme={theme}>
-      <>
-        {/* {alert ? (
-          <ErrorAlert message="Incorrect username or password" />
-        ) : (
-          <></>
-        )} */}
-      </>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <Box
@@ -86,8 +77,8 @@ export default function SignInSide() {
         >
           <Avatar
             src={FxLogo}
-            sx={{ width: 75, height: 56, margin: 3 }}
-            variant="rounded"
+            sx={{ width: 388, height: 110, margin: 3 }}
+            variant="square"
           />
           <Typography component="h1" variant="h5">
             Sign in
@@ -138,20 +129,22 @@ export default function SignInSide() {
                 </FormControl>
               </Grid>
             </Grid>
-            <Button
+            <LoadingButton
               type="submit"
               fullWidth
               variant="contained"
               sx={{
                 mt: 3,
                 mb: 2,
-                background: "linear-gradient(45deg, #773E7C 30%, #000000 90%)",
+                background: "linear-gradient(45deg, #C9037F 30%, #000000 90%)",
                 bgcolor: "#925098",
                 height: 50,
               }}
+              // onClick={handleClick}
+              loading={loading}
             >
-              Sign In
-            </Button>
+              <span>Log in</span>
+            </LoadingButton>
             <Grid container>
               <Grid item xs>
                 <Link to="#">Forgot password?</Link>

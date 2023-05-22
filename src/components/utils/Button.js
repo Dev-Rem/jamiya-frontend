@@ -3,22 +3,21 @@ import Button from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
 
 export const purpleButton = {
-  bgcolor: "#773E7C",
+  bgcolor: "#C9037F",
   color: "#EBEBEB",
   "&:hover": {
-    color: "#773E7C",
+    color: "#C9037F",
     backgroundColor: "#EBEBEB",
   },
   height: "30px",
 };
 
 export const deleteButton = {
-  bgcolor: "#EBEBEB",
-  color: "#773E7C",
-  borderColor: "#773E7C",
+  bgcolor: "red",
+  color: "#ffffff",
   "&:hover": {
-    bgColor: "white",
-    borderColor: "#773E7C",
+    backgroundColor: "#EBEBEB",
+    color: "red",
   },
   height: "30px",
 };
@@ -29,12 +28,12 @@ export function CancelButton(props) {
     <Button
       variant="outlined"
       sx={{
-        bgcolor: "white",
-        color: "#773E7C",
-        borderColor: "#773E7C",
+        bgcolor: "#ffffff",
+        color: "#C9037F",
+        borderColor: "#C9037F",
         "&:hover": {
-          bgColor: "#EBEBEB",
-          borderColor: "#773E7C",
+          backgroundColor: "#EBEBEB",
+          borderColor: "#ffffff",
         },
         height: "30px",
       }}

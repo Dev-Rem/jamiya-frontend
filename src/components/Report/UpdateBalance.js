@@ -2,10 +2,8 @@ import React from "react";
 import TextField from "@mui/material/TextField";
 import { purpleButton, CancelButton, deleteButton } from "../utils/Button";
 import FormStack from "../utils/FormStack";
-import { axiosInstance } from "../utils/AxiosInstance";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
-import { Link, useNavigate, useParams } from "react-router-dom";
 
 export function UpdateBalance() {
   return (
@@ -90,7 +88,7 @@ export function UpdateBalance() {
         </FormStack>
         <FormStack>
           <Button variant="text" type="submit" sx={purpleButton}>
-            Edit
+            Update
           </Button>
           <Button variant="text" onClick={handleDelete} sx={deleteButton}>
             Delete

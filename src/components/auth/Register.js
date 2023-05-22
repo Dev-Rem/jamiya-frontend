@@ -43,7 +43,7 @@ export default function SignUp() {
     if (value.password === value.confirm_password) {
       delete value.confirm_password;
       navigate("/login");
-      const user = await axios.post(
+      const response = await axios.post(
         "http://127.0.0.1:8000/api/users/register/",
         value,
         { headers: { "Content-Type": "application/json" } },
@@ -168,7 +168,7 @@ export default function SignUp() {
               sx={{
                 mt: 3,
                 mb: 2,
-                background: "linear-gradient(45deg, #773E7C 30%, #000000 90%)",
+                background: "linear-gradient(45deg, #C9037F 30%, #000000 90%)",
                 bgcolor: "#925098",
                 height: 50,
               }}

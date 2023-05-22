@@ -4,46 +4,36 @@ import TableBody from "@mui/material/TableBody";
 import TableContainer from "@mui/material/TableContainer";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import { TableCell } from "@mui/material";
+import TableCell, { tableCellClasses } from "@mui/material/TableCell";
 import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
 import { styled, experimental_sx as sx } from "@mui/system";
 import { axiosInstance } from "../utils/AxiosInstance";
-const rows = {
-  ledgerTotal: 10000,
-  recievable: 20000,
-  grandTotal: 3000,
-  previousTotal: 4000,
-  difference: 5000,
-  expenses: 6000,
-  bookProfit: 7000,
-  calculatedProfit: 8000,
-  variance: 9000,
-};
+import { NumericFormat } from "react-number-format";
 
-const StyledTableCell = styled(TableCell)(
-  sx({
-    fontWeight: "bold",
-    color: "#925098",
-  })
-);
+const StyledTableCell = styled(TableCell)(({ theme }) => ({
+  [`&.${tableCellClasses.head}`]: {
+    // backgroundColor: theme.palette.common.white,
+    color: "#C9037F",
+  },
+  [`&.${tableCellClasses.body}`]: {
+    fontSize: 14,
+  },
+}));
 
 export default function LedgerVariables() {
   const [ledgerVariables, setLedgerVariables] = React.useState({});
-  async function fetchLedgerVariables() {
+
+  async function getLedgerVariables() {
     try {
-      let ledgerVariables = await axiosInstance.get(
-        `/generalledger`,
-        { headers: { "Content-Type": "application/json" } },
-        { withCredentials: true }
-      );
-      setLedgerVariables(ledgerVariables.data.results[0]);
+      const response = await axiosInstance.get(`/generalledger/`);
+      setLedgerVariables(response.data.results[0]);
     } catch {
       setLedgerVariables("You need to create a new report");
     }
   }
   React.useEffect(() => {
-    fetchLedgerVariables();
+    setTimeout(getLedgerVariables, 2000);
   }, []);
   return (
     <div>
@@ -52,7 +42,7 @@ export default function LedgerVariables() {
         component="h6"
         sx={{ color: "#303030", marginTop: "30px", marginBottom: "10px" }}
       >
-        Ledger Variables
+        Ledger Variables {LedgerVariables.date_created}
       </Typography>
       <TableContainer component={Paper}>
         <Table
@@ -66,64 +56,112 @@ export default function LedgerVariables() {
               <StyledTableCell>Currency Total</StyledTableCell>
               <Divider orientation="vertical" />
               <TableCell align="right" sx={{ fontWeight: "bold" }}>
-                {ledgerVariables.currency_total}
-              </TableCell>
-            </TableRow>
-            <TableRow>
-              <StyledTableCell>Recievable</StyledTableCell>
-              <Divider orientation="vertical" flexItem="true" />
-              <TableCell align="right" sx={{ fontWeight: "bold" }}>
-                {ledgerVariables.recievable}
+                <NumericFormat
+                  value={ledgerVariables.currency_total}
+                  thousandSeparator={true}
+                  displayType="text"
+                  renderText={(formattedValue) => (
+                    <span> {formattedValue}</span>
+                  )}
+                />
               </TableCell>
             </TableRow>
             <TableRow>
               <StyledTableCell>Grand Total</StyledTableCell>
               <Divider orientation="vertical" />
               <TableCell align="right" sx={{ fontWeight: "bold" }}>
-                {ledgerVariables.grand_total}
+                <NumericFormat
+                  value={ledgerVariables.grand_total}
+                  thousandSeparator={true}
+                  displayType="text"
+                  renderText={(formattedValue) => (
+                    <span> {formattedValue}</span>
+                  )}
+                />
               </TableCell>
             </TableRow>
             <TableRow>
-              <StyledTableCell>Prrevious Total</StyledTableCell>
+              <StyledTableCell>Previous Total</StyledTableCell>
               <Divider orientation="vertical" />
               <TableCell align="right" sx={{ fontWeight: "bold" }}>
-                {ledgerVariables.previous_total}
+                <NumericFormat
+                  value={ledgerVariables.previous_total}
+                  thousandSeparator={true}
+                  displayType="text"
+                  renderText={(formattedValue) => (
+                    <span> {formattedValue}</span>
+                  )}
+                />
               </TableCell>
             </TableRow>
             <TableRow>
               <StyledTableCell>Difference</StyledTableCell>
               <Divider orientation="vertical" />
               <TableCell align="right" sx={{ fontWeight: "bold" }}>
-                {ledgerVariables.difference}
+                <NumericFormat
+                  value={ledgerVariables.difference}
+                  thousandSeparator={true}
+                  displayType="text"
+                  renderText={(formattedValue) => (
+                    <span> {formattedValue}</span>
+                  )}
+                />
               </TableCell>
             </TableRow>
             <TableRow>
               <StyledTableCell>Expenses</StyledTableCell>
               <Divider orientation="vertical" />
               <TableCell align="right" sx={{ fontWeight: "bold" }}>
-                {" "}
-                {ledgerVariables.expense}
+                <NumericFormat
+                  value={ledgerVariables.expense}
+                  thousandSeparator={true}
+                  displayType="text"
+                  renderText={(formattedValue) => (
+                    <span> {formattedValue}</span>
+                  )}
+                />
               </TableCell>
             </TableRow>
             <TableRow>
               <StyledTableCell>Book Profit</StyledTableCell>
               <Divider orientation="vertical" />
               <TableCell align="right" sx={{ fontWeight: "bold" }}>
-                {ledgerVariables.book_profit}
+                <NumericFormat
+                  value={ledgerVariables.book_profit}
+                  thousandSeparator={true}
+                  displayType="text"
+                  renderText={(formattedValue) => (
+                    <span> {formattedValue}</span>
+                  )}
+                />
               </TableCell>
             </TableRow>
             <TableRow>
               <StyledTableCell>Calculated profit</StyledTableCell>
               <Divider orientation="vertical" />
               <TableCell align="right" sx={{ fontWeight: "bold" }}>
-                {ledgerVariables.calculated_profit}
+                <NumericFormat
+                  value={ledgerVariables.calculated_profit}
+                  thousandSeparator={true}
+                  displayType="text"
+                  renderText={(formattedValue) => (
+                    <span> {formattedValue}</span>
+                  )}
+                />
               </TableCell>
             </TableRow>
             <TableRow>
               <StyledTableCell>Variance</StyledTableCell>
               <Divider orientation="vertical" />
               <TableCell align="right" sx={{ fontWeight: "bold" }}>
-                {ledgerVariables.variance}
+                <NumericFormat
+                  value={ledgerVariables.variance}
+                  thousandSeparator={true}
+                  displayType="text"
+                  renderText={(formattedValue) => (
+                    <span> {formattedValue}</span>
+                  )}
+                />
               </TableCell>
             </TableRow>
           </TableBody>

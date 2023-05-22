@@ -14,12 +14,12 @@ import { Link, useLocation } from "react-router-dom";
 import Button from "@mui/material/Button";
 import { axiosInstance } from "../utils/AxiosInstance";
 import Typography from "@mui/material/Typography";
-import { WarningAlert } from "../utils/Alerts";
+import { NumericFormat } from "react-number-format";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
     backgroundColor: theme.palette.common.white,
-    color: "#773E7C",
+    color: "#C9037F",
   },
   [`&.${tableCellClasses.body}`]: {
     fontSize: 14,
@@ -37,10 +37,10 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 export function Report() {
-  const [alert, setAlert] = React.useState(false);
   const [values, setValues] = React.useState([]);
 
   const currentUrl = useLocation();
+  const today = new Date();
   let station = getStation(currentUrl);
 
   function getStation(currentUrl) {
@@ -55,30 +55,19 @@ export function Report() {
         return "MARKETING";
     }
   }
-  function createData(name, naira, dollar, pound, euro) {
-    return { name, naira, dollar, pound, euro };
-  }
   const data = [];
 
   const createNewReport = async () => {
     const reportData = {
-      naira: 0.0,
-      dollar: 0.0,
-      pound: 0.0,
-      euro: 0.0,
-      description: "Front Desk",
+      currencies: { naira: 0.0, dollar: 0.0, pound: 0.0, euro: 0.0 },
+      description: station,
       station: station,
       profit: 0.0,
     };
     try {
-      const createdReport = await axiosInstance.post(
-        `/reports/`,
-        reportData,
-        { headers: { "Content-Type": "application/json" } },
-        { withCredentials: true }
-      );
-      localStorage.setItem(`${currentUrl.pathname}`, createdReport.data.id);
-      console.log(createdReport);
+      const response = await axiosInstance.post(`/reports/`, reportData);
+      localStorage.setItem(`${currentUrl.pathname}`, response.data.id);
+
       window.location.reload();
     } catch (error) {}
   };
@@ -88,58 +77,51 @@ export function Report() {
   const getCompleteReport = async () => {
     let reportId = localStorage.getItem(`${currentUrl.pathname}`);
     try {
-      const completeReport = await axiosInstance.get(
-        `/reports/${reportId}/`,
-        { headers: { "Content-Type": "application/json" } },
-        { withCredentials: true }
-      );
+      const response = await axiosInstance.get(`/reports/${reportId}/`);
       const data = [
         createData(
           "Opening Balance",
-          completeReport.data.opening_balance.naira,
-          completeReport.data.opening_balance.dollar,
-          completeReport.data.opening_balance.pound,
-          completeReport.data.opening_balance.euro
+          response.data.opening_balance.currencies.naira,
+          response.data.opening_balance.currencies.dollar,
+          response.data.opening_balance.currencies.pound,
+          response.data.opening_balance.currencies.euro
         ),
         createData(
           "Money In",
-          completeReport.data.money_in.naira,
-          completeReport.data.money_in.dollar,
-          completeReport.data.money_in.pound,
-          completeReport.data.money_in.euro
+          response.data.money_in.currencies.naira,
+          response.data.money_in.currencies.dollar,
+          response.data.money_in.currencies.pound,
+          response.data.money_in.currencies.euro
         ),
         createData(
           "Report Balance",
-          completeReport.data.report.naira,
-          completeReport.data.report.dollar,
-          completeReport.data.report.pound,
-          completeReport.data.report.euro
+          response.data.report.currencies.naira,
+          response.data.report.currencies.dollar,
+          response.data.report.currencies.pound,
+          response.data.report.currencies.euro
         ),
         createData(
           "Money Out",
-          completeReport.data.money_out.naira,
-          completeReport.data.money_out.dollar,
-          completeReport.data.money_out.pound,
-          completeReport.data.money_out.euro
+          response.data.money_out.currencies.naira,
+          response.data.money_out.currencies.dollar,
+          response.data.money_out.currencies.pound,
+          response.data.money_out.currencies.euro
         ),
         createData(
           "Closing Balance",
-          completeReport.data.closing_balance.naira,
-          completeReport.data.closing_balance.dollar,
-          completeReport.data.closing_balance.pound,
-          completeReport.data.closing_balance.euro
+          response.data.closing_balance.currencies.naira,
+          response.data.closing_balance.currencies.dollar,
+          response.data.closing_balance.currencies.pound,
+          response.data.closing_balance.currencies.euro
         ),
       ];
       setValues(data);
     } catch (error) {
-      setAlert(true);
-      if (error.response.status === 401) {
-        window.location.href = "/login";
-      }
+      console.log(error);
     }
   };
   React.useEffect(() => {
-    setTimeout(getCompleteReport, 5000);
+    setTimeout(getCompleteReport, 2000);
   }, []);
 
   return (
@@ -159,7 +141,7 @@ export function Report() {
             type="submit"
             sx={purpleButton}
           >
-            New Report
+            Get Report
           </Button>
 
           <Link
@@ -173,18 +155,20 @@ export function Report() {
           <Link
             to={`${currentUrl.pathname}/update-balances`}
             style={{ textDecoration: "none" }}
+            state={{ reportId: localStorage.getItem(`${currentUrl.pathname}`) }}
           >
             <Button variant="text" type="submit" sx={purpleButton}>
               Update Balance
             </Button>
           </Link>
+          <Typography variant="h6">{today.toLocaleDateString()}</Typography>
         </Stack>
       </Box>
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 700 }} aria-label="customized table">
           <TableHead>
             <TableRow>
-              <StyledTableCell>REPORT</StyledTableCell>
+              <StyledTableCell>REPORT </StyledTableCell>
               <StyledTableCell align="right">Naira</StyledTableCell>
               <StyledTableCell align="right">Dollar</StyledTableCell>
               <StyledTableCell align="right">Pound</StyledTableCell>
@@ -205,17 +189,44 @@ export function Report() {
                     {value.name}
                   </StyledTableCell>
                   <StyledTableCell align="right">
-                    &#8358; {value.naira}
+                    <NumericFormat
+                      value={value.naira}
+                      thousandSeparator={true}
+                      displayType="text"
+                      renderText={(formattedValue) => (
+                        <span> &#8358; {formattedValue}</span>
+                      )}
+                    />
                   </StyledTableCell>
                   <StyledTableCell align="right">
-                    &#36; {value.dollar}
+                    <NumericFormat
+                      value={value.dollar}
+                      thousandSeparator={true}
+                      displayType="text"
+                      renderText={(formattedValue) => (
+                        <span> &#36; {formattedValue}</span>
+                      )}
+                    />
                   </StyledTableCell>
                   <StyledTableCell align="right">
-                    {" "}
-                    &#163; {value.pound}
+                    <NumericFormat
+                      value={value.pound}
+                      thousandSeparator={true}
+                      displayType="text"
+                      renderText={(formattedValue) => (
+                        <span> &#163; {formattedValue}</span>
+                      )}
+                    />
                   </StyledTableCell>
                   <StyledTableCell align="right">
-                    &#128; {value.euro}
+                    <NumericFormat
+                      value={value.euro}
+                      thousandSeparator={true}
+                      displayType="text"
+                      renderText={(formattedValue) => (
+                        <span> &#128; {formattedValue}</span>
+                      )}
+                    />
                   </StyledTableCell>
                 </StyledTableRow>
               ))

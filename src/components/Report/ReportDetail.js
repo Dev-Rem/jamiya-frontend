@@ -7,7 +7,6 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { styled } from "@mui/material/styles";
 import TableCell, { tableCellClasses } from "@mui/material/TableCell";
-
 import { axiosInstance } from "../utils/AxiosInstance";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -38,47 +37,45 @@ export function ReportDetails(props) {
   }
   const getCompleteReport = async () => {
     try {
-      const completeReport = await axiosInstance.get(
-        `/reports/${localStorage.getItem("reportId")}/`,
-        { headers: { "Content-Type": "application/json" } },
-        { withCredentials: true }
+      const response = await axiosInstance.get(
+        `/reports/${localStorage.getItem("reportId")}/`
       );
       console.log(completeReport);
       const data = [
         createData(
           "Opening Balance",
-          completeReport.data.opening_balance.naira,
-          completeReport.data.opening_balance.dollar,
-          completeReport.data.opening_balance.pound,
-          completeReport.data.opening_balance.euro
+          response.data.opening_balance.naira,
+          response.data.opening_balance.dollar,
+          response.data.opening_balance.pound,
+          response.data.opening_balance.euro
         ),
         createData(
           "Money In",
-          completeReport.data.money_in.naira,
-          completeReport.data.money_in.dollar,
-          completeReport.data.money_in.pound,
-          completeReport.data.money_in.euro
+          response.data.money_in.naira,
+          response.data.money_in.dollar,
+          response.data.money_in.pound,
+          response.data.money_in.euro
         ),
         createData(
           "Report Balance",
-          completeReport.data.report.naira,
-          completeReport.data.report.dollar,
-          completeReport.data.report.pound,
-          completeReport.data.report.euro
+          response.data.report.naira,
+          response.data.report.dollar,
+          response.data.report.pound,
+          response.data.report.euro
         ),
         createData(
           "Money Out",
-          completeReport.data.money_out.naira,
-          completeReport.data.money_out.dollar,
-          completeReport.data.money_out.pound,
-          completeReport.data.money_out.euro
+          response.data.money_out.naira,
+          response.data.money_out.dollar,
+          response.data.money_out.pound,
+          response.data.money_out.euro
         ),
         createData(
           "Closing Balance",
-          completeReport.data.closing_balance.naira,
-          completeReport.data.closing_balance.dollar,
-          completeReport.data.closing_balance.pound,
-          completeReport.data.closing_balance.euro
+          response.data.closing_balance.naira,
+          response.data.closing_balance.dollar,
+          response.data.closing_balance.pound,
+          response.data.closing_balance.euro
         ),
       ];
       setValues(data);

@@ -32,12 +32,12 @@ function TabPanel(props) {
 }
 const AltTabs = styled(Tabs)({
   "& .MuiTabs-indicator": {
-    backgroundColor: "#925098",
+    backgroundColor: "#C9037F",
   },
 });
 const AltTab = styled(Tab)({
   "&.Mui-selected": {
-    color: "#925098",
+    color: "#C9037F",
   },
 });
 

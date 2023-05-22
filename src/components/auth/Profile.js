@@ -5,15 +5,15 @@ import { axiosInstance } from "../utils/AxiosInstance";
 import Typography from "@mui/material/Typography";
 
 export function UserProfile() {
-  const [userInfo, setUserInfo] = React.useState({});
+  const [user, setUser] = React.useState({});
   const getUser = async () => {
-    const user = await axiosInstance.get(
+    const response = await axiosInstance.get(
       "/users/detail/",
       { headers: { "Content-Type": "application/json" } },
       { withCredentials: true }
     );
-    setUserInfo(user.data);
-    localStorage.setItem("user", JSON.stringify(user.data));
+    setUser(response.data);
+    localStorage.setItem("user", JSON.stringify(response.data));
   };
   React.useEffect(() => {
     getUser();
@@ -24,15 +24,15 @@ export function UserProfile() {
       <PageBox>
         <Typography variant="h6" gutterBottom>
           {" "}
-          Name: {userInfo.first_name} {userInfo.last_name}
+          Name: {user.first_name} {user.last_name}
         </Typography>
         <Typography variant="h6" gutterBottom>
           {" "}
-          Username: {userInfo.username}
+          Username: {user.username}
         </Typography>
         <Typography variant="h6" gutterBottom>
           {" "}
-          Email: {userInfo.email}
+          Email: {user.email}
         </Typography>
         <Typography variant="h6" gutterBottom>
           {" "}

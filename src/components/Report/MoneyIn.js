@@ -21,14 +21,9 @@ export default function MoneyIn() {
   };
 
   const handleSubmit = async () => {
-    let id = localStorage.getItem(`/${currentUrl.pathname.split("/")[1]}`);
+    let id = currentUrl.state.reportId;
     navigate(`/${currentUrl.pathname.split("/")[1]}`);
-    const moneyin = await axiosInstance.patch(
-      `/moneyins/${id}/`,
-      value,
-      { headers: { "Content-Type": "application/json" } },
-      { withCredentials: true }
-    );
+    const response = await axiosInstance.patch(`/moneyins/${id}/`, value);
   };
   return (
     <Box

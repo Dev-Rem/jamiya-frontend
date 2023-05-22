@@ -6,7 +6,7 @@ import ListItemText from "@mui/material/ListItemText";
 import { Link } from "react-router-dom";
 import "../../assets/css/drawer.css";
 import Image from "mui-image";
-import FxLogo from "../../assets/images/logo.png";
+import FxLogo from "../../assets/images/jamiyafx.png";
 
 export default function DrawerList() {
   return (

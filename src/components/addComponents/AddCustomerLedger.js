@@ -9,39 +9,43 @@ import Box from "@mui/material/Box";
 import { axiosInstance } from "../utils/AxiosInstance";
 import { useNavigate } from "react-router-dom";
 
+const currArray = ["naira", "dollar", "pound", "euro"];
+
 export function NewCustomerLedger(props) {
   const navigate = useNavigate();
-  const [value, setValue] = React.useState({});
+  const [value, setValue] = React.useState({
+    customer: "",
+    currencies: { naira: 0.0, dollar: 0.0, pound: 0, euro: 0.0 },
+    description: "",
+    status: "",
+  });
 
   const handleChange = (event) => {
-    let shouldBeNumber = ["naira", "dollar", "pound", "euro"];
     const val = event.target.value;
     const key = event.target.name;
-    setValue((prevState) => {
-      if (shouldBeNumber.includes(key)) {
-        return { ...prevState, [key]: parseInt(val) };
-      }
-      return { ...prevState, [key]: val };
-    });
+
+    if (currArray.includes(key)) {
+      setValue((prevState) => {
+        return {
+          ...prevState,
+          currencies: { ...prevState.currencies, [key]: parseInt(val) },
+        };
+      });
+    } else {
+      setValue((prevState) => {
+        return { ...prevState, [key]: val };
+      });
+    }
   };
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = async () => {
     try {
-      const ledger = await axiosInstance.post(
-        "/customerledgers/",
-        value,
-        { headers: { "Content-Type": "application/json" } },
-        { withCredentials: true }
-      );
-      event.preventDefault();
-      navigate(-1);
+      const response = await axiosInstance.post("/customerledgers/", value);
+      navigate("/customer-ledger");
     } catch (error) {
       console.log(error);
     }
   };
-  React.useEffect(() => {
-    console.log(value);
-  });
   return (
     <>
       <Box
@@ -150,61 +154,50 @@ export function NewCustomerLedger(props) {
 
 export function ViewEditDeleteCustomerLedger() {
   const navigate = useNavigate();
-
   const location = useLocation();
   const data = location.state;
   const [value, setValue] = React.useState(data.row);
 
   const handleChange = (event) => {
-    let shouldBeNumber = ["naira", "dollar", "pound", "euro"];
     const val = event.target.value;
     const key = event.target.name;
-    setValue((prevState) => {
-      if (shouldBeNumber.includes(key)) {
-        return { ...prevState, [key]: parseInt(val) };
-      }
-      return { ...prevState, [key]: val };
-    });
+
+    if (currArray.includes(key)) {
+      setValue((prevState) => {
+        return {
+          ...prevState,
+          currencies: { ...prevState.currencies, [key]: parseInt(val) },
+        };
+      });
+    } else {
+      setValue((prevState) => {
+        return { ...prevState, [key]: val };
+      });
+    }
   };
   const handleSubmit = async () => {
-    const {
-      date_created,
-      last_updated,
-      id,
-      customer,
-      status,
-      ...updatedLedger
-    } = value;
     try {
-      const ledger = await axiosInstance.patch(
+      navigate("/customer-ledger");
+
+      const response = await axiosInstance.patch(
         `/customerledgers/${value.id}/`,
-        updatedLedger,
-        { headers: { "Content-Type": "application/json" } },
-        { withCredentials: true }
+        value
       );
     } catch (error) {
       console.log(error);
     }
   };
-  const handleDelete = async (event) => {
+  const handleDelete = async () => {
     try {
-      const ledger = await axiosInstance.delete(
+      navigate("/customer-ledger");
+      const response = await axiosInstance.delete(
         `/customerledgers/${value.id}/`,
-        value,
-        { headers: { "Content-Type": "application/json" } },
-        { withCredentials: true }
+        value
       );
-      event.preventDefault();
-      navigate(-1);
     } catch (error) {
       console.log(error);
     }
   };
-  React.useEffect(() => {
-    console.log(value);
-    const { date_created, last_updated, id, ...updatedLedger } = value;
-    console.log(updatedLedger);
-  });
 
   return (
     <Box
@@ -251,7 +244,7 @@ export function ViewEditDeleteCustomerLedger() {
           fullWidth
           size="small"
           name="naira"
-          value={value.naira}
+          value={value.currencies.naira}
           onChange={handleChange}
         />
         <TextField
@@ -262,7 +255,7 @@ export function ViewEditDeleteCustomerLedger() {
           fullWidth
           size="small"
           name="dollar"
-          value={value.dollar}
+          value={value.currencies.dollar}
           onChange={handleChange}
         />
         <TextField
@@ -273,7 +266,7 @@ export function ViewEditDeleteCustomerLedger() {
           fullWidth
           size="small"
           name="pound"
-          value={value.pound}
+          value={value.currencies.pound}
           onChange={handleChange}
         />
         <TextField
@@ -284,7 +277,7 @@ export function ViewEditDeleteCustomerLedger() {
           fullWidth
           size="euro"
           name="rate"
-          value={value.euro}
+          value={value.currencies.euro}
           onChange={handleChange}
         />
       </FormStack>

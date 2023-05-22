@@ -20,7 +20,7 @@ export default function MoneyIn() {
     });
   };
   const handleSubmit = async () => {
-    let id = localStorage.getItem(`/${currentUrl.pathname.split("/")[1]}`);
+    let id = currentUrl.state.reportId;
     navigate(`/${currentUrl.pathname.split("/")[1]}`);
     const moneyouts = await axiosInstance.patch(
       `/moneyouts/${id}/`,
@@ -87,7 +87,7 @@ export default function MoneyIn() {
       </FormStack>
       <FormStack>
         <Button variant="text" type="submit" sx={purpleButton}>
-          Update
+          Uodate
         </Button>
         <CancelButton name="cancel" />
       </FormStack>

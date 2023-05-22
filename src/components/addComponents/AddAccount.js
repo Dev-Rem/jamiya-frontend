@@ -5,30 +5,39 @@ import FormStack from "../utils/FormStack";
 import { axiosInstance } from "../utils/AxiosInstance";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
-import { useNavigate, useParams, useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
+
+const currArray = ["naira", "dollar", "pound", "euro"];
 
 export function AddAccount() {
   const navigate = useNavigate();
-  const [value, setValue] = React.useState();
+  const [value, setValue] = React.useState({
+    bank_name: "",
+    account_name: "",
+    currencies: {},
+  });
 
   const handleChange = (event) => {
     const val = event.target.value;
     const key = event.target.name;
-    setValue((prevState) => {
-      return { ...prevState, [key]: val };
-    });
+    if (currArray.includes(key)) {
+      setValue((prevState) => {
+        return {
+          ...prevState,
+          currencies: { ...prevState.currencies, [key]: parseInt(val) },
+        };
+      });
+    } else {
+      setValue((prevState) => {
+        return { ...prevState, [key]: val };
+      });
+    }
   };
 
   const handleSubmit = async (event) => {
     navigate("/general-ledger");
     try {
-      const newAccount = await axiosInstance.post(
-        `/accounts/`,
-        value,
-        { headers: { "Content-Type": "application/json" } },
-        { withCredentials: true }
-      );
-      console.log(newAccount.status);
+      const newAccount = await axiosInstance.post(`/accounts/`, value);
     } catch (error) {
       console.log(error);
     }
@@ -118,28 +127,34 @@ export function AddAccount() {
     </>
   );
 }
-export function UpdateAccount(props) {
+export function UpdateAccount() {
   const navigate = useNavigate();
   const location = useLocation();
-  // const params = useParams();
-  const [accountDetails, setAccountDetails] = React.useState(
-    location.state.account
-  );
+  const [value, setValue] = React.useState(location.state.account);
 
   const handleChange = (event) => {
     const val = event.target.value;
     const key = event.target.name;
-    setAccountDetails((prevState) => {
-      return { ...prevState, [key]: val };
-    });
+    if (currArray.includes(key)) {
+      setValue((prevState) => {
+        return {
+          ...prevState,
+          currencies: { ...prevState.currencies, [key]: parseInt(val) },
+        };
+      });
+    } else {
+      setValue((prevState) => {
+        return { ...prevState, [key]: val };
+      });
+    }
   };
 
   const handleSubmit = async () => {
     navigate("/general-ledger");
     try {
-      const updatedAccount = await axiosInstance.patch(
-        `/accounts/${accountDetails.id}/`,
-        accountDetails
+      const response = await axiosInstance.patch(
+        `/accounts/${value.id}/`,
+        value
       );
     } catch (error) {
       console.log(error);
@@ -149,11 +164,7 @@ export function UpdateAccount(props) {
   const handleDelete = async () => {
     try {
       navigate("/general-ledger");
-      const accountToDelete = await axiosInstance.delete(
-        `/accounts/${accountDetails.id}/`,
-        { headers: { "Content-Type": "application/json" } },
-        { withCredentials: true }
-      );
+      const response = await axiosInstance.delete(`/accounts/${value.id}/`);
     } catch (error) {
       console.log(error);
     }
@@ -177,7 +188,7 @@ export function UpdateAccount(props) {
             id="outlined-select-currency"
             label="Bank name"
             onChange={handleChange}
-            value={accountDetails.bank_name}
+            value={value.bank_name}
             fullWidth
             variant="standard"
           />
@@ -185,7 +196,7 @@ export function UpdateAccount(props) {
             id="standard-basic"
             label="Account Name"
             variant="standard"
-            value={accountDetails.account_name}
+            value={value.account_name}
             fullWidth
             name="account_name"
             onChange={handleChange}
@@ -199,7 +210,7 @@ export function UpdateAccount(props) {
             label="Naira"
             type="number"
             variant="standard"
-            value={accountDetails.naira}
+            value={value.currencies.naira}
             fullWidth
             size="small"
             name="naira"
@@ -211,7 +222,7 @@ export function UpdateAccount(props) {
             type="number"
             variant="standard"
             fullWidth
-            value={accountDetails.dollar}
+            value={value.currencies.dollar}
             size="small"
             name="dollar"
             onChange={handleChange}
@@ -221,7 +232,7 @@ export function UpdateAccount(props) {
             label="Pound"
             type="number"
             variant="standard"
-            value={accountDetails.pound}
+            value={value.currencies.pound}
             fullWidth
             size="small"
             name="pound"
@@ -230,7 +241,7 @@ export function UpdateAccount(props) {
           <TextField
             id="standard-number"
             label="Euro"
-            value={accountDetails.euro}
+            value={value.currencies.euro}
             type="number"
             variant="standard"
             fullWidth

@@ -5,54 +5,11 @@ import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import { styled } from "@mui/material/styles";
-import { TransactionList } from "./TransactionList";
+import { TransactionList } from "../report/TransactionList";
 import { axiosInstance } from "../utils/AxiosInstance";
 import { useLocation } from "react-router-dom";
-
-const data = [
-  {
-    beneficiaries: "SINGLE_PAYMENT",
-    customer_name1: "Aremu Oluwaseyi Festus",
-    account_number1: "0235770003",
-    bank_name1: "GTB",
-    phone_number: "08034164740",
-    address: "No. 5 Adiss Aluminium Crescent, Kubwa Anuja",
-    recieve_mode: "CASH",
-    currency_recieved: "DOLLAR",
-    amount_recieved: 100,
-    give_mode: "CASH",
-    rate: 575,
-    currency_given: "NAIRA",
-    cash_given: 57500,
-    amount_transfered: 0,
-    description: "TEST",
-    initiator: "FRONTDESK",
-    status: "SENT",
-    categories: "PURCHASE",
-    profit: 0.0,
-  },
-  {
-    beneficiaries: "SINGLE_PAYMENT",
-    customer_name1: "Aremu Oluwaseyi Festus",
-    account_number1: "0235770003",
-    bank_name1: "GTB",
-    phone_number: "08034164740",
-    address: "No. 5 Adiss Aluminium Crescent, Kubwa Anuja",
-    recieve_mode: "CASH",
-    currency_recieved: "DOLLAR",
-    amount_recieved: 100,
-    give_mode: "CASH",
-    rate: 575,
-    currency_given: "NAIRA",
-    cash_given: 57500,
-    amount_transfered: 0,
-    description: "TEST",
-    initiator: "FRONTDESK",
-    status: "SENT",
-    categories: "PURCHASE",
-    profit: 0.0,
-  },
-];
+import FormStack from "../utils/FormStack";
+import Pagination from "@mui/material/Pagination";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -75,12 +32,12 @@ function TabPanel(props) {
 }
 const AltTabs = styled(Tabs)({
   "& .MuiTabs-indicator": {
-    backgroundColor: "#925098",
+    backgroundColor: "#C9037F",
   },
 });
 const AltTab = styled(Tab)({
   "&.Mui-selected": {
-    color: "#925098",
+    color: "#C9037F",
   },
 });
 
@@ -116,25 +73,27 @@ export default function RecentTransactions() {
   const currentUrl = useLocation();
   let station = getStation(currentUrl);
 
-  const fetchTransactionData = async () => {
+  const getTransactions = async () => {
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = String(today.getMonth() + 1).padStart(2, "0");
+    const day = String(today.getDate()).padStart(2, "0");
     try {
-      const transactionData = await axiosInstance.get(
-        `/transactions`,
-        { headers: { "Content-Type": "application/json" } },
-        { withCredentials: true }
-      );
+      const response = await axiosInstance.get("/transactions/");
       setTransactions(
-        transactionData.data.results.filter(
-          (transaction) => transaction.initiator === station
+        response.data.results.filter(
+          (transaction) =>
+            transaction.initiator === station &&
+            transaction.date_created === `${year}-${month}-${day}`
         )
       );
     } catch {
-      setTransactions("No Transactions posted yet");
+      setTransactions([]);
     }
   };
 
   React.useEffect(() => {
-    fetchTransactionData();
+    getTransactions();
   }, []);
 
   const handleChange = (event, newValue) => {
@@ -158,9 +117,9 @@ export default function RecentTransactions() {
             aria-label="basic tabs example"
             centered
           >
-            <AltTab label="Transaction Created" {...a11yProps(0)} />
+            <AltTab label="Transaction Sent" {...a11yProps(0)} />
             <AltTab label="Transaction Initiated" {...a11yProps(1)} />
-            <AltTab label="Transaction Completed" {...a11yProps(2)} />
+            <AltTab label="Transaction Approved" {...a11yProps(2)} />
           </AltTabs>
         </Box>
         <TabPanel value={value} index={0}>
@@ -186,5 +145,55 @@ export default function RecentTransactions() {
         </TabPanel>
       </Box>
     </div>
+  );
+}
+
+export function TransactionLogComponent() {
+  const [transactions, setTransactions] = React.useState([]);
+  const [currentPage, setCurrentPage] = React.useState(1);
+  const [totalPages, setTotalPages] = React.useState(0);
+
+  const getTransactions = async (page) => {
+    try {
+      const response = await axiosInstance.get(`/transactions`, {
+        params: {
+          page: page,
+        },
+      });
+      setTransactions(response.data.results);
+      setTotalPages(Math.ceil(response.data.count / 10));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handlePageChange = (event, page) => {
+    setCurrentPage(page);
+    getTransactions(page);
+  };
+
+  React.useEffect(() => {
+    getTransactions();
+  }, []);
+  return (
+    <>
+      <FormStack></FormStack>
+      <TransactionList data={transactions} />
+      <Pagination
+        count={totalPages}
+        page={currentPage}
+        onChange={handlePageChange}
+      />
+    </>
+  );
+}
+
+export function SearchedTransaction() {
+  const currentUrl = useLocation();
+  return (
+    <>
+      {" "}
+      <TransactionList data={currentUrl.state.data.results} />
+    </>
   );
 }

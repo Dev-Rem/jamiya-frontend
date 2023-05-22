@@ -22,6 +22,7 @@ export default function UpdateRate() {
       return { ...prevState, [key]: val };
     });
   };
+
   const handleSubmit = (event) => {
     try {
       const createdRates = axiosInstance.patch(
@@ -36,9 +37,6 @@ export default function UpdateRate() {
       console.log(error);
     }
   };
-  React.useEffect(() => {
-    console.log(rates);
-  });
   return (
     <div>
       <Box
@@ -92,11 +90,7 @@ export default function UpdateRate() {
           />
         </FormStack>
         <FormStack>
-          <Button
-            variant="text"
-            type="submit"
-            sx={purpleButton}
-          >
+          <Button variant="text" type="submit" sx={purpleButton}>
             Update
           </Button>
           <CancelButton name="cancel" />

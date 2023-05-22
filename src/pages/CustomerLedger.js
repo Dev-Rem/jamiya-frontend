@@ -10,7 +10,6 @@ import {
 export function CustomerLedgerPage() {
   return (
     <div>
-      {" "}
       <ResponsiveDrawer>
         <Title section="Customer Ledger Report" />
         <CustomerLedger />
@@ -22,7 +21,6 @@ export function CustomerLedgerPage() {
 export function AddCustomerLedger(props) {
   return (
     <div>
-      {" "}
       <ResponsiveDrawer>
         <Title section="Add New Customer Ledger" />
         <NewCustomerLedger customerLedger={props} />
@@ -34,7 +32,6 @@ export function AddCustomerLedger(props) {
 export function ViewCustomerLedger() {
   return (
     <div>
-      {" "}
       <ResponsiveDrawer>
         <Title section="Edit Customer Ledger" />
         <ViewEditDeleteCustomerLedger />

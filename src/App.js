@@ -11,12 +11,19 @@ import {
   ViewCustomerLedger,
 } from "./pages/CustomerLedger";
 import { GeneralLedger, Rate } from "./pages/GeneralLedger";
-import { Reports, ReportDetails } from "./pages/Reports";
-import TransactionLog from "./pages/TransactionLog";
+import {
+  ReportList,
+  ReportDetails,
+  SearchedReportResults,
+} from "./pages/Reports";
+import {
+  TransactionLog,
+  SearchedTransactionResults,
+} from "./pages/TransactionLog";
 import NewTransaction from "./pages/NewTransaction";
 import { NewAccount, EditOrDeleteAccount } from "./pages/NewAccount";
 import UpdateMoneyIn from "./pages/UpdateMoneyIn";
-import TransactionDetails from "./pages/TransactionDetails";
+import { TransactionDetails } from "./pages/TransactionDetails";
 import { LoginPage, RegisterPage, ProfilePage } from "./pages/Auth";
 import { PreviewReceipt } from "./pages/PreviewReceipt";
 
@@ -44,13 +51,30 @@ export default function App() {
         <Route exact path={"/online"} element={<Online />} />
         <Route exact path={"/marketing"} element={<Marketing />} />
 
-        <Route exact path={"/report-logs"} element={<Reports />} />
-        <Route exact path={"/general-ledger"} element={<GeneralLedger />} />
+        <Route exact path={"/report-logs"} element={<ReportList />} />
+        <Route exact path={"/report-details"} element={<ReportDetails />} />
         <Route exact path={"/transaction-logs"} element={<TransactionLog />} />
+
+        <Route exact path={"/general-ledger"} element={<GeneralLedger />} />
 
         <Route exact path={"/:section/add-account"} element={<NewAccount />} />
         <Route exact path={"/:section/update-rates"} element={<Rate />} />
-        <Route exact path={"/:receipt"} element={<PreviewReceipt />} />
+        <Route
+          exact
+          path={"/:search/report/search-results"}
+          element={<SearchedReportResults />}
+        />
+        <Route
+          exact
+          path={"/:search/transaction/search-results"}
+          element={<SearchedTransactionResults />}
+        />
+
+        <Route
+          exact
+          path={"/:receiptNumber/receipt"}
+          element={<PreviewReceipt />}
+        />
 
         <Route
           exact
@@ -67,12 +91,6 @@ export default function App() {
           exact
           path={"/:section/update-account/:id"}
           element={<EditOrDeleteAccount />}
-        />
-
-        <Route
-          exact
-          path={"/:section/report-details"}
-          element={<ReportDetails />}
         />
 
         <Route

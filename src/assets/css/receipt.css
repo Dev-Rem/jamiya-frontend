@@ -1,0 +1,67 @@
+@page {
+  
+}
+
+body {
+  margin: 0;
+  padding: 1cm;
+}
+
+.receipt-container{
+  margin: 0;
+  
+}
+.receipt {
+  background-color: inherit;
+  width: 210mm;
+  height: 297mm;
+  margin: 0;
+  
+}
+
+
+.logo-image{
+  width: 300px;
+}
+
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.item {
+  width: 100%;
+  /* height: 100%; */
+}
+
+.footer {
+   position: fixed;
+   left: 0;
+   bottom: 0;
+   width: 100%;
+   background-color: red;
+   color: white;
+   text-align: center;
+}
+
+.signature-box{
+    height: 100px;
+    border: 2px;
+    border-radius: 3px;
+    border-style: solid;
+    border-color: #afafaf;
+}
+.signature-container{
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
