@@ -9,7 +9,7 @@ body {
 
 .receipt-container{
   margin: 0;
-  
+  padding: 10px;
 }
 .receipt {
   background-color: inherit;

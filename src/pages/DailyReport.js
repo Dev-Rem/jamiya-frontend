@@ -9,7 +9,7 @@ function FrontDesk() {
     <div>
       {" "}
       <ResponsiveDrawer>
-        <Title section="Front Desk Report" />
+        <Title section="Daily Report" />
         <Report />
         <RecentTransactions />
       </ResponsiveDrawer>

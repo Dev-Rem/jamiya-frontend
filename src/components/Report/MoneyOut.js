@@ -21,7 +21,7 @@ export default function MoneyIn() {
   };
   const handleSubmit = async () => {
     let id = currentUrl.state.reportId;
-    navigate(`/${currentUrl.pathname.split("/")[1]}`);
+    navigate(-1);
     const moneyouts = await axiosInstance.patch(
       `/moneyouts/${id}/`,
       value,

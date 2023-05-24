@@ -38,7 +38,7 @@ export function ReportDetails(props) {
   const getCompleteReport = async () => {
     try {
       const response = await axiosInstance.get(
-        `/reports/${localStorage.getItem("reportId")}/`
+        `/reports/${JSON.parse(localStorage.getItem("user")).station}/`
       );
       console.log(completeReport);
       const data = [

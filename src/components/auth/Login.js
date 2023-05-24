@@ -37,6 +37,21 @@ export default function SignInSide() {
     event.preventDefault();
   };
 
+  const getUserInfo = async (accessToken) => {
+    const response = await axios.get(
+      "http://127.0.0.1:8000/api/users/detail/",
+
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${accessToken}`,
+        },
+      },
+      { withCredentials: true }
+    );
+    localStorage.setItem("user", JSON.stringify(response.data));
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
@@ -47,7 +62,7 @@ export default function SignInSide() {
         { headers: { "Content-Type": "application/json" } },
         { withCredentials: true }
       );
-
+      getUserInfo(response.data.access);
       localStorage.setItem("access_token", response.data.access);
       localStorage.setItem("refresh_token", response.data.refresh);
     } catch (error) {

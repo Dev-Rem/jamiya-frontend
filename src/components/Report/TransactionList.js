@@ -130,10 +130,6 @@ const ViewTransaction = (props) => {
                 {data.initiator}
               </Typography>
             </Typography>
-            {/* {data.profit ? ( */}
-            {/* ) : (
-              <></>
-            )} */}
           </Grid>
           <Grid item xs={12} sm={3} md={3}>
             <Typography variant="body1">
@@ -398,12 +394,15 @@ const ViewTransaction = (props) => {
 export function ViewEditDeleteTransaction() {
   const location = useLocation();
   const data = location.state.data;
+  const [admin, setAdmin] = React.useState(
+    `${JSON.parse(localStorage.getItem("user")).is_admin}`
+  );
   return (
     <>
-      {true ? (
-        <TransactionForm data={data} use="edit" />
-      ) : (
+      {admin ? (
         <ViewTransaction data={data} />
+      ) : (
+        <TransactionForm data={data} use="edit" />
       )}
     </>
   );

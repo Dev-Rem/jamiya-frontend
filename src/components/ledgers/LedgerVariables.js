@@ -18,6 +18,8 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
   },
   [`&.${tableCellClasses.body}`]: {
     fontSize: 14,
+    paddingTop: 5,
+    paddingBottom: 5,
   },
 }));
 
@@ -55,7 +57,10 @@ export default function LedgerVariables() {
             <TableRow>
               <StyledTableCell>Currency Total</StyledTableCell>
               <Divider orientation="vertical" />
-              <TableCell align="right" sx={{ fontWeight: "bold" }}>
+              <TableCell
+                align="right"
+                sx={{ fontWeight: "bold", pt: 1, pb: 1 }}
+              >
                 <NumericFormat
                   value={ledgerVariables.currency_total}
                   thousandSeparator={true}
@@ -69,7 +74,10 @@ export default function LedgerVariables() {
             <TableRow>
               <StyledTableCell>Grand Total</StyledTableCell>
               <Divider orientation="vertical" />
-              <TableCell align="right" sx={{ fontWeight: "bold" }}>
+              <TableCell
+                align="right"
+                sx={{ fontWeight: "bold", pt: 1, pb: 1 }}
+              >
                 <NumericFormat
                   value={ledgerVariables.grand_total}
                   thousandSeparator={true}
@@ -83,7 +91,10 @@ export default function LedgerVariables() {
             <TableRow>
               <StyledTableCell>Previous Total</StyledTableCell>
               <Divider orientation="vertical" />
-              <TableCell align="right" sx={{ fontWeight: "bold" }}>
+              <TableCell
+                align="right"
+                sx={{ fontWeight: "bold", pt: 1, pb: 1 }}
+              >
                 <NumericFormat
                   value={ledgerVariables.previous_total}
                   thousandSeparator={true}
@@ -97,7 +108,10 @@ export default function LedgerVariables() {
             <TableRow>
               <StyledTableCell>Difference</StyledTableCell>
               <Divider orientation="vertical" />
-              <TableCell align="right" sx={{ fontWeight: "bold" }}>
+              <TableCell
+                align="right"
+                sx={{ fontWeight: "bold", pt: 1, pb: 1 }}
+              >
                 <NumericFormat
                   value={ledgerVariables.difference}
                   thousandSeparator={true}
@@ -111,7 +125,10 @@ export default function LedgerVariables() {
             <TableRow>
               <StyledTableCell>Expenses</StyledTableCell>
               <Divider orientation="vertical" />
-              <TableCell align="right" sx={{ fontWeight: "bold" }}>
+              <TableCell
+                align="right"
+                sx={{ fontWeight: "bold", pt: 1, pb: 1 }}
+              >
                 <NumericFormat
                   value={ledgerVariables.expense}
                   thousandSeparator={true}
@@ -125,7 +142,10 @@ export default function LedgerVariables() {
             <TableRow>
               <StyledTableCell>Book Profit</StyledTableCell>
               <Divider orientation="vertical" />
-              <TableCell align="right" sx={{ fontWeight: "bold" }}>
+              <TableCell
+                align="right"
+                sx={{ fontWeight: "bold", pt: 1, pb: 1 }}
+              >
                 <NumericFormat
                   value={ledgerVariables.book_profit}
                   thousandSeparator={true}
@@ -139,7 +159,10 @@ export default function LedgerVariables() {
             <TableRow>
               <StyledTableCell>Calculated profit</StyledTableCell>
               <Divider orientation="vertical" />
-              <TableCell align="right" sx={{ fontWeight: "bold" }}>
+              <TableCell
+                align="right"
+                sx={{ fontWeight: "bold", pt: 1, pb: 1 }}
+              >
                 <NumericFormat
                   value={ledgerVariables.calculated_profit}
                   thousandSeparator={true}
@@ -153,7 +176,10 @@ export default function LedgerVariables() {
             <TableRow>
               <StyledTableCell>Variance</StyledTableCell>
               <Divider orientation="vertical" />
-              <TableCell align="right" sx={{ fontWeight: "bold" }}>
+              <TableCell
+                align="right"
+                sx={{ fontWeight: "bold", pt: 1, pb: 1 }}
+              >
                 <NumericFormat
                   value={ledgerVariables.variance}
                   thousandSeparator={true}

@@ -22,6 +22,8 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
   },
   [`&.${tableCellClasses.body}`]: {
     fontSize: 14,
+    paddingTop: 5,
+    paddingBottom: 5,
   },
 }));
 
@@ -216,7 +218,7 @@ export default function Account() {
               </TableCell>
               <TableCell align="right" sx={{ fontWeight: "bold" }}>
                 <NumericFormat
-                  value={totals.nairaTotal}
+                  value={totals.dollarTotal}
                   thousandSeparator={true}
                   displayType="text"
                   renderText={(formattedValue) => (
@@ -226,7 +228,7 @@ export default function Account() {
               </TableCell>
               <TableCell align="right" sx={{ fontWeight: "bold" }}>
                 <NumericFormat
-                  value={totals.nairaTotal}
+                  value={totals.poundTotal}
                   thousandSeparator={true}
                   displayType="text"
                   renderText={(formattedValue) => (
@@ -236,7 +238,7 @@ export default function Account() {
               </TableCell>
               <TableCell align="right" sx={{ fontWeight: "bold" }}>
                 <NumericFormat
-                  value={totals.nairaTotal}
+                  value={totals.euroTotal}
                   thousandSeparator={true}
                   displayType="text"
                   renderText={(formattedValue) => (

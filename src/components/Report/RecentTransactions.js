@@ -57,21 +57,10 @@ function a11yProps(index) {
 export default function RecentTransactions() {
   const [value, setValue] = React.useState(0);
   const [transactions, setTransactions] = React.useState([]);
+  const [station, setStation] = React.useState(
+    JSON.parse(localStorage.getItem("user")).station
+  );
 
-  function getStation(currentUrl) {
-    switch (currentUrl.pathname) {
-      case "/frontdesk":
-        return "FRONTDESK";
-      case "/online":
-        return "ONLINE";
-      case "/bank":
-        return "BANK";
-      case "/marketing":
-        return "MARKETING";
-    }
-  }
-  const currentUrl = useLocation();
-  let station = getStation(currentUrl);
 
   const getTransactions = async () => {
     const today = new Date();

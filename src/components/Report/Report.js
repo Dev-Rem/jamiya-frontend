@@ -38,10 +38,12 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 export function Report() {
   const [values, setValues] = React.useState([]);
+  const [station, setStation] = React.useState(
+    JSON.parse(localStorage.getItem("user")).station
+  );
 
   const currentUrl = useLocation();
   const today = new Date();
-  let station = getStation(currentUrl);
 
   function getStation(currentUrl) {
     switch (currentUrl.pathname) {
@@ -66,7 +68,10 @@ export function Report() {
     };
     try {
       const response = await axiosInstance.post(`/reports/`, reportData);
-      localStorage.setItem(`${currentUrl.pathname}`, response.data.id);
+      localStorage.setItem(
+        `${JSON.parse(localStorage.getItem("user")).station}`,
+        response.data.id
+      );
 
       window.location.reload();
     } catch (error) {}
@@ -75,7 +80,9 @@ export function Report() {
     return { name, naira, dollar, pound, euro };
   }
   const getCompleteReport = async () => {
-    let reportId = localStorage.getItem(`${currentUrl.pathname}`);
+    let reportId = localStorage.getItem(
+      `${JSON.parse(localStorage.getItem("user")).station}`
+    );
     try {
       const response = await axiosInstance.get(`/reports/${reportId}/`);
       const data = [
@@ -121,7 +128,7 @@ export function Report() {
     }
   };
   React.useEffect(() => {
-    setTimeout(getCompleteReport, 2000);
+    setTimeout(getCompleteReport, 1000);
   }, []);
 
   return (

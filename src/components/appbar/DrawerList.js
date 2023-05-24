@@ -9,6 +9,10 @@ import Image from "mui-image";
 import FxLogo from "../../assets/images/jamiyafx.png";
 
 export default function DrawerList() {
+  const [admin, setAdmin] = React.useState(
+    JSON.parse(localStorage.getItem("user")).is_admin
+  );
+
   return (
     <List sx={{ padding: 0 }}>
       <Link to="/" style={{ textDecoration: "none", color: "black" }}>
@@ -20,65 +24,76 @@ export default function DrawerList() {
         </ListItemButton>
       </Link>
       <Divider />
-      <Link to="/frontdesk" style={{ textDecoration: "none", color: "black" }}>
-        <ListItemButton>
-          <ListItemText primary="Front Desk" />
-        </ListItemButton>
-      </Link>
+      {admin ? (
+        <></>
+      ) : (
+        <>
+          <Link to="/report" style={{ textDecoration: "none", color: "black" }}>
+            <ListItemButton>
+              <ListItemText primary="Report" />
+            </ListItemButton>
+          </Link>
+          <Divider />
+          <Link
+            to="/my-transactions"
+            style={{ textDecoration: "none", color: "black" }}
+          >
+            <ListItemButton>
+              <ListItemText primary="My Transactions" />
+            </ListItemButton>
+          </Link>
+          <Divider />
+        </>
+      )}
+      {admin ? (
+        <>
+          <Link
+            to="/general-ledger"
+            style={{ textDecoration: "none", color: "black" }}
+          >
+            <ListItemButton button>
+              <ListItemText primary="General Ledger" />
+            </ListItemButton>
+          </Link>
+          <Divider />
+          <Link
+            to="/customer-ledger"
+            style={{ textDecoration: "none", color: "black" }}
+          >
+            <ListItemButton button>
+              <ListItemText primary="Customer Ledger" />
+            </ListItemButton>
+          </Link>
+          <Divider />
+          <Link
+            to="/report-logs"
+            style={{ textDecoration: "none", color: "black" }}
+          >
+            <ListItemButton button>
+              <ListItemText primary="Report Logs" />
+            </ListItemButton>
+          </Link>
+          <Divider />
+          <Link
+            to="/transaction-logs"
+            style={{ textDecoration: "none", color: "black" }}
+          >
+            <ListItemButton button>
+              <ListItemText primary="Transaction Log" />
+            </ListItemButton>
+          </Link>
+          <Divider />
+        </>
+      ) : (
+        <></>
+      )}
+
+      <ListItemButton>
+        <ListItemText
+          primary={JSON.parse(localStorage.getItem("user")).station}
+        />
+      </ListItemButton>
       <Divider />
-      <Link to="/bank" style={{ textDecoration: "none", color: "black" }}>
-        <ListItemButton button>
-          <ListItemText primary="Bank" />
-        </ListItemButton>
-      </Link>
-      <Divider />
-      <Link to="/online" style={{ textDecoration: "none", color: "black" }}>
-        <ListItemButton button>
-          <ListItemText primary="Online" />
-        </ListItemButton>
-      </Link>
-      <Divider />
-      <Link to="/marketing" style={{ textDecoration: "none", color: "black" }}>
-        <ListItemButton button>
-          <ListItemText primary="Marketing" />
-        </ListItemButton>
-      </Link>
-      <Divider />
-      <Link
-        to="/general-ledger"
-        style={{ textDecoration: "none", color: "black" }}
-      >
-        <ListItemButton button>
-          <ListItemText primary="General Ledger" />
-        </ListItemButton>
-      </Link>
-      <Divider />
-      <Link
-        to="/customer-ledger"
-        style={{ textDecoration: "none", color: "black" }}
-      >
-        <ListItemButton button>
-          <ListItemText primary="Customer Ledger" />
-        </ListItemButton>
-      </Link>
-      <Divider />
-      <Link
-        to="/report-logs"
-        style={{ textDecoration: "none", color: "black" }}
-      >
-        <ListItemButton button>
-          <ListItemText primary="Report Logs" />
-        </ListItemButton>
-      </Link>
-      <Divider />
-      <Link
-        to="/transaction-logs"
-        style={{ textDecoration: "none", color: "black" }}
-      >
-        <ListItemButton button>
-          <ListItemText primary="Transaction Log" />
-        </ListItemButton>
-      </Link>
     </List>
   );
 }

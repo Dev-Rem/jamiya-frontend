@@ -19,6 +19,8 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import { NumericFormat } from "react-number-format";
+import Grid from "@mui/material/Grid";
+import html2pdf from "html2pdf.js";
 
 export const GenerateTransactionReceipt = () => {
   const navigate = useNavigate();
@@ -85,6 +87,11 @@ export const GenerateTransactionReceipt = () => {
     hour12: true,
   };
 
+  const downloadPDF = () => {
+    const element = document.getElementById("receipt-container"); // Replace 'your-div-id' with the actual ID of your <div> element
+
+    html2pdf().from(element).save(`${transaction.receipt_number}.pdf`);
+  };
   const formattedDate = date.toLocaleString("en-US", options);
   React.useEffect(() => {
     const node = loadCSS(
@@ -106,6 +113,9 @@ export const GenerateTransactionReceipt = () => {
         <Button variant="text" sx={purpleButton} onClick={() => navigate("/")}>
           dashboard
         </Button>
+        <Button variant="text" sx={purpleButton} onClick={downloadPDF}>
+          Download
+        </Button>
       </FormStack>
       <FormStack></FormStack>
       <Box
@@ -116,7 +126,11 @@ export const GenerateTransactionReceipt = () => {
           padding: 3,
         }}
       >
-        <div ref={printContentRef} className="receipt-container">
+        <div
+          ref={printContentRef}
+          className="receipt-container"
+          id="receipt-container"
+        >
           <div className="receipt">
             <div className="container">
               <div className="row">
@@ -207,9 +221,13 @@ export const GenerateTransactionReceipt = () => {
                 {transaction.phone_number}
               </Typography>
             </Typography>
-            {transaction.beneficiaries.map((entry) => (
-              <>
-                <FormStack>
+            <Grid
+              container
+              spacing={{ xs: 2, md: 5 }}
+              columns={{ xs: 4, sm: 8, md: 12 }}
+            >
+              {transaction.beneficiaries.map((entry) => (
+                <Grid item xs={2} sm={6} md={6}>
                   <Typography variant="body1">
                     Name:{" "}
                     <Typography
@@ -281,9 +299,10 @@ export const GenerateTransactionReceipt = () => {
                   ) : (
                     <></>
                   )}
-                </FormStack>
-              </>
-            ))}
+                </Grid>
+              ))}
+            </Grid>
+
             <Typography variant="h6">Transaction Details</Typography>
             <hr />
 
@@ -293,15 +312,23 @@ export const GenerateTransactionReceipt = () => {
                   <Table sx={{ minWidth: 650 }} aria-label="simple table">
                     <TableHead>
                       <TableRow>
-                        <TableCell>Customer Brought</TableCell>
-                        <TableCell align="center">Rate</TableCell>
+                        <TableCell sx={{ py: 1 }}>Customer Brought</TableCell>
+                        <TableCell sx={{ py: 1 }} align="center">
+                          Rate
+                        </TableCell>
 
-                        <TableCell align="right">Customer Gets</TableCell>
+                        <TableCell sx={{ py: 1 }} align="right">
+                          Customer Gets
+                        </TableCell>
                       </TableRow>
                       <TableRow>
-                        <TableCell>Cash - Transfer</TableCell>
-                        <TableCell align="center">Cash - Transfer</TableCell>
-                        <TableCell align="right">Cash - Transfer</TableCell>
+                        <TableCell sx={{ py: 1 }}>Cash / Transfer</TableCell>
+                        <TableCell sx={{ py: 1 }} align="center">
+                          Cash / Transfer
+                        </TableCell>
+                        <TableCell sx={{ py: 1 }} align="right">
+                          Amount
+                        </TableCell>
                       </TableRow>
                     </TableHead>
                     <TableBody>
@@ -312,18 +339,18 @@ export const GenerateTransactionReceipt = () => {
                               "&:last-child td, &:last-child th": { border: 0 },
                             }}
                           >
-                            <TableCell>
+                            <TableCell sx={{ py: 1 }}>
                               {getCurrencySymbol(entry.currency)}
                               {entry.cash ? entry.cash : ""}
-                              {entry.cash && entry.transfer ? " - " : ""}
+                              {entry.cash && entry.transfer ? " / " : ""}
                               {entry.transfer ? entry.transfer : ""}
                             </TableCell>
-                            <TableCell align="center">
+                            <TableCell sx={{ py: 1 }} align="center">
                               {entry.cash_rate ? entry.cash_rate : ""}
-                              {entry.cash && entry.transfer ? " - " : ""}
+                              {entry.cash && entry.transfer ? " / " : ""}
                               {entry.transfer_rate ? entry.transfer_rate : ""}
                             </TableCell>
-                            <TableCell align="right">
+                            <TableCell sx={{ py: 1 }} align="right">
                               <NumericFormat
                                 value={
                                   entry.transfer * entry.transfer_rate +
@@ -343,9 +370,61 @@ export const GenerateTransactionReceipt = () => {
                         ))}
 
                         <TableRow>
-                          <TableCell rowSpan={3} />
-                          <TableCell colSpan={1}>Total</TableCell>
-                          <TableCell align="right">
+                          <TableCell sx={{ py: 1 }} rowSpan={3} />
+                          <TableCell sx={{ py: 1 }}>Cash Collected</TableCell>
+                          <TableCell sx={{ py: 1 }} colSpan={2} align="right">
+                            {giving.map((entry) => (
+                              <>
+                                {entry.cash === 0 ? (
+                                  <></>
+                                ) : (
+                                  <>
+                                    {getCurrencySymbol(entry.currency)}
+                                    <NumericFormat
+                                      value={entry.cash}
+                                      thousandSeparator={true}
+                                      displayType="text"
+                                      renderText={(formattedValue) => (
+                                        <span>{formattedValue}</span>
+                                      )}
+                                    />
+                                  </>
+                                )}
+                              </>
+                            ))}
+                          </TableCell>
+                        </TableRow>
+                        <TableRow>
+                          <TableCell sx={{ py: 1 }} colSpan={1}>
+                            Amount Transfered
+                          </TableCell>
+                          <TableCell sx={{ py: 1 }} align="right">
+                            {giving.map((entry) => (
+                              <>
+                                {entry.transfer === 0 ? (
+                                  <></>
+                                ) : (
+                                  <>
+                                    {getCurrencySymbol(entry.currency)}
+                                    <NumericFormat
+                                      value={entry.transfer}
+                                      thousandSeparator={true}
+                                      displayType="text"
+                                      renderText={(formattedValue) => (
+                                        <span>{formattedValue}</span>
+                                      )}
+                                    />
+                                  </>
+                                )}
+                              </>
+                            ))}
+                          </TableCell>
+                        </TableRow>
+                        <TableRow>
+                          <TableCell sx={{ py: 1 }} colSpan={1}>
+                            Total
+                          </TableCell>
+                          <TableCell sx={{ py: 1 }} align="right">
                             {giving.map((entry) => (
                               <>
                                 {getCurrencySymbol(entry.currency)}
@@ -361,10 +440,6 @@ export const GenerateTransactionReceipt = () => {
                             ))}
                           </TableCell>
                         </TableRow>
-                        <TableRow>
-                          <TableCell colSpan={1}></TableCell>
-                          <TableCell align="right"></TableCell>
-                        </TableRow>
                       </>
                     </TableBody>
                   </Table>
@@ -374,15 +449,23 @@ export const GenerateTransactionReceipt = () => {
                   <Table sx={{ minWidth: 650 }} aria-label="simple table">
                     <TableHead>
                       <TableRow>
-                        <TableCell>Customer Brought</TableCell>
-                        <TableCell align="center">Rate</TableCell>
+                        <TableCell sx={{ py: 1 }}>Customer Brought</TableCell>
+                        <TableCell sx={{ py: 1 }} align="center">
+                          Rate
+                        </TableCell>
 
-                        <TableCell align="right">Customer Gets</TableCell>
+                        <TableCell sx={{ py: 1 }} align="right">
+                          Customer Gets
+                        </TableCell>
                       </TableRow>
                       <TableRow>
-                        <TableCell>Cash - Transfer</TableCell>
-                        <TableCell align="center">Cash - Transfer</TableCell>
-                        <TableCell align="right">Cash - Transfer</TableCell>
+                        <TableCell sx={{ py: 1 }}>Cash / Transfer</TableCell>
+                        <TableCell sx={{ py: 1 }} align="center">
+                          Cash / Transfer
+                        </TableCell>
+                        <TableCell sx={{ py: 1 }} align="right">
+                          Amount
+                        </TableCell>
                       </TableRow>
                     </TableHead>
                     <TableBody>
@@ -395,7 +478,7 @@ export const GenerateTransactionReceipt = () => {
                               },
                             }}
                           >
-                            <TableCell>
+                            <TableCell sx={{ py: 1 }}>
                               <NumericFormat
                                 value={
                                   entry.transfer * entry.transfer_rate +
@@ -411,25 +494,75 @@ export const GenerateTransactionReceipt = () => {
                                 )}
                               />
                             </TableCell>
-                            <TableCell align="center">
+                            <TableCell sx={{ py: 1 }} align="center">
                               {entry.cash_rate ? entry.cash_rate : ""}
-                              {entry.cash && entry.transfer ? " - " : ""}
+                              {entry.cash && entry.transfer ? " / " : ""}
                               {entry.transfer_rate ? entry.transfer_rate : ""}
                             </TableCell>
 
-                            <TableCell align="right">
+                            <TableCell sx={{ py: 1 }} align="right">
                               {getCurrencySymbol(entry.currency)}
                               {entry.cash ? entry.cash : ""}
-                              {entry.cash && entry.transfer ? " - " : ""}
+                              {entry.cash && entry.transfer ? " / " : ""}
                               {entry.transfer ? entry.transfer : ""}
                             </TableCell>
                           </TableRow>
                         ))}
 
                         <TableRow>
-                          <TableCell rowSpan={3} />
-                          <TableCell colSpan={1}>Total</TableCell>
-                          <TableCell align="right">
+                          <TableCell sx={{ py: 1 }} rowSpan={3} />
+                          <TableCell sx={{ py: 1 }}>Cash Collected</TableCell>
+                          <TableCell sx={{ py: 1 }} colSpan={2} align="right">
+                            {giving.map((entry) => (
+                              <>
+                                {entry.cash === 0 ? (
+                                  <></>
+                                ) : (
+                                  <>
+                                    {getCurrencySymbol(entry.currency)}
+                                    <NumericFormat
+                                      value={entry.cash}
+                                      thousandSeparator={true}
+                                      displayType="text"
+                                      renderText={(formattedValue) => (
+                                        <span>{formattedValue}</span>
+                                      )}
+                                    />
+                                  </>
+                                )}
+                              </>
+                            ))}
+                          </TableCell>
+                        </TableRow>
+                        <TableRow>
+                          <TableCell sx={{ py: 1 }} colSpan={1}>
+                            Amount Transfered
+                          </TableCell>
+                          <TableCell sx={{ py: 1 }} align="right">
+                            {giving.map((entry) => (
+                              <>
+                                {entry.transfer === 0 ? (
+                                  <></>
+                                ) : (
+                                  <>
+                                    {getCurrencySymbol(entry.currency)}
+                                    <NumericFormat
+                                      value={entry.transfer}
+                                      thousandSeparator={true}
+                                      displayType="text"
+                                      renderText={(formattedValue) => (
+                                        <span>{formattedValue}</span>
+                                      )}
+                                    />
+                                  </>
+                                )}
+                              </>
+                            ))}
+                          </TableCell>
+                        </TableRow>
+                        <TableRow>
+                          <TableCell sx={{ py: 1 }}>Total</TableCell>
+                          <TableCell sx={{ py: 1 }} align="right">
                             {giving.map((entry) => (
                               <>
                                 <NumericFormat
@@ -454,8 +587,8 @@ export const GenerateTransactionReceipt = () => {
                           </TableCell>
                         </TableRow>
                         <TableRow>
-                          <TableCell colSpan={1}></TableCell>
-                          <TableCell align="right"></TableCell>
+                          <TableCell sx={{ py: 1 }} colSpan={1}></TableCell>
+                          <TableCell sx={{ py: 1 }} align="right"></TableCell>
                         </TableRow>
                       </>
                     </TableBody>
@@ -466,15 +599,23 @@ export const GenerateTransactionReceipt = () => {
                   <Table sx={{ minWidth: 650 }} aria-label="simple table">
                     <TableHead>
                       <TableRow>
-                        <TableCell>Customer Brought</TableCell>
-                        <TableCell align="center">Rate</TableCell>
+                        <TableCell sx={{ py: 1 }}>Customer Brought</TableCell>
+                        <TableCell sx={{ py: 1 }} align="center">
+                          Rate
+                        </TableCell>
 
-                        <TableCell align="right">Customer Gets</TableCell>
+                        <TableCell sx={{ py: 1 }} align="right">
+                          Customer Gets
+                        </TableCell>
                       </TableRow>
                       <TableRow>
-                        <TableCell>Cash - Transfer</TableCell>
-                        <TableCell align="center">Cah - Transfer</TableCell>
-                        <TableCell align="right">Cash - Transfer</TableCell>
+                        <TableCell sx={{ py: 1 }}>Cash / Transfer</TableCell>
+                        <TableCell sx={{ py: 1 }} align="center">
+                          Cah / Transfer
+                        </TableCell>
+                        <TableCell sx={{ py: 1 }} align="right">
+                          Amount
+                        </TableCell>
                       </TableRow>
                     </TableHead>
                     <TableBody>
@@ -487,18 +628,18 @@ export const GenerateTransactionReceipt = () => {
                               },
                             }}
                           >
-                            <TableCell align="left">
+                            <TableCell sx={{ py: 1 }} align="left">
                               {getCurrencySymbol(entry.currency)}
                               {entry.cash ? entry.cash : ""}
-                              {entry.cash && entry.transfer ? " - " : ""}
+                              {entry.cash && entry.transfer ? " / " : ""}
                               {entry.transfer ? entry.transfer : ""}
                             </TableCell>
-                            <TableCell align="center">
+                            <TableCell sx={{ py: 1 }} align="center">
                               {entry.cash_rate ? entry.cash_rate : ""}
-                              {entry.cash && entry.transfer ? " - " : ""}
+                              {entry.cash && entry.transfer ? " / " : ""}
                               {entry.transfer_rate ? entry.transfer_rate : ""}
                             </TableCell>
-                            <TableCell align="right"></TableCell>
+                            <TableCell sx={{ py: 1 }} align="right"></TableCell>
                           </TableRow>
                         ))}
 
@@ -510,26 +651,79 @@ export const GenerateTransactionReceipt = () => {
                               },
                             }}
                           >
-                            <TableCell align="left"></TableCell>
+                            <TableCell sx={{ py: 1 }} align="left"></TableCell>
 
-                            <TableCell align="center">
+                            <TableCell sx={{ py: 1 }} align="center">
                               {entry.cash_rate ? entry.cash_rate : ""}
-                              {entry.cash && entry.transfer ? " - " : ""}
+                              {entry.cash && entry.transfer ? " / " : ""}
                               {entry.transfer_rate ? entry.transfer_rate : ""}
                             </TableCell>
-                            <TableCell align="right">
+                            <TableCell sx={{ py: 1 }} align="right">
                               {getCurrencySymbol(entry.currency)}
                               {entry.cash ? entry.cash : ""}
-                              {entry.cash && entry.transfer ? " - " : ""}
+                              {entry.cash && entry.transfer ? " / " : ""}
                               {entry.transfer ? entry.transfer : ""}
                             </TableCell>
                           </TableRow>
                         ))}
-
                         <TableRow>
-                          <TableCell rowSpan={3} />
-                          <TableCell colSpan={1}>Total</TableCell>
-                          <TableCell align="right">
+                          <TableCell sx={{ py: 1 }} rowSpan={3} />
+                          <TableCell sx={{ py: 1 }} colSpan={1}>
+                            Cash Collected
+                          </TableCell>
+                          <TableCell sx={{ py: 1 }} align="right">
+                            {giving.map((entry) => (
+                              <>
+                                {entry.cash === 0 ? (
+                                  <></>
+                                ) : (
+                                  <>
+                                    {getCurrencySymbol(entry.currency)}
+                                    <NumericFormat
+                                      value={entry.cash}
+                                      thousandSeparator={true}
+                                      displayType="text"
+                                      renderText={(formattedValue) => (
+                                        <span>{formattedValue}</span>
+                                      )}
+                                    />
+                                  </>
+                                )}
+                              </>
+                            ))}
+                          </TableCell>
+                        </TableRow>
+                        <TableRow>
+                          <TableCell sx={{ py: 1 }}>
+                            Amount Transfered
+                          </TableCell>
+                          <TableCell sx={{ py: 1 }} align="right">
+                            {giving.map((entry) => (
+                              <>
+                                {entry.transfer === 0 ? (
+                                  <></>
+                                ) : (
+                                  <>
+                                    {getCurrencySymbol(entry.currency)}
+                                    <NumericFormat
+                                      value={entry.transfer}
+                                      thousandSeparator={true}
+                                      displayType="text"
+                                      renderText={(formattedValue) => (
+                                        <span>{formattedValue}</span>
+                                      )}
+                                    />
+                                  </>
+                                )}
+                              </>
+                            ))}
+                          </TableCell>
+                        </TableRow>
+                        <TableRow>
+                          <TableCell sx={{ py: 1 }} colSpan={1}>
+                            Total
+                          </TableCell>
+                          <TableCell sx={{ py: 1 }} align="right">
                             {giving.map((entry) => (
                               <>
                                 <NumericFormat
@@ -554,8 +748,8 @@ export const GenerateTransactionReceipt = () => {
                           </TableCell>
                         </TableRow>
                         <TableRow>
-                          <TableCell colSpan={1}></TableCell>
-                          <TableCell align="right"></TableCell>
+                          <TableCell sx={{ py: 1 }} colSpan={1}></TableCell>
+                          <TableCell sx={{ py: 1 }} align="right"></TableCell>
                         </TableRow>
                       </>
                     </TableBody>

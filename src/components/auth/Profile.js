@@ -5,19 +5,9 @@ import { axiosInstance } from "../utils/AxiosInstance";
 import Typography from "@mui/material/Typography";
 
 export function UserProfile() {
-  const [user, setUser] = React.useState({});
-  const getUser = async () => {
-    const response = await axiosInstance.get(
-      "/users/detail/",
-      { headers: { "Content-Type": "application/json" } },
-      { withCredentials: true }
-    );
-    setUser(response.data);
-    localStorage.setItem("user", JSON.stringify(response.data));
-  };
-  React.useEffect(() => {
-    getUser();
-  });
+  const [user, setUser] = React.useState(
+    JSON.parse(localStorage.getItem("user"))
+  );
   return (
     <>
       <Title section="User Profile" />
@@ -36,7 +26,7 @@ export function UserProfile() {
         </Typography>
         <Typography variant="h6" gutterBottom>
           {" "}
-          Role: Front Desk
+          Role: {user.station}
         </Typography>
       </PageBox>
     </>

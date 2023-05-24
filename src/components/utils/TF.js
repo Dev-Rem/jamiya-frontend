@@ -217,7 +217,11 @@ export default function TransactionForm(props) {
     try {
       const response = await axiosInstance.patch(
         `/transactions/${transaction.id}/`,
-        transaction
+        {
+          ...transaction,
+          beneficiaries,
+          receive_give: receiveGiveFormList,
+        }
       );
       event.preventDefault();
       navigate(-1);
@@ -282,14 +286,14 @@ export default function TransactionForm(props) {
   };
 
   React.useEffect(() => {
-    // setTimeout(() => {
-    //   getAccounts();
-    // }, 5000);
-    console.log({
-      ...transaction,
-      beneficiaries,
-      receive_give: receiveGiveFormList,
-    });
+    setTimeout(() => {
+      getAccounts();
+    }, 5000);
+    // console.log({
+    //   ...transaction,
+    //   beneficiaries,
+    //   receive_give: receiveGiveFormList,
+    // });
     setStation(getStation(currentUrl));
   }, [accounts]);
   return (
@@ -695,6 +699,7 @@ export default function TransactionForm(props) {
               value={beneficiary["customer_bank_name"] || ""}
               size="small"
             >
+              <MenuItem value=""></MenuItem>
               {commercialBanks.map((bankName) => (
                 <MenuItem key={bankName} value={bankName}>
                   {bankName}

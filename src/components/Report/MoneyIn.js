@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import FormStack from "../utils/FormStack";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
@@ -22,7 +22,7 @@ export default function MoneyIn() {
 
   const handleSubmit = async () => {
     let id = currentUrl.state.reportId;
-    navigate(`/${currentUrl.pathname.split("/")[1]}`);
+    navigate(-1);
     const response = await axiosInstance.patch(`/moneyins/${id}/`, value);
   };
   return (

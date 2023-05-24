@@ -27,7 +27,8 @@ export default function SignUp() {
     password: "",
     first_name: "",
     last_name: "",
-    confirm_password: "",
+    password: "",
+    station: "",
   });
 
   // handle user register submit button
