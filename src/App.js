@@ -7,7 +7,7 @@ import {
   AddCustomerLedger,
   ViewCustomerLedger,
 } from "./pages/CustomerLedger";
-import { GeneralLedger, Rate } from "./pages/GeneralLedger";
+import { GeneralLedger, Rate, ViewGeneralLedger } from "./pages/GeneralLedger";
 import {
   ReportList,
   ReportDetails,
@@ -16,6 +16,7 @@ import {
 import {
   TransactionLog,
   SearchedTransactionResults,
+  MyTransactions,
 } from "./pages/TransactionLog";
 import NewTransaction from "./pages/NewTransaction";
 import { NewAccount, EditOrDeleteAccount } from "./pages/NewAccount";
@@ -48,11 +49,16 @@ export default function App() {
         <Route exact path={"/report-logs"} element={<ReportList />} />
         <Route exact path={"/report-details"} element={<ReportDetails />} />
         <Route exact path={"/transaction-logs"} element={<TransactionLog />} />
+        <Route exact path={"/new-transaction"} element={<NewTransaction />} />
+        <Route exact path={"/my-transactions"} element={<MyTransactions />} />
 
         <Route exact path={"/general-ledger"} element={<GeneralLedger />} />
-
+        <Route exact path={"/ledger-details"} element={<ViewGeneralLedger />} />
         <Route exact path={"/:section/add-account"} element={<NewAccount />} />
         <Route exact path={"/:section/update-rates"} element={<Rate />} />
+
+        <Route exact path={"/:section/add"} element={<AddCustomerLedger />} />
+        <Route exact path={"/:section/view"} element={<ViewCustomerLedger />} />
         <Route
           exact
           path={"/:search/report/search-results"}
@@ -89,23 +95,8 @@ export default function App() {
 
         <Route
           exact
-          path={"/:section/new-transaction"}
-          element={<NewTransaction />}
-        />
-        <Route
-          exact
           path={"/:section/update-balances"}
           element={<UpdateMoneyIn />}
-        />
-        <Route
-          exact
-          path={"/:section/add"}
-          element={<AddCustomerLedger customerLedger={customerLedger} />}
-        />
-        <Route
-          exact
-          path={"/:section/view"}
-          element={<ViewCustomerLedger customerLedger={customerLedger} />}
         />
       </Routes>
     </Router>

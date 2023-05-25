@@ -2,18 +2,20 @@ import * as React from "react";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import TableCell, { tableCellClasses } from "@mui/material/TableCell";
-import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
 import { styled, experimental_sx as sx } from "@mui/system";
 import { axiosInstance } from "../utils/AxiosInstance";
 import { NumericFormat } from "react-number-format";
+import { Link, useLocation } from "react-router-dom";
+import Pagination from "@mui/material/Pagination";
+import FormStack from "../utils/FormStack";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
-    // backgroundColor: theme.palette.common.white,
     color: "#C9037F",
   },
   [`&.${tableCellClasses.body}`]: {
@@ -23,29 +25,23 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
   },
 }));
 
-export default function LedgerVariables() {
-  const [ledgerVariables, setLedgerVariables] = React.useState({});
+export function LedgerVariables(props) {
+  const [ledgerVariables, setLedgerVariables] = React.useState(
+    props.data || {}
+  );
 
   async function getLedgerVariables() {
-    try {
-      const response = await axiosInstance.get(`/generalledger/`);
-      setLedgerVariables(response.data.results[0]);
-    } catch {
-      setLedgerVariables("You need to create a new report");
-    }
+    const response = await axiosInstance.get(`/generalledger/`);
+    setLedgerVariables(response.data.results[0]);
   }
   React.useEffect(() => {
-    setTimeout(getLedgerVariables, 2000);
+    if (props.data) {
+    } else {
+      setTimeout(getLedgerVariables, 2000);
+    }
   }, []);
   return (
-    <div>
-      <Typography
-        variant="h6"
-        component="h6"
-        sx={{ color: "#303030", marginTop: "30px", marginBottom: "10px" }}
-      >
-        Ledger Variables {LedgerVariables.date_created}
-      </Typography>
+    <>
       <TableContainer component={Paper}>
         <Table
           sx={{
@@ -66,7 +62,7 @@ export default function LedgerVariables() {
                   thousandSeparator={true}
                   displayType="text"
                   renderText={(formattedValue) => (
-                    <span> {formattedValue}</span>
+                    <span>&#8358; {formattedValue}</span>
                   )}
                 />
               </TableCell>
@@ -83,7 +79,7 @@ export default function LedgerVariables() {
                   thousandSeparator={true}
                   displayType="text"
                   renderText={(formattedValue) => (
-                    <span> {formattedValue}</span>
+                    <span>&#8358; {formattedValue}</span>
                   )}
                 />
               </TableCell>
@@ -100,7 +96,7 @@ export default function LedgerVariables() {
                   thousandSeparator={true}
                   displayType="text"
                   renderText={(formattedValue) => (
-                    <span> {formattedValue}</span>
+                    <span>&#8358; {formattedValue}</span>
                   )}
                 />
               </TableCell>
@@ -117,7 +113,7 @@ export default function LedgerVariables() {
                   thousandSeparator={true}
                   displayType="text"
                   renderText={(formattedValue) => (
-                    <span> {formattedValue}</span>
+                    <span>&#8358; {formattedValue}</span>
                   )}
                 />
               </TableCell>
@@ -134,7 +130,7 @@ export default function LedgerVariables() {
                   thousandSeparator={true}
                   displayType="text"
                   renderText={(formattedValue) => (
-                    <span> {formattedValue}</span>
+                    <span> &#8358; {formattedValue}</span>
                   )}
                 />
               </TableCell>
@@ -151,7 +147,7 @@ export default function LedgerVariables() {
                   thousandSeparator={true}
                   displayType="text"
                   renderText={(formattedValue) => (
-                    <span> {formattedValue}</span>
+                    <span>&#8358; {formattedValue}</span>
                   )}
                 />
               </TableCell>
@@ -168,7 +164,7 @@ export default function LedgerVariables() {
                   thousandSeparator={true}
                   displayType="text"
                   renderText={(formattedValue) => (
-                    <span> {formattedValue}</span>
+                    <span>&#8358; {formattedValue}</span>
                   )}
                 />
               </TableCell>
@@ -185,7 +181,7 @@ export default function LedgerVariables() {
                   thousandSeparator={true}
                   displayType="text"
                   renderText={(formattedValue) => (
-                    <span> {formattedValue}</span>
+                    <span> &#8358; {formattedValue}</span>
                   )}
                 />
               </TableCell>
@@ -193,6 +189,133 @@ export default function LedgerVariables() {
           </TableBody>
         </Table>
       </TableContainer>
-    </div>
+    </>
+  );
+}
+
+export function ListLedger() {
+  const [ledgerVariables, setLedgerVariables] = React.useState([]);
+  const [currentPage, setCurrentPage] = React.useState(1);
+  const [totalPages, setTotalPages] = React.useState(0);
+
+  const getLedgerVariables = async (page) => {
+    const response = await axiosInstance.get(`/generalledger/`, {
+      params: {
+        page: page,
+      },
+    });
+    setLedgerVariables(response.data.results);
+    setTotalPages(Math.ceil(response.data.count / 10));
+  };
+
+  const handlePageChange = (event, page) => {
+    setCurrentPage(page);
+    getLedgerVariables(page);
+  };
+  React.useEffect(() => {
+    setTimeout(getLedgerVariables, 2000);
+  }, []);
+  return (
+    <>
+      <TableContainer component={Paper} sx={{ mt: 2 }}>
+        <Table sx={{ minWidth: 650 }} aria-label="simple table">
+          <TableHead>
+            <TableRow>
+              <TableCell>Date</TableCell>
+              <TableCell align="right">Currency Total</TableCell>
+              <TableCell align="right">Grand Total</TableCell>
+              <TableCell align="right">Calculated Profit</TableCell>
+              <TableCell align="right">Variance</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {ledgerVariables === [] ? (
+              <></>
+            ) : (
+              <>
+                {ledgerVariables.map((row) => (
+                  <TableRow
+                    key={row.id}
+                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                  >
+                    <>
+                      <TableCell component="th" scope="row">
+                        <Link
+                          to={`/ledger-details`}
+                          style={{
+                            textDecoration: "none",
+                            color: "#C9037F",
+                          }}
+                          state={{ ledger: row }}
+                        >
+                          {row.date_created}
+                        </Link>
+                      </TableCell>
+                    </>
+
+                    <TableCell align="right">
+                      <NumericFormat
+                        value={row.currency_total}
+                        thousandSeparator={true}
+                        displayType="text"
+                        renderText={(formattedValue) => (
+                          <span>&#8358; {formattedValue}</span>
+                        )}
+                      />
+                    </TableCell>
+                    <TableCell align="right">
+                      <NumericFormat
+                        value={row.grand_total}
+                        thousandSeparator={true}
+                        displayType="text"
+                        renderText={(formattedValue) => (
+                          <span>&#8358; {formattedValue}</span>
+                        )}
+                      />
+                    </TableCell>
+                    <TableCell align="right">
+                      <NumericFormat
+                        value={row.calculated_profit}
+                        thousandSeparator={true}
+                        displayType="text"
+                        renderText={(formattedValue) => (
+                          <span>&#8358; {formattedValue}</span>
+                        )}
+                      />
+                    </TableCell>
+                    <TableCell align="right">
+                      <NumericFormat
+                        value={row.variance}
+                        thousandSeparator={true}
+                        displayType="text"
+                        renderText={(formattedValue) => (
+                          <span>&#8358; {formattedValue}</span>
+                        )}
+                      />
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </>
+            )}
+          </TableBody>
+        </Table>
+      </TableContainer>
+      <FormStack />
+      <Pagination
+        count={totalPages}
+        page={currentPage}
+        onChange={handlePageChange}
+      />
+    </>
+  );
+}
+
+export function ViewLedgerVariable() {
+  const location = useLocation();
+  const data = location.state.ledger;
+  return (
+    <>
+      <LedgerVariables data={data} />
+    </>
   );
 }

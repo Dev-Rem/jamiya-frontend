@@ -394,15 +394,12 @@ const ViewTransaction = (props) => {
 export function ViewEditDeleteTransaction() {
   const location = useLocation();
   const data = location.state.data;
-  const [admin, setAdmin] = React.useState(
-    `${JSON.parse(localStorage.getItem("user")).is_admin}`
-  );
   return (
     <>
-      {admin ? (
-        <ViewTransaction data={data} />
-      ) : (
+      {JSON.parse(localStorage.getItem("user")).is_admin === true ? (
         <TransactionForm data={data} use="edit" />
+      ) : (
+        <ViewTransaction data={data} />
       )}
     </>
   );

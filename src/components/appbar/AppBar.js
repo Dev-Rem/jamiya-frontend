@@ -30,6 +30,9 @@ function ResponsiveDrawer(props) {
 
   const handleLogout = async () => {
     await axiosInstance.post("/users/logout/");
+    localStorage.removeItem('access_token')
+    localStorage.removeItem("refresh_token");
+
   };
   const container =
     window !== undefined ? () => window().document.body : undefined;

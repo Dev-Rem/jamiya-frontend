@@ -12,6 +12,9 @@ export default function DrawerList() {
   const [admin, setAdmin] = React.useState(
     JSON.parse(localStorage.getItem("user")).is_admin
   );
+  const [staff, setStaff] = React.useState(
+    JSON.parse(localStorage.getItem("user")).is_staff
+  );
 
   return (
     <List sx={{ padding: 0 }}>
@@ -24,13 +27,19 @@ export default function DrawerList() {
         </ListItemButton>
       </Link>
       <Divider />
-      {admin ? (
+      {admin && staff ? (
         <></>
       ) : (
         <>
           <Link to="/report" style={{ textDecoration: "none", color: "black" }}>
             <ListItemButton>
-              <ListItemText primary="Report" />
+              <ListItemText primary="Daily Report" />
+            </ListItemButton>
+          </Link>
+          <Divider />
+          <Link to="/new-transaction" style={{ textDecoration: "none", color: "black" }}>
+            <ListItemButton>
+              <ListItemText primary="New Transaction" />
             </ListItemButton>
           </Link>
           <Divider />
@@ -45,7 +54,7 @@ export default function DrawerList() {
           <Divider />
         </>
       )}
-      {admin ? (
+      {admin && staff ? (
         <>
           <Link
             to="/general-ledger"
@@ -65,6 +74,12 @@ export default function DrawerList() {
             </ListItemButton>
           </Link>
           <Divider />
+        </>
+      ) : (
+        <></>
+      )}
+      {admin ? (
+        <>
           <Link
             to="/report-logs"
             style={{ textDecoration: "none", color: "black" }}
@@ -79,7 +94,7 @@ export default function DrawerList() {
             style={{ textDecoration: "none", color: "black" }}
           >
             <ListItemButton button>
-              <ListItemText primary="Transaction Log" />
+              <ListItemText primary="Transaction Logs" />
             </ListItemButton>
           </Link>
           <Divider />
@@ -90,7 +105,9 @@ export default function DrawerList() {
 
       <ListItemButton>
         <ListItemText
-          primary={JSON.parse(localStorage.getItem("user")).station}
+          primary={`Station: ${
+            JSON.parse(localStorage.getItem("user")).station
+          }`}
         />
       </ListItemButton>
       <Divider />

@@ -23,6 +23,8 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
   },
   [`&.${tableCellClasses.body}`]: {
     fontSize: 14,
+    paddingTop: 7,
+    paddingBottom: 7,
   },
 }));
 
@@ -44,20 +46,6 @@ export function Report() {
 
   const currentUrl = useLocation();
   const today = new Date();
-
-  function getStation(currentUrl) {
-    switch (currentUrl.pathname) {
-      case "/frontdesk":
-        return "FRONTDESK";
-      case "/online":
-        return "ONLINE";
-      case "/bank":
-        return "BANK";
-      case "/marketing":
-        return "MARKETING";
-    }
-  }
-  const data = [];
 
   const createNewReport = async () => {
     const reportData = {
@@ -151,14 +139,6 @@ export function Report() {
             Get Report
           </Button>
 
-          <Link
-            to={`${currentUrl.pathname}/new-transaction`}
-            style={{ textDecoration: "none" }}
-          >
-            <Button variant="text" type="submit" sx={purpleButton}>
-              New Transaction
-            </Button>
-          </Link>
           <Link
             to={`${currentUrl.pathname}/update-balances`}
             style={{ textDecoration: "none" }}

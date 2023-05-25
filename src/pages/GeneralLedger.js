@@ -2,7 +2,11 @@ import React from "react";
 import ResponsiveDrawer from "../components/appbar/AppBar";
 import Accounts from "../components/ledgers/Account";
 import Title from "../components/utils/Title";
-import LedgerVariables from "../components/ledgers/LedgerVariables";
+import {
+  LedgerVariables,
+  ListLedger,
+  ViewLedgerVariable,
+} from "../components/ledgers/LedgerVariables";
 import UpdateRate from "../components/ledgers/UpdateRate";
 
 export function GeneralLedger() {
@@ -10,9 +14,12 @@ export function GeneralLedger() {
     <div>
       {" "}
       <ResponsiveDrawer>
-        <Title section="General Report" />
+        <Title section="Accounts" />
         <Accounts />
+        <Title section="Ledger Variables" />
         <LedgerVariables />
+        <Title section="Ledger List" />
+        <ListLedger />
       </ResponsiveDrawer>
     </div>
   );
@@ -23,6 +30,16 @@ export function Rate() {
     <div>
       <ResponsiveDrawer>
         <UpdateRate />
+      </ResponsiveDrawer>
+    </div>
+  );
+}
+
+export function ViewGeneralLedger() {
+  return (
+    <div>
+      <ResponsiveDrawer>
+        <ViewLedgerVariable />
       </ResponsiveDrawer>
     </div>
   );

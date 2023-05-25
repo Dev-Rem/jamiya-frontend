@@ -14,7 +14,7 @@ export function TransactionLog() {
       <ResponsiveDrawer>
         <Title section="Transaction Log" />
         <Filters use="transactions" />
-        <TransactionLogComponent />
+        <TransactionLogComponent use="transaction-log" />
       </ResponsiveDrawer>{" "}
     </div>
   );
@@ -31,3 +31,16 @@ export function SearchedTransactionResults() {
     </div>
   );
 }
+
+export function MyTransactions() {
+  return (
+    <div>
+      {" "}
+      <ResponsiveDrawer>
+        <Title section="My Transactions" />
+        <TransactionLogComponent use="my-transactions" />
+      </ResponsiveDrawer>{" "}
+    </div>
+  );
+}
+

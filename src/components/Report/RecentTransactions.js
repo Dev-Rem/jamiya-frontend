@@ -61,7 +61,6 @@ export default function RecentTransactions() {
     JSON.parse(localStorage.getItem("user")).station
   );
 
-
   const getTransactions = async () => {
     const today = new Date();
     const year = today.getFullYear();
@@ -137,10 +136,13 @@ export default function RecentTransactions() {
   );
 }
 
-export function TransactionLogComponent() {
+export function TransactionLogComponent(props) {
   const [transactions, setTransactions] = React.useState([]);
   const [currentPage, setCurrentPage] = React.useState(1);
   const [totalPages, setTotalPages] = React.useState(0);
+  const [station, setStation] = React.useState(
+    JSON.parse(localStorage.getItem("user"))
+  );
 
   const getTransactions = async (page) => {
     try {
@@ -167,7 +169,16 @@ export function TransactionLogComponent() {
   return (
     <>
       <FormStack></FormStack>
-      <TransactionList data={transactions} />
+      {props.use === "transaction-log" ? (
+        <TransactionList data={transactions} />
+      ) : (
+        <TransactionList
+          data={transactions.filter((transaction) => {
+            return transaction.initiator === station.station;
+          })}
+        />
+      )}
+      <FormStack />
       <Pagination
         count={totalPages}
         page={currentPage}

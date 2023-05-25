@@ -147,17 +147,13 @@ export function ReportsList() {
   const [totalPages, setTotalPages] = React.useState(0);
 
   const getReports = async (page) => {
-    try {
-      const response = await axiosInstance.get(`/reports`, {
-        params: {
-          page: page,
-        },
-      });
-      setReports(response.data.results);
-      setTotalPages(Math.ceil(response.data.count / 10));
-    } catch {
-      setReports("there are no reports to display");
-    }
+    const response = await axiosInstance.get(`/reports`, {
+      params: {
+        page: page,
+      },
+    });
+    setReports(response.data.results);
+    setTotalPages(Math.ceil(response.data.count / 10));
   };
   const handlePageChange = (event, page) => {
     setCurrentPage(page);

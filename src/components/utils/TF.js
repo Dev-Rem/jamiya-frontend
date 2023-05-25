@@ -35,7 +35,7 @@ const receiveGiveFormData = {
 const transactionData = {
   phone_number: "",
   description: "",
-  initiator: "",
+  initiator: JSON.parse(localStorage.getItem("user")).station,
   status: "SENT",
   category: "PURCHASE",
   profit: 0.0,
@@ -103,7 +103,9 @@ const commercialBanks = [
 export default function TransactionForm(props) {
   const navigate = useNavigate();
   const currentUrl = useLocation();
-  const [station, setStation] = React.useState(getStation(currentUrl));
+  // const [station, setStation] = React.useState(
+  //   JSON.parse(localStorage.getItem("user")).station
+  // );
   const [use, setUse] = React.useState(props.use);
   const [accounts, setAccounts] = React.useState([]);
 
@@ -129,19 +131,6 @@ export default function TransactionForm(props) {
       return props.data.receive_give;
     }
   });
-
-  function getStation(currentUrl) {
-    switch (currentUrl.pathname.split("/")[1]) {
-      case "frontdesk":
-        return "FRONTDESK";
-      case "online":
-        return "ONLINE";
-      case "bank":
-        return "BANK";
-      case "marketing":
-        return "MARKETING";
-    }
-  }
 
   async function getAccounts() {
     const response = await axiosInstance.get("/accounts/");
@@ -202,12 +191,12 @@ export default function TransactionForm(props) {
 
   const handleSubmit = async () => {
     try {
+      navigate("/report");
       const response = await axiosInstance.post("/transactions/", {
         ...transaction,
         beneficiaries,
         receive_give: receiveGiveFormList,
       });
-      navigate(-1);
     } catch (error) {
       console.log(error);
     }
@@ -224,7 +213,7 @@ export default function TransactionForm(props) {
         }
       );
       event.preventDefault();
-      navigate(-1);
+      navigate("/report");
     } catch (error) {
       console.log(error);
     }
@@ -294,7 +283,6 @@ export default function TransactionForm(props) {
     //   beneficiaries,
     //   receive_give: receiveGiveFormList,
     // });
-    setStation(getStation(currentUrl));
   }, [accounts]);
   return (
     <>
@@ -773,8 +761,8 @@ export default function TransactionForm(props) {
                 name="initiator"
                 onChange={handleTransactionChange}
                 size="small"
-                value={(transaction.initiator = station)}
-                defaultValue={(transaction.initiator = station)}
+                value={transaction.initiator}
+                defaultValue={transaction.initiator}
               />
             </>
           )}
