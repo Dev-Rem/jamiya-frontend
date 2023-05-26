@@ -112,23 +112,23 @@ export default function RecentTransactions() {
         </Box>
         <TabPanel value={value} index={0}>
           <TransactionList
-            data={transactions.filter(
-              (transaction) => transaction.status === "SENT"
-            )}
+            data={transactions
+              .filter((transaction) => transaction.status === "SENT")
+              .sort((a, b) => b.serial_number - a.serial_number)}
           />
         </TabPanel>
         <TabPanel value={value} index={1}>
           <TransactionList
-            data={transactions.filter(
-              (transaction) => transaction.status === "INITIATED"
-            )}
+            data={transactions
+              .filter((transaction) => transaction.status === "INITIATED")
+              .sort((a, b) => b.serial_number - a.serial_number)}
           />
         </TabPanel>
         <TabPanel value={value} index={2}>
           <TransactionList
-            data={transactions.filter(
-              (transaction) => transaction.status === "APPROVED"
-            )}
+            data={transactions
+              .filter((transaction) => transaction.status === "APPROVED")
+              .sort((a, b) => b.serial_number - a.serial_number)}
           />
         </TabPanel>
       </Box>
@@ -173,9 +173,11 @@ export function TransactionLogComponent(props) {
         <TransactionList data={transactions} />
       ) : (
         <TransactionList
-          data={transactions.filter((transaction) => {
-            return transaction.initiator === station.station;
-          })}
+          data={transactions
+            .filter((transaction) => {
+              return transaction.initiator === station.station;
+            })
+            .sort((a, b) => b.serial_number - a.serial_number)}
         />
       )}
       <FormStack />

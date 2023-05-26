@@ -25,6 +25,7 @@ import html2pdf from "html2pdf.js";
 export const GenerateTransactionReceipt = () => {
   const navigate = useNavigate();
   const currentUrl = useLocation();
+  console.log(currentUrl);
   const [transaction, setTransaction] = React.useState(currentUrl.state.data);
   const [receiving, setReceiving] = React.useState(
     currentUrl.state.data.receive_give.filter(
@@ -37,7 +38,6 @@ export const GenerateTransactionReceipt = () => {
     )
   );
   const printContentRef = React.useRef(null);
-  console.log(giving);
 
   const handlePrint = () => {
     const printContent = printContentRef.current.innerHTML;

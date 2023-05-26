@@ -84,6 +84,7 @@ export default function Account() {
     };
 
     await axiosInstance.post(`/generalledger/`, ledgerData);
+    window.location.reload();
   };
 
   React.useEffect(() => {

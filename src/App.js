@@ -2,12 +2,18 @@ import "./assets/css/style.css";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Dashboard from "./pages/Dashboard";
 import DailyReport from "./pages/DailyReport";
+import NewTransaction from "./pages/NewTransaction";
+import { NewAccount, EditOrDeleteAccount } from "./pages/NewAccount";
+import UpdateMoneyIn from "./pages/UpdateMoneyIn";
+import { TransactionDetails } from "./pages/TransactionDetails";
+import { LoginPage, RegisterPage, ProfilePage } from "./pages/Auth";
+import { PreviewReceipt } from "./pages/PreviewReceipt";
+import { GeneralLedger, Rate, ViewGeneralLedger } from "./pages/GeneralLedger";
 import {
   CustomerLedgerPage,
   AddCustomerLedger,
   ViewCustomerLedger,
 } from "./pages/CustomerLedger";
-import { GeneralLedger, Rate, ViewGeneralLedger } from "./pages/GeneralLedger";
 import {
   ReportList,
   ReportDetails,
@@ -18,23 +24,8 @@ import {
   SearchedTransactionResults,
   MyTransactions,
 } from "./pages/TransactionLog";
-import NewTransaction from "./pages/NewTransaction";
-import { NewAccount, EditOrDeleteAccount } from "./pages/NewAccount";
-import UpdateMoneyIn from "./pages/UpdateMoneyIn";
-import { TransactionDetails } from "./pages/TransactionDetails";
-import { LoginPage, RegisterPage, ProfilePage } from "./pages/Auth";
-import { PreviewReceipt } from "./pages/PreviewReceipt";
 
 export default function App() {
-  const customerLedger = {
-    customer: "",
-    naira: "",
-    dollar: "",
-    pound: "",
-    euro: "",
-    description: "",
-    status: "",
-  };
   return (
     <Router basename={"/"}>
       <Routes>
@@ -72,7 +63,7 @@ export default function App() {
 
         <Route
           exact
-          path={"/:receiptNumber/receipt"}
+          path={"/:receiptnumber/transaction-receipt"}
           element={<PreviewReceipt />}
         />
 

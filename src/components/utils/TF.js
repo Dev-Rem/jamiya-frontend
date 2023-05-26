@@ -189,13 +189,16 @@ export default function TransactionForm(props) {
     });
   };
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (event) => {
+    event.preventDefault();
     try {
-      navigate("/report");
       const response = await axiosInstance.post("/transactions/", {
         ...transaction,
         beneficiaries,
         receive_give: receiveGiveFormList,
+      });
+      navigate(`/${response.data.receipt_number}/transaction-receipt`, {
+        state: { data: response.data },
       });
     } catch (error) {
       console.log(error);
@@ -213,7 +216,7 @@ export default function TransactionForm(props) {
         }
       );
       event.preventDefault();
-      navigate("/report");
+      navigate(-1);
     } catch (error) {
       console.log(error);
     }
@@ -400,10 +403,10 @@ export default function TransactionForm(props) {
                     size="small"
                     required
                   >
-                    <MenuItem value="NAIRA">NAIRA</MenuItem>
-                    <MenuItem value="DOLLAR">DOLLAR</MenuItem>
-                    <MenuItem value="POUND">POUND</MenuItem>
-                    <MenuItem value="EURO">EURO</MenuItem>
+                    <MenuItem value="NGN">NGN</MenuItem>
+                    <MenuItem value="USD">USD</MenuItem>
+                    <MenuItem value="GBP">GBP</MenuItem>
+                    <MenuItem value="EUR">EUR</MenuItem>
                   </TextField>
                 </FormStack>
 
@@ -821,9 +824,12 @@ export default function TransactionForm(props) {
                 variant="text"
                 sx={purpleButton}
                 onClick={() => {
-                  navigate(`/${transaction.receipt_number}/receipt`, {
-                    state: { data: transaction },
-                  });
+                  navigate(
+                    `/${transaction.receipt_number}/transaction-receipt`,
+                    {
+                      state: { data: transaction },
+                    }
+                  );
                 }}
               >
                 Generate Receipt

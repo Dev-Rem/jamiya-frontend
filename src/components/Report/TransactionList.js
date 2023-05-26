@@ -25,7 +25,8 @@ export function TransactionList(props) {
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
             <TableRow>
-              <TableCell>Reciept No.</TableCell>
+              <TableCell>Serial Number</TableCell>
+              <TableCell align="right">Reciept Number</TableCell>
               <TableCell align="right">Station</TableCell>
               <TableCell align="right">Category</TableCell>
               <TableCell align="right">Phone Number</TableCell>
@@ -43,13 +44,14 @@ export function TransactionList(props) {
                   >
                     <TableCell sx={{ color: "#C9037F" }}>
                       <Link
-                        to={`${currentUrl.pathname}/view-transaction`}
+                        to={`/${data.receipt_number}/view-transaction`}
                         style={{ textDecoration: "none", color: "#c9037e" }}
                         state={{ data: data }} //https://ui.dev/react-router-pass-props-to-link
                       >
-                        {data.receipt_number}
+                        {data.serial_number}
                       </Link>
                     </TableCell>
+                    <TableCell align="right">{data.receipt_number}</TableCell>
                     <TableCell align="right">{data.initiator}</TableCell>
                     <TableCell align="right">{data.category}</TableCell>
                     <TableCell align="right">{data.phone_number}</TableCell>
@@ -377,7 +379,7 @@ const ViewTransaction = (props) => {
             variant="text"
             sx={purpleButton}
             onClick={() => {
-              navigate(`/${data.receipt_number}/receipt`, {
+              navigate(`/${data.receipt_number}/transaction-receipt`, {
                 state: { data: data },
               });
             }}
