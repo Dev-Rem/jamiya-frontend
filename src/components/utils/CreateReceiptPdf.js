@@ -110,7 +110,11 @@ export const GenerateTransactionReceipt = () => {
         <Button variant="text" sx={purpleButton} onClick={handlePrint}>
           print
         </Button>
-        <Button variant="text" sx={purpleButton} onClick={() => navigate("/")}>
+        <Button
+          variant="text"
+          sx={purpleButton}
+          onClick={() => navigate("/dashboard")}
+        >
           dashboard
         </Button>
         <Button variant="text" sx={purpleButton} onClick={downloadPDF}>

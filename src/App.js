@@ -29,11 +29,11 @@ export default function App() {
   return (
     <Router basename={"/"}>
       <Routes>
-        <Route exact path={"/login"} element={<LoginPage />} />
+        <Route exact path={"/"} element={<LoginPage />} />
         <Route exact path={"/register"} element={<RegisterPage />} />
         <Route exact path={"/profile"} element={<ProfilePage />} />
 
-        <Route exact path={"/"} element={<Dashboard />} />
+        <Route exact path={"/dashboard"} element={<Dashboard />} />
 
         <Route exact path={"/report"} element={<DailyReport />} />
 

@@ -18,10 +18,10 @@ export default function DrawerList() {
 
   return (
     <List sx={{ padding: 0 }}>
-      <Link to="/" style={{ textDecoration: "none", color: "black" }}>
+      <Link to="/dashboard" style={{ textDecoration: "none", color: "black" }}>
         <Image src={FxLogo} alt="Logo" />
       </Link>
-      <Link to="/" style={{ textDecoration: "none", color: "black" }}>
+      <Link to="/dashboard" style={{ textDecoration: "none", color: "black" }}>
         <ListItemButton button>
           <ListItemText primary="Dashboard" />
         </ListItemButton>
@@ -37,7 +37,10 @@ export default function DrawerList() {
             </ListItemButton>
           </Link>
           <Divider />
-          <Link to="/new-transaction" style={{ textDecoration: "none", color: "black" }}>
+          <Link
+            to="/new-transaction"
+            style={{ textDecoration: "none", color: "black" }}
+          >
             <ListItemButton>
               <ListItemText primary="New Transaction" />
             </ListItemButton>

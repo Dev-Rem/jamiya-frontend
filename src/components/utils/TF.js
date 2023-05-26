@@ -35,7 +35,7 @@ const receiveGiveFormData = {
 const transactionData = {
   phone_number: "",
   description: "",
-  initiator: JSON.parse(localStorage.getItem("user")).station,
+  initiator: "",
   status: "SENT",
   category: "PURCHASE",
   profit: 0.0,
@@ -102,10 +102,6 @@ const commercialBanks = [
 
 export default function TransactionForm(props) {
   const navigate = useNavigate();
-  const currentUrl = useLocation();
-  // const [station, setStation] = React.useState(
-  //   JSON.parse(localStorage.getItem("user")).station
-  // );
   const [use, setUse] = React.useState(props.use);
   const [accounts, setAccounts] = React.useState([]);
 
@@ -764,7 +760,11 @@ export default function TransactionForm(props) {
                 name="initiator"
                 onChange={handleTransactionChange}
                 size="small"
-                value={transaction.initiator}
+                value={
+                  (transaction.initiator = JSON.parse(
+                    localStorage.getItem("user")
+                  ).station)
+                }
                 defaultValue={transaction.initiator}
               />
             </>
