@@ -48,10 +48,10 @@ const ListReports = (props) => {
             <TableRow>
               <TableCell>Date</TableCell>
               <TableCell align="right">Station</TableCell>
-              <TableCell align="right">Naira</TableCell>
-              <TableCell align="right">Dollar</TableCell>
-              <TableCell align="right">Pound</TableCell>
-              <TableCell align="right">Euro</TableCell>
+              <TableCell align="right">NGN</TableCell>
+              <TableCell align="right">USD</TableCell>
+              <TableCell align="right">GBP</TableCell>
+              <TableCell align="right">EUR</TableCell>
               <TableCell align="right">Profit</TableCell>
             </TableRow>
           </TableHead>
@@ -83,7 +83,7 @@ const ListReports = (props) => {
                     <TableCell align="right">{row.station}</TableCell>
                     <TableCell align="right">
                       <NumericFormat
-                        value={row.currencies.naira}
+                        value={row.currencies.ngn}
                         thousandSeparator={true}
                         displayType="text"
                         renderText={(formattedValue) => (
@@ -93,7 +93,7 @@ const ListReports = (props) => {
                     </TableCell>
                     <TableCell align="right">
                       <NumericFormat
-                        value={row.currencies.dollar}
+                        value={row.currencies.usd}
                         thousandSeparator={true}
                         displayType="text"
                         renderText={(formattedValue) => (
@@ -103,7 +103,7 @@ const ListReports = (props) => {
                     </TableCell>
                     <TableCell align="right">
                       <NumericFormat
-                        value={row.currencies.pound}
+                        value={row.currencies.gbp}
                         thousandSeparator={true}
                         displayType="text"
                         renderText={(formattedValue) => (
@@ -113,7 +113,7 @@ const ListReports = (props) => {
                     </TableCell>
                     <TableCell align="right">
                       <NumericFormat
-                        value={row.currencies.euro}
+                        value={row.currencies.eur}
                         thousandSeparator={true}
                         displayType="text"
                         renderText={(formattedValue) => (
@@ -177,60 +177,60 @@ export function ReportsList() {
 }
 
 export function SearchedReport() {
-  const currentUrl = useLocation();
+  const locaction = useLocation();
   return (
     <>
-      <ListReports data={currentUrl.state.data.results} />
+      <ListReports data={locaction.state.data.results} />
     </>
   );
 }
 
 export function ViewReport(props) {
-  const currentUrl = useLocation();
+  const locaction = useLocation();
   const [report, setReport] = React.useState([]);
 
-  function createData(name, naira, dollar, pound, euro) {
-    return { name, naira, dollar, pound, euro };
+  function createData(name, ngn, usd, gbp, eur) {
+    return { name, ngn, usd, gbp, eur };
   }
   const getCompleteReport = async () => {
-    let reportId = currentUrl.state.report.id;
+    let reportId = locaction.state.report.id;
     try {
       const response = await axiosInstance.get(`/reports/${reportId}/`);
       const data = [
         createData(
           "Opening Balance",
-          response.data.opening_balance.currencies.naira,
-          response.data.opening_balance.currencies.dollar,
-          response.data.opening_balance.currencies.pound,
-          response.data.opening_balance.currencies.euro
+          response.data.opening_balance.currencies.ngn,
+          response.data.opening_balance.currencies.usd,
+          response.data.opening_balance.currencies.gbp,
+          response.data.opening_balance.currencies.eur
         ),
         createData(
           "Money In",
-          response.data.money_in.currencies.naira,
-          response.data.money_in.currencies.dollar,
-          response.data.money_in.currencies.pound,
-          response.data.money_in.currencies.euro
+          response.data.money_in.currencies.ngn,
+          response.data.money_in.currencies.usd,
+          response.data.money_in.currencies.gbp,
+          response.data.money_in.currencies.eur
         ),
         createData(
           "Report Balance",
-          response.data.report.currencies.naira,
-          response.data.report.currencies.dollar,
-          response.data.report.currencies.pound,
-          response.data.report.currencies.euro
+          response.data.report.currencies.ngn,
+          response.data.report.currencies.usd,
+          response.data.report.currencies.gbp,
+          response.data.report.currencies.eur
         ),
         createData(
           "Money Out",
-          response.data.money_out.currencies.naira,
-          response.data.money_out.currencies.dollar,
-          response.data.money_out.currencies.pound,
-          response.data.money_out.currencies.euro
+          response.data.money_out.currencies.ngn,
+          response.data.money_out.currencies.usd,
+          response.data.money_out.currencies.gbp,
+          response.data.money_out.currencies.eur
         ),
         createData(
           "Closing Balance",
-          response.data.closing_balance.currencies.naira,
-          response.data.closing_balance.currencies.dollar,
-          response.data.closing_balance.currencies.pound,
-          response.data.closing_balance.currencies.euro
+          response.data.closing_balance.currencies.ngn,
+          response.data.closing_balance.currencies.usd,
+          response.data.closing_balance.currencies.gbp,
+          response.data.closing_balance.currencies.eur
         ),
       ];
       setReport(data);
@@ -255,16 +255,16 @@ export function ViewReport(props) {
         >
           <Stack spacing={2} direction="row" mb={2}>
             <Link
-              to={`${currentUrl.pathname}/update-balances`}
+              to={`${locaction.pathname}/update-balances`}
               style={{ textDecoration: "none" }}
-              state={{ reportId: currentUrl.state.report.id }}
+              state={{ reportId: locaction.state.report.id }}
             >
               <Button variant="text" type="submit" sx={purpleButton}>
                 Update Balance
               </Button>
             </Link>
             <Typography variant="h6">
-              Date: {currentUrl.state.report.date_created}
+              Date: {locaction.state.report.date_created}
             </Typography>
           </Stack>
         </Box>
@@ -273,10 +273,10 @@ export function ViewReport(props) {
             <TableHead>
               <TableRow>
                 <StyledTableCell>REPORT </StyledTableCell>
-                <StyledTableCell align="right">Naira</StyledTableCell>
-                <StyledTableCell align="right">Dollar</StyledTableCell>
-                <StyledTableCell align="right">Pound</StyledTableCell>
-                <StyledTableCell align="right">Euro</StyledTableCell>
+                <StyledTableCell align="right">NGN</StyledTableCell>
+                <StyledTableCell align="right">USD</StyledTableCell>
+                <StyledTableCell align="right">GBP</StyledTableCell>
+                <StyledTableCell align="right">EUR</StyledTableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -293,17 +293,17 @@ export function ViewReport(props) {
                       {value.name}
                     </StyledTableCell>
                     <StyledTableCell align="right">
-                      &#8358; {value.naira}
+                      &#8358; {value.ngn}
                     </StyledTableCell>
                     <StyledTableCell align="right">
-                      &#36; {value.dollar}
+                      &#36; {value.usd}
                     </StyledTableCell>
                     <StyledTableCell align="right">
                       {" "}
-                      &#163; {value.pound}
+                      &#163; {value.gbp}
                     </StyledTableCell>
                     <StyledTableCell align="right">
-                      &#128; {value.euro}
+                      &#128; {value.eur}
                     </StyledTableCell>
                   </StyledTableRow>
                 ))

@@ -18,7 +18,7 @@ axiosInstance.interceptors.response.use(
   async (error) => {
     console.log("using this guy");
     if (error.response.status === 401 && !refresh) {
-      window.location.href = "/login";
+      window.location.href = "/";
 
       // refresh = true;
       // const response = await axios.post(

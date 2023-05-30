@@ -39,11 +39,28 @@ export default function DashBoardContent() {
       const day = String(today.getDate()).padStart(2, "0");
       return `${year}-${month}-${day}`;
     });
-    getTransactions();
+    setTimeout(getTransactions, 2000);
   }, []);
   return (
     <>
-      {JSON.parse(localStorage.getItem("user")).is_admin === true ? (
+      {JSON.parse(localStorage.getItem("user")).station === "ONLINE" ? (
+        <>
+          <TransactionList
+            data={transactions.filter(
+              (transaction) =>
+                transaction.status === "SENT" &&
+                transaction.date_created === todaysDate
+            )}
+          />
+          <FormStack />
+          <Pagination
+            count={totalPages}
+            page={currentPage}
+            onChange={handlePageChange}
+          />
+        </>
+      ) : JSON.parse(localStorage.getItem("user")).station ===
+        "HEAD OF OPERATIONS" ? (
         <>
           <TransactionList
             data={transactions.filter(

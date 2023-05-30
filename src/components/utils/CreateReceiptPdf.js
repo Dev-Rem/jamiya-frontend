@@ -24,18 +24,16 @@ import html2pdf from "html2pdf.js";
 
 export const GenerateTransactionReceipt = () => {
   const navigate = useNavigate();
-  const currentUrl = useLocation();
-  console.log(currentUrl);
-  const [transaction, setTransaction] = React.useState(currentUrl.state.data);
+  const locaction = useLocation();
+  console.log(locaction);
+  const [transaction, setTransaction] = React.useState(locaction.state.data);
   const [receiving, setReceiving] = React.useState(
-    currentUrl.state.data.receive_give.filter(
+    locaction.state.data.receive_give.filter(
       (receive) => receive.status === "RECEIVING"
     )
   );
   const [giving, setGiving] = React.useState(
-    currentUrl.state.data.receive_give.filter(
-      (give) => give.status === "GIVING"
-    )
+    locaction.state.data.receive_give.filter((give) => give.status === "GIVING")
   );
   const printContentRef = React.useRef(null);
 
@@ -67,10 +65,10 @@ export const GenerateTransactionReceipt = () => {
 
   function getCurrencySymbol(currencyName) {
     const currencySymbols = {
-      DOLLAR: "\u0024", // $
-      EURO: "\u20AC", // €
-      POUND: "\u00A3", // £
-      NAIRA: "\u20A6", // ₦
+      USD: "\u0024", // $
+      EUR: "\u20AC", // €
+      GBP: "\u00A3", // £
+      NGN: "\u20A6", // ₦
       // Add more currency symbols as needed
     };
 
@@ -109,13 +107,6 @@ export const GenerateTransactionReceipt = () => {
       <FormStack>
         <Button variant="text" sx={purpleButton} onClick={handlePrint}>
           print
-        </Button>
-        <Button
-          variant="text"
-          sx={purpleButton}
-          onClick={() => navigate("/dashboard")}
-        >
-          dashboard
         </Button>
         <Button variant="text" sx={purpleButton} onClick={downloadPDF}>
           Download
@@ -364,7 +355,7 @@ export const GenerateTransactionReceipt = () => {
                                 displayType="text"
                                 renderText={(formattedValue) => (
                                   <span>
-                                    {getCurrencySymbol("NAIRA")}
+                                    {getCurrencySymbol("NGN")}
                                     {formattedValue}
                                   </span>
                                 )}
@@ -492,7 +483,7 @@ export const GenerateTransactionReceipt = () => {
                                 displayType="text"
                                 renderText={(formattedValue) => (
                                   <span>
-                                    {getCurrencySymbol("NAIRA")}
+                                    {getCurrencySymbol("ngn")}
                                     {formattedValue}
                                   </span>
                                 )}

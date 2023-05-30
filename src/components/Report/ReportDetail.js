@@ -32,50 +32,49 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 export function ReportDetails(props) {
   const [values, setValues] = React.useState({});
 
-  function createData(name, naira, dollar, pound, euro) {
-    return { name, naira, dollar, pound, euro };
+  function createData(name, ngn, usd, gbp, eur) {
+    return { name, ngn, usd, gbp, eur };
   }
   const getCompleteReport = async () => {
     try {
       const response = await axiosInstance.get(
         `/reports/${JSON.parse(localStorage.getItem("user")).station}/`
       );
-      console.log(completeReport);
       const data = [
         createData(
           "Opening Balance",
-          response.data.opening_balance.naira,
-          response.data.opening_balance.dollar,
-          response.data.opening_balance.pound,
-          response.data.opening_balance.euro
+          response.data.opening_balance.ngn,
+          response.data.opening_balance.usd,
+          response.data.opening_balance.gbp,
+          response.data.opening_balance.eur
         ),
         createData(
           "Money In",
-          response.data.money_in.naira,
-          response.data.money_in.dollar,
-          response.data.money_in.pound,
-          response.data.money_in.euro
+          response.data.money_in.ngn,
+          response.data.money_in.usd,
+          response.data.money_in.gbp,
+          response.data.money_in.eur
         ),
         createData(
           "Report Balance",
-          response.data.report.naira,
-          response.data.report.dollar,
-          response.data.report.pound,
-          response.data.report.euro
+          response.data.report.ngn,
+          response.data.report.usd,
+          response.data.report.gbp,
+          response.data.report.eur
         ),
         createData(
           "Money Out",
-          response.data.money_out.naira,
-          response.data.money_out.dollar,
-          response.data.money_out.pound,
-          response.data.money_out.euro
+          response.data.money_out.ngn,
+          response.data.money_out.usd,
+          response.data.money_out.gbp,
+          response.data.money_out.eur
         ),
         createData(
           "Closing Balance",
-          response.data.closing_balance.naira,
-          response.data.closing_balance.dollar,
-          response.data.closing_balance.pound,
-          response.data.closing_balance.euro
+          response.data.closing_balance.ngn,
+          response.data.closing_balance.usd,
+          response.data.closing_balance.gbp,
+          response.data.closing_balance.eur
         ),
       ];
       setValues(data);
@@ -92,10 +91,10 @@ export function ReportDetails(props) {
           <TableHead>
             <TableRow>
               <StyledTableCell>REPORT</StyledTableCell>
-              <StyledTableCell align="right">Naira</StyledTableCell>
-              <StyledTableCell align="right">Dollar</StyledTableCell>
-              <StyledTableCell align="right">Pound</StyledTableCell>
-              <StyledTableCell align="right">Euro</StyledTableCell>
+              <StyledTableCell align="right">NGN</StyledTableCell>
+              <StyledTableCell align="right">USD</StyledTableCell>
+              <StyledTableCell align="right">GBP</StyledTableCell>
+              <StyledTableCell align="right">EUR</StyledTableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -105,17 +104,17 @@ export function ReportDetails(props) {
                   {value.name}
                 </StyledTableCell>
                 <StyledTableCell align="right">
-                  &#8358; {value.naira}
+                  &#8358; {value.ngn}
                 </StyledTableCell>
                 <StyledTableCell align="right">
-                  &#36; {value.dollar}
+                  &#36; {value.usd}
                 </StyledTableCell>
                 <StyledTableCell align="right">
                   {" "}
-                  &#163; {value.pound}
+                  &#163; {value.gbp}
                 </StyledTableCell>
                 <StyledTableCell align="right">
-                  &#128; {value.euro}
+                  &#128; {value.eur}
                 </StyledTableCell>
               </StyledTableRow>
             ))}

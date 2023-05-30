@@ -6,7 +6,7 @@ import { axiosInstance } from "../utils/AxiosInstance";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import MenuItem from "@mui/material/MenuItem";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function UpdateRate() {
   const navigate = useNavigate();
@@ -60,10 +60,10 @@ export default function UpdateRate() {
             onChange={handleChange}
             size="small"
           >
-            <MenuItem value="NAIRA">NAIRA</MenuItem>
-            <MenuItem value="DOLLAR">DOLLAR</MenuItem>
-            <MenuItem value="POUND">POUND</MenuItem>
-            <MenuItem value="EURO">EURO</MenuItem>
+            <MenuItem value="ngn">NGN</MenuItem>
+            <MenuItem value="usd">USD</MenuItem>
+            <MenuItem value="gbp">GBP</MenuItem>
+            <MenuItem value="eur">EUR</MenuItem>
           </TextField>
           <TextField
             id="standard-number"

@@ -14,6 +14,7 @@ import { Link, useLocation } from "react-router-dom";
 import { axiosInstance } from "../utils/AxiosInstance";
 import Button from "@mui/material/Button";
 import { NumericFormat } from "react-number-format";
+import { calcTotals } from "../utils/Definitions";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -38,57 +39,25 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 export default function Account() {
-  const currentUrl = useLocation();
+  const locaction = useLocation();
   const [accounts, setAccounts] = React.useState([]);
   const [totals, setTotals] = React.useState({});
-
-  function calcTotals(accounts) {
-    const nairaTotal = accounts
-      .map((account) => Object.values(account)[3].naira)
-      .reduce((acc, curr) => acc + curr, 0);
-
-    const dollarTotal = accounts
-      .map((account) => Object.values(account)[3].dollar)
-      .reduce((acc, curr) => acc + curr, 0);
-
-    const poundTotal = accounts
-      .map((account) => Object.values(account)[3].pound)
-      .reduce((acc, curr) => acc + curr, 0);
-
-    const euroTotal = accounts
-      .map((account) => Object.values(account)[3].euro)
-      .reduce((acc, curr) => acc + curr, 0);
-    setTotals({ nairaTotal, dollarTotal, poundTotal, euroTotal });
-  }
 
   async function getAccounts() {
     try {
       const response = await axiosInstance.get(`/accounts`);
       setAccounts(response.data.results);
-      calcTotals(response.data.results);
+      setTotals(calcTotals(response.data.results));
     } catch {
       setAccounts("there are no accounts to display");
     }
   }
   const createNewLegder = async () => {
-    const ledgerData = {
-      currencies: { naira: 0.0, dollar: 0.0, pound: 0.0, euro: 0.0 },
-      currency_total: 0.0,
-      grand_total: 0.0,
-      previous_total: 0.0,
-      difference: 0.0,
-      expense: 0.0,
-      book_profit: 0.0,
-      calculated_profit: 0.0,
-      variance: 0.0,
-    };
-
-    await axiosInstance.post(`/generalledger/`, ledgerData);
     window.location.reload();
   };
 
   React.useEffect(() => {
-    setTimeout(getAccounts, 2000);
+    setTimeout(getAccounts, 1000);
   }, []);
 
   return (
@@ -103,16 +72,8 @@ export default function Account() {
         }}
       >
         <Stack spacing={2} direction="row">
-          <Button
-            onClick={createNewLegder}
-            variant="text"
-            type="submit"
-            sx={purpleButton}
-          >
-            New Report
-          </Button>
           <Link
-            to={`${currentUrl.pathname}/add-account`}
+            to={`${locaction.pathname}/add-account`}
             style={{ textDecoration: "none" }}
           >
             <Button variant="text" type="submit" sx={purpleButton}>
@@ -120,7 +81,7 @@ export default function Account() {
             </Button>
           </Link>
           <Link
-            to={`${currentUrl.pathname}/update-rates`}
+            to={`${locaction.pathname}/update-rates`}
             style={{ textDecoration: "none" }}
           >
             <Button variant="text" type="submit" sx={purpleButton}>
@@ -140,10 +101,10 @@ export default function Account() {
             <TableRow>
               <StyledTableCell>Bank Name</StyledTableCell>
               <StyledTableCell>Account Name</StyledTableCell>
-              <StyledTableCell align="right">Naira</StyledTableCell>
-              <StyledTableCell align="right">Dollar</StyledTableCell>
-              <StyledTableCell align="right">Pound</StyledTableCell>
-              <StyledTableCell align="right">Euro</StyledTableCell>
+              <StyledTableCell align="right">NGN</StyledTableCell>
+              <StyledTableCell align="right">USD</StyledTableCell>
+              <StyledTableCell align="right">GBP</StyledTableCell>
+              <StyledTableCell align="right">EUR</StyledTableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -151,7 +112,7 @@ export default function Account() {
               <StyledTableRow key={account.id}>
                 <StyledTableCell component="th" scope="row">
                   <Link
-                    to={`${currentUrl.pathname}/update-account/${account.id}`}
+                    to={`${locaction.pathname}/update-account`}
                     style={{ textDecoration: "none", color: "#C9037F" }}
                     state={{ account: account }}
                   >
@@ -163,7 +124,7 @@ export default function Account() {
                 </StyledTableCell>
                 <StyledTableCell align="right">
                   <NumericFormat
-                    value={account.currencies.naira}
+                    value={account.currencies.ngn}
                     thousandSeparator={true}
                     displayType="text"
                     renderText={(formattedValue) => (
@@ -173,7 +134,7 @@ export default function Account() {
                 </StyledTableCell>
                 <StyledTableCell align="right">
                   <NumericFormat
-                    value={account.currencies.dollar}
+                    value={account.currencies.usd}
                     thousandSeparator={true}
                     displayType="text"
                     renderText={(formattedValue) => (
@@ -184,7 +145,7 @@ export default function Account() {
                 <StyledTableCell align="right">
                   {" "}
                   <NumericFormat
-                    value={account.currencies.pound}
+                    value={account.currencies.gbp}
                     thousandSeparator={true}
                     displayType="text"
                     renderText={(formattedValue) => (
@@ -194,7 +155,7 @@ export default function Account() {
                 </StyledTableCell>
                 <StyledTableCell align="right">
                   <NumericFormat
-                    value={account.currencies.euro}
+                    value={account.currencies.eur}
                     thousandSeparator={true}
                     displayType="text"
                     renderText={(formattedValue) => (
@@ -209,7 +170,7 @@ export default function Account() {
               <TableCell />
               <TableCell align="right" sx={{ fontWeight: "bold" }}>
                 <NumericFormat
-                  value={totals.nairaTotal}
+                  value={totals.ngnTotal}
                   thousandSeparator={true}
                   displayType="text"
                   renderText={(formattedValue) => (
@@ -219,7 +180,7 @@ export default function Account() {
               </TableCell>
               <TableCell align="right" sx={{ fontWeight: "bold" }}>
                 <NumericFormat
-                  value={totals.dollarTotal}
+                  value={totals.usdTotal}
                   thousandSeparator={true}
                   displayType="text"
                   renderText={(formattedValue) => (
@@ -229,7 +190,7 @@ export default function Account() {
               </TableCell>
               <TableCell align="right" sx={{ fontWeight: "bold" }}>
                 <NumericFormat
-                  value={totals.poundTotal}
+                  value={totals.gbpTotal}
                   thousandSeparator={true}
                   displayType="text"
                   renderText={(formattedValue) => (
@@ -239,7 +200,7 @@ export default function Account() {
               </TableCell>
               <TableCell align="right" sx={{ fontWeight: "bold" }}>
                 <NumericFormat
-                  value={totals.euroTotal}
+                  value={totals.eurTotal}
                   thousandSeparator={true}
                   displayType="text"
                   renderText={(formattedValue) => (

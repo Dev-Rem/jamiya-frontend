@@ -30,9 +30,8 @@ function ResponsiveDrawer(props) {
 
   const handleLogout = async () => {
     await axiosInstance.post("/users/logout/");
-    localStorage.removeItem('access_token')
+    localStorage.removeItem("access_token");
     localStorage.removeItem("refresh_token");
-
   };
   const container =
     window !== undefined ? () => window().document.body : undefined;
@@ -69,10 +68,7 @@ function ResponsiveDrawer(props) {
             <AccountCircleIcon sx={{ mr: 2, mb: 1 }} />
           </Link>
 
-          <Link
-            to={"/login"}
-            style={{ textDecoration: "none", color: "white" }}
-          >
+          <Link to={"/"} style={{ textDecoration: "none", color: "white" }}>
             <LogoutIcon
               fontSize="medium"
               sx={{ mb: 1 }}

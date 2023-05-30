@@ -7,9 +7,9 @@ import { axiosInstance } from "../utils/AxiosInstance";
 import { useLocation, useNavigate } from "react-router-dom";
 import Box from "@mui/material/Box";
 
-export default function MoneyIn() {
+export default function UpdateBalanceForm(props) {
   const navigate = useNavigate();
-  const currentUrl = useLocation();
+  const locaction = useLocation();
   const [value, setValue] = React.useState({});
 
   const handleChange = (event) => {
@@ -18,12 +18,19 @@ export default function MoneyIn() {
     setValue((prevState) => {
       return { ...prevState, [key]: parseInt(val) };
     });
+
+    console.log(value);
   };
 
-  const handleSubmit = async () => {
-    let id = currentUrl.state.reportId;
-    navigate(-1);
-    const response = await axiosInstance.patch(`/moneyins/${id}/`, value);
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    let id = locaction.state.reportId;
+    if (props.use === "moneyin") {
+      const response = await axiosInstance.patch(`/moneyins/${id}/`, value);
+    } else {
+      const response = await axiosInstance.patch(`/moneyouts/${id}/`, value);
+    }
+    window.location.reload();
   };
   return (
     <Box
@@ -38,47 +45,51 @@ export default function MoneyIn() {
       <FormStack>
         <TextField
           id="standard-number"
-          label="Naira"
+          label="NGN"
           type="number"
           variant="standard"
           fullWidth
           size="small"
-          name="naira"
-          value={value.naira}
+          name="ngn"
+          value={value.ngn}
           onChange={handleChange}
+          defaultValue={0}
         />
         <TextField
           id="standard-number"
-          label="Dollar"
+          label="USD"
           type="number"
           variant="standard"
           fullWidth
           size="small"
-          name="dollar"
-          value={value.dollar}
+          name="usd"
+          value={value.usd}
           onChange={handleChange}
+          defaultValue={0}
         />
         <TextField
           id="standard-number"
-          label="Pound"
+          label="GBP"
           type="number"
           variant="standard"
           fullWidth
           size="small"
-          name="pound"
-          value={value.pound}
+          name="gbp"
+          value={value.gbp}
           onChange={handleChange}
+          defaultValue={0}
         />
         <TextField
           id="standard-number"
-          label="Euro"
+          label="EUR"
           type="number"
           variant="standard"
           fullWidth
           size="small"
-          name="euro"
-          value={value.euro}
+          name="eur"
+          value={value.eur}
           onChange={handleChange}
+          defaultValue={0}
         />
       </FormStack>
       <FormStack>

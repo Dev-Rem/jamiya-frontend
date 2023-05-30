@@ -1,20 +1,19 @@
 import React from "react";
 import ResponsiveDrawer from "../components/appbar/AppBar";
 import Title from "../components/utils/Title";
-import MoneyIn from "../components/report/MoneyIn";
-import MoneyOut from "../components/report/MoneyOut";
 import Toolbar from "@mui/material/Toolbar";
+import UpdateBalanceForm from "../components/report/UpdateBalanceForm";
 
-export default function UpdateMoneyIn() {
+export default function UpdateBalances() {
   return (
     <div>
       {" "}
       <ResponsiveDrawer>
         <Title section="Money In" />
-        <MoneyIn />
+        <UpdateBalanceForm use="moneyin" />
         <Toolbar />
         <Title section="Money Out" />
-        <MoneyOut />
+        <UpdateBalanceForm use="moneyout" />
       </ResponsiveDrawer>{" "}
     </div>
   );

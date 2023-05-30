@@ -203,6 +203,13 @@ export default function TransactionForm(props) {
 
   const handleUpdateSubmit = async (event) => {
     try {
+      const user = JSON.parse(localStorage.getItem("user"));
+      if (user.is_admin) {
+        transaction.status = "INITIATED";
+      }
+      if (user.is_admin && user.is_staff) {
+        transaction.status = "APPROVED";
+      }
       const response = await axiosInstance.patch(
         `/transactions/${transaction.id}/`,
         {
@@ -741,7 +748,7 @@ export default function TransactionForm(props) {
             <TextField
               disabled
               id="standard-disabled"
-              label="Initiator"
+              label="Station"
               variant="standard"
               fullWidth
               name="initiator"
@@ -754,7 +761,7 @@ export default function TransactionForm(props) {
               <TextField
                 disabled
                 id="standard-disabled"
-                label="Initiator"
+                label="Station"
                 variant="standard"
                 fullWidth
                 name="initiator"
@@ -769,25 +776,22 @@ export default function TransactionForm(props) {
               />
             </>
           )}
-          {props.use === "create" ? (
-            <></>
-          ) : (
-            <TextField
-              id="standard-select-currency"
-              select
-              label="Status"
-              value={transaction.status}
-              variant="standard"
-              fullWidth
-              name="status"
-              onChange={handleTransactionChange}
-              size="small"
-            >
-              <MenuItem value="SENT">SENT</MenuItem>
-              <MenuItem value="INITIATED">INITIATED</MenuItem>
-              <MenuItem value="APPROVED">APPROVED</MenuItem>
-            </TextField>
-          )}
+          <TextField
+            id="standard-select-currency"
+            select
+            disabled
+            label="Status"
+            value={transaction.status}
+            variant="standard"
+            fullWidth
+            name="status"
+            onChange={handleTransactionChange}
+            size="small"
+          >
+            <MenuItem value="SENT">SENT</MenuItem>
+            <MenuItem value="INITIATED">INITIATED</MenuItem>
+            <MenuItem value="APPROVED">APPROVED</MenuItem>
+          </TextField>
         </FormStack>
         <FormStack>
           <Typography variant="h6">
@@ -812,14 +816,24 @@ export default function TransactionForm(props) {
             </>
           ) : (
             <>
-              {" "}
-              <Button
-                variant="text"
-                sx={purpleButton}
-                onClick={handleUpdateSubmit}
-              >
-                update
-              </Button>
+              {transaction.status === "APPROVED" ? (
+                <Button
+                  variant="text"
+                  sx={purpleButton}
+                  disabled
+                  onClick={handleUpdateSubmit}
+                >
+                  update
+                </Button>
+              ) : (
+                <Button
+                  variant="text"
+                  sx={purpleButton}
+                  onClick={handleUpdateSubmit}
+                >
+                  update
+                </Button>
+              )}
               <Button
                 variant="text"
                 sx={purpleButton}

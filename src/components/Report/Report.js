@@ -39,75 +39,67 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 export function Report() {
+  const [reportId, setReportId] = React.useState();
   const [values, setValues] = React.useState([]);
   const [station, setStation] = React.useState(
     JSON.parse(localStorage.getItem("user")).station
   );
 
-  const currentUrl = useLocation();
+  const locaction = useLocation();
   const today = new Date();
 
-  const createNewReport = async () => {
+  function createData(name, ngn, usd, gbp, eur) {
+    return { name, ngn, usd, gbp, eur };
+  }
+  const getCompleteReport = async () => {
     const reportData = {
-      currencies: { naira: 0.0, dollar: 0.0, pound: 0.0, euro: 0.0 },
+      currencies: { ngn: 0.0, usd: 0.0, gbp: 0.0, eur: 0.0 },
       description: station,
       station: station,
       profit: 0.0,
     };
     try {
-      const response = await axiosInstance.post(`/reports/`, reportData);
-      localStorage.setItem(
-        `${JSON.parse(localStorage.getItem("user")).station}`,
-        response.data.id
+      const createReport = await axiosInstance.post(`/reports/`, reportData);
+      setReportId(createReport.data.id);
+      console.log(createReport);
+      const response = await axiosInstance.get(
+        `/reports/${createReport.data.id}/`
       );
-
-      window.location.reload();
-    } catch (error) {}
-  };
-  function createData(name, naira, dollar, pound, euro) {
-    return { name, naira, dollar, pound, euro };
-  }
-  const getCompleteReport = async () => {
-    let reportId = localStorage.getItem(
-      `${JSON.parse(localStorage.getItem("user")).station}`
-    );
-    try {
-      const response = await axiosInstance.get(`/reports/${reportId}/`);
       const data = [
         createData(
           "Opening Balance",
-          response.data.opening_balance.currencies.naira,
-          response.data.opening_balance.currencies.dollar,
-          response.data.opening_balance.currencies.pound,
-          response.data.opening_balance.currencies.euro
+          response.data.opening_balance.currencies.ngn,
+          response.data.opening_balance.currencies.usd,
+          response.data.opening_balance.currencies.gbp,
+          response.data.opening_balance.currencies.eur
         ),
         createData(
           "Money In",
-          response.data.money_in.currencies.naira,
-          response.data.money_in.currencies.dollar,
-          response.data.money_in.currencies.pound,
-          response.data.money_in.currencies.euro
+          response.data.money_in.currencies.ngn,
+          response.data.money_in.currencies.usd,
+          response.data.money_in.currencies.gbp,
+          response.data.money_in.currencies.eur
         ),
         createData(
           "Report Balance",
-          response.data.report.currencies.naira,
-          response.data.report.currencies.dollar,
-          response.data.report.currencies.pound,
-          response.data.report.currencies.euro
+          response.data.report.currencies.ngn,
+          response.data.report.currencies.usd,
+          response.data.report.currencies.gbp,
+          response.data.report.currencies.eur
         ),
         createData(
           "Money Out",
-          response.data.money_out.currencies.naira,
-          response.data.money_out.currencies.dollar,
-          response.data.money_out.currencies.pound,
-          response.data.money_out.currencies.euro
+          response.data.money_out.currencies.ngn,
+          response.data.money_out.currencies.usd,
+          response.data.money_out.currencies.gbp,
+          response.data.money_out.currencies.eur
         ),
         createData(
           "Closing Balance",
-          response.data.closing_balance.currencies.naira,
-          response.data.closing_balance.currencies.dollar,
-          response.data.closing_balance.currencies.pound,
-          response.data.closing_balance.currencies.euro
+          response.data.closing_balance.currencies.ngn,
+          response.data.closing_balance.currencies.usd,
+          response.data.closing_balance.currencies.gbp,
+          response.data.closing_balance.currencies.eur
         ),
       ];
       setValues(data);
@@ -130,19 +122,19 @@ export function Report() {
         }}
       >
         <Stack spacing={2} direction="row" mb={2}>
-          <Button
+          {/* <Button
             variant="text"
             onClick={createNewReport}
             type="submit"
             sx={purpleButton}
           >
-            Get Report
-          </Button>
+            New Report
+          </Button> */}
 
           <Link
-            to={`${currentUrl.pathname}/update-balances`}
+            to={`${locaction.pathname}/update-balances`}
             style={{ textDecoration: "none" }}
-            state={{ reportId: localStorage.getItem(`${currentUrl.pathname}`) }}
+            state={{ reportId: reportId }}
           >
             <Button variant="text" type="submit" sx={purpleButton}>
               Update Balance
@@ -156,10 +148,10 @@ export function Report() {
           <TableHead>
             <TableRow>
               <StyledTableCell>REPORT </StyledTableCell>
-              <StyledTableCell align="right">Naira</StyledTableCell>
-              <StyledTableCell align="right">Dollar</StyledTableCell>
-              <StyledTableCell align="right">Pound</StyledTableCell>
-              <StyledTableCell align="right">Euro</StyledTableCell>
+              <StyledTableCell align="right">NGN</StyledTableCell>
+              <StyledTableCell align="right">USD</StyledTableCell>
+              <StyledTableCell align="right">GBP</StyledTableCell>
+              <StyledTableCell align="right">EUR</StyledTableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -177,7 +169,7 @@ export function Report() {
                   </StyledTableCell>
                   <StyledTableCell align="right">
                     <NumericFormat
-                      value={value.naira}
+                      value={value.ngn}
                       thousandSeparator={true}
                       displayType="text"
                       renderText={(formattedValue) => (
@@ -187,7 +179,7 @@ export function Report() {
                   </StyledTableCell>
                   <StyledTableCell align="right">
                     <NumericFormat
-                      value={value.dollar}
+                      value={value.usd}
                       thousandSeparator={true}
                       displayType="text"
                       renderText={(formattedValue) => (
@@ -197,7 +189,7 @@ export function Report() {
                   </StyledTableCell>
                   <StyledTableCell align="right">
                     <NumericFormat
-                      value={value.pound}
+                      value={value.gbp}
                       thousandSeparator={true}
                       displayType="text"
                       renderText={(formattedValue) => (
@@ -207,7 +199,7 @@ export function Report() {
                   </StyledTableCell>
                   <StyledTableCell align="right">
                     <NumericFormat
-                      value={value.euro}
+                      value={value.eur}
                       thousandSeparator={true}
                       displayType="text"
                       renderText={(formattedValue) => (

@@ -170,7 +170,9 @@ export function TransactionLogComponent(props) {
     <>
       <FormStack></FormStack>
       {props.use === "transaction-log" ? (
-        <TransactionList data={transactions} />
+        <TransactionList
+          data={transactions.sort((a, b) => b.serial_number - a.serial_number)}
+        />
       ) : (
         <TransactionList
           data={transactions
@@ -191,11 +193,11 @@ export function TransactionLogComponent(props) {
 }
 
 export function SearchedTransaction() {
-  const currentUrl = useLocation();
+  const locaction = useLocation();
   return (
     <>
       {" "}
-      <TransactionList data={currentUrl.state.data.results} />
+      <TransactionList data={locaction.state.data.results} />
     </>
   );
 }

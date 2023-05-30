@@ -56,7 +56,7 @@ function a11yProps(index) {
 
 export default function CustomerLedger() {
   const [value, setValue] = React.useState(0);
-  const currentUrl = useLocation();
+  const location = useLocation();
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -66,7 +66,7 @@ export default function CustomerLedger() {
     <div>
       <Stack spacing={2} direction="row">
         <Link
-          to={`${currentUrl.pathname}/add`}
+          to={`${location.pathname}/add`}
           style={{ textDecoration: "none" }}
         >
           <Button variant="text" type="submit" sx={purpleButton}>

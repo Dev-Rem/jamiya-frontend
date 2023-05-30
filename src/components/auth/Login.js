@@ -55,7 +55,7 @@ export default function SignInSide() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      navigate("/");
+      navigate("/dashboard");
       const response = await axios.post(
         `http://127.0.0.1:8000/api/tokens/`,
         value,

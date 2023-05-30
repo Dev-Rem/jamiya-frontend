@@ -31,13 +31,31 @@ export function LedgerVariables(props) {
   );
 
   async function getLedgerVariables() {
-    const response = await axiosInstance.get(`/generalledger/`);
-    setLedgerVariables(response.data.results[0]);
+    const ledgerData = {
+      currencies: { ngn: 0.0, usd: 0.0, gbp: 0.0, eur: 0.0 },
+      currency_total: 0.0,
+      grand_total: 0.0,
+      previous_total: 0.0,
+      difference: 0.0,
+      expense: 0.0,
+      book_profit: 0.0,
+      calculated_profit: 0.0,
+      variance: 0.0,
+    };
+
+    const createdLedger = await axiosInstance.post(
+      `/generalledger/`,
+      ledgerData
+    );
+    const response = await axiosInstance.get(
+      `/generalledger/${createdLedger.data.id}/`
+    );
+    setLedgerVariables(response.data);
   }
   React.useEffect(() => {
     if (props.data) {
     } else {
-      setTimeout(getLedgerVariables, 2000);
+      setTimeout(getLedgerVariables, 1000);
     }
   }, []);
   return (
@@ -213,7 +231,7 @@ export function ListLedger() {
     getLedgerVariables(page);
   };
   React.useEffect(() => {
-    setTimeout(getLedgerVariables, 2000);
+    setTimeout(getLedgerVariables, 1000);
   }, []);
   return (
     <>

@@ -9,28 +9,10 @@ import Paper from "@mui/material/Paper";
 import { Link, useLocation } from "react-router-dom";
 import { axiosInstance } from "../utils/AxiosInstance";
 import { NumericFormat } from "react-number-format";
-
-function calcTotals(accounts) {
-  const nairaTotal = accounts
-    .map((account) => account.currencies.naira)
-    .reduce((acc, curr) => acc + curr, 0);
-
-  const dollarTotal = accounts
-    .map((account) => account.currencies.dollar)
-    .reduce((acc, curr) => acc + curr, 0);
-
-  const poundTotal = accounts
-    .map((account) => account.currencies.pound)
-    .reduce((acc, curr) => acc + curr, 0);
-
-  const euroTotal = accounts
-    .map((account) => account.currencies.euro)
-    .reduce((acc, curr) => acc + curr, 0);
-  return { nairaTotal, dollarTotal, poundTotal, euroTotal };
-}
+import { calcTotals } from "../utils/Definitions";
 
 function ListCustomerLedgers(props) {
-  const currentUrl = useLocation();
+  const locaction = useLocation();
   const data = props.ledger;
   const totals = props.totals;
 
@@ -42,10 +24,10 @@ function ListCustomerLedgers(props) {
             <TableRow>
               <TableCell>Date</TableCell>
               <TableCell align="right">Customer Name</TableCell>
-              <TableCell align="right">Naira</TableCell>
-              <TableCell align="right">Dollar</TableCell>
-              <TableCell align="right">Pound</TableCell>
-              <TableCell align="right">Euro</TableCell>
+              <TableCell align="right">NGN</TableCell>
+              <TableCell align="right">USD</TableCell>
+              <TableCell align="right">GBP</TableCell>
+              <TableCell align="right">EUR</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -56,7 +38,7 @@ function ListCustomerLedgers(props) {
               >
                 <TableCell>
                   <Link
-                    to={`${currentUrl.pathname}/view`}
+                    to={`${locaction.pathname}/view`}
                     style={{ textDecoration: "none", color: "#C9037E" }}
                     state={{ row: row }} //https://ui.dev/react-router-pass-props-to-link
                   >
@@ -67,7 +49,7 @@ function ListCustomerLedgers(props) {
                 <TableCell align="right">{row.customer}</TableCell>
                 <TableCell align="right">
                   <NumericFormat
-                    value={row.currencies.naira}
+                    value={row.currencies.ngn}
                     thousandSeparator={true}
                     displayType="text"
                     renderText={(formattedValue) => (
@@ -77,7 +59,7 @@ function ListCustomerLedgers(props) {
                 </TableCell>
                 <TableCell align="right">
                   <NumericFormat
-                    value={row.currencies.dollar}
+                    value={row.currencies.usd}
                     thousandSeparator={true}
                     displayType="text"
                     renderText={(formattedValue) => (
@@ -87,7 +69,7 @@ function ListCustomerLedgers(props) {
                 </TableCell>
                 <TableCell align="right">
                   <NumericFormat
-                    value={row.currencies.pound}
+                    value={row.currencies.gbp}
                     thousandSeparator={true}
                     displayType="text"
                     renderText={(formattedValue) => (
@@ -97,7 +79,7 @@ function ListCustomerLedgers(props) {
                 </TableCell>
                 <TableCell align="right">
                   <NumericFormat
-                    value={row.currencies.euro}
+                    value={row.currencies.eur}
                     thousandSeparator={true}
                     displayType="text"
                     renderText={(formattedValue) => (
@@ -118,7 +100,7 @@ function ListCustomerLedgers(props) {
 
               <TableCell align="right" sx={{ fontWeight: "bold" }}>
                 <NumericFormat
-                  value={totals.nairaTotal}
+                  value={totals.ngnTotal}
                   thousandSeparator={true}
                   displayType="text"
                   renderText={(formattedValue) => (
@@ -128,7 +110,7 @@ function ListCustomerLedgers(props) {
               </TableCell>
               <TableCell align="right" sx={{ fontWeight: "bold" }}>
                 <NumericFormat
-                  value={totals.dollarTotal}
+                  value={totals.usdTotal}
                   thousandSeparator={true}
                   displayType="text"
                   renderText={(formattedValue) => (
@@ -138,7 +120,7 @@ function ListCustomerLedgers(props) {
               </TableCell>
               <TableCell align="right" sx={{ fontWeight: "bold" }}>
                 <NumericFormat
-                  value={totals.poundTotal}
+                  value={totals.gbpTotal}
                   thousandSeparator={true}
                   displayType="text"
                   renderText={(formattedValue) => (
@@ -148,7 +130,7 @@ function ListCustomerLedgers(props) {
               </TableCell>
               <TableCell align="right" sx={{ fontWeight: "bold" }}>
                 <NumericFormat
-                  value={totals.euroTotal}
+                  value={totals.eurTotal}
                   thousandSeparator={true}
                   displayType="text"
                   renderText={(formattedValue) => (
@@ -177,7 +159,7 @@ export function Recievable() {
     setRecievable(filteredResponse);
   };
   React.useEffect(() => {
-    setTimeout(getRecievables, 2000);
+    setTimeout(getRecievables, 1000);
   }, []);
   return (
     <>
@@ -200,7 +182,7 @@ export function Payable() {
     setTotals(calcTotals(filteredResponse));
   };
   React.useEffect(() => {
-    setTimeout(getPayables, 2000);
+    setTimeout(getPayables, 1000);
   }, []);
   return (
     <>

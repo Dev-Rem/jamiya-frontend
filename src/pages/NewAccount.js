@@ -1,10 +1,7 @@
 import React from "react";
 import ResponsiveDrawer from "../components/appbar/AppBar";
 import Title from "../components/utils/Title";
-import {
-  AddAccount,
-  UpdateAccount,
-} from "../components/addComponents/AddAccount";
+import { AccountForm } from "../components/addComponents/AddAccount";
 
 export function NewAccount() {
   return (
@@ -12,7 +9,7 @@ export function NewAccount() {
       {" "}
       <ResponsiveDrawer>
         <Title section="Add Account" />
-        <AddAccount />
+        <AccountForm />
       </ResponsiveDrawer>{" "}
     </div>
   );
@@ -24,7 +21,7 @@ export function EditOrDeleteAccount() {
       {" "}
       <ResponsiveDrawer>
         <Title section="Edit or Delete Account" />
-        <UpdateAccount />
+        <AccountForm />
       </ResponsiveDrawer>{" "}
     </div>
   );

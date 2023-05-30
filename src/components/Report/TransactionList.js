@@ -17,8 +17,6 @@ import { purpleButton, CancelButton } from "../utils/Button";
 
 export function TransactionList(props) {
   const data = props.data;
-  const currentUrl = useLocation();
-
   return (
     <>
       <TableContainer component={Paper} sx={{ boxShadow: "none" }}>
@@ -26,11 +24,11 @@ export function TransactionList(props) {
           <TableHead>
             <TableRow>
               <TableCell>Serial Number</TableCell>
-              <TableCell align="right">Reciept Number</TableCell>
-              <TableCell align="right">Station</TableCell>
-              <TableCell align="right">Category</TableCell>
-              <TableCell align="right">Phone Number</TableCell>
-              <TableCell align="right">Date</TableCell>
+              <TableCell>Reciept Number</TableCell>
+              <TableCell>Customer Name</TableCell>
+              <TableCell>Station</TableCell>
+              <TableCell>Category</TableCell>
+              <TableCell>Date</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -51,11 +49,13 @@ export function TransactionList(props) {
                         {data.serial_number}
                       </Link>
                     </TableCell>
-                    <TableCell align="right">{data.receipt_number}</TableCell>
-                    <TableCell align="right">{data.initiator}</TableCell>
-                    <TableCell align="right">{data.category}</TableCell>
-                    <TableCell align="right">{data.phone_number}</TableCell>
-                    <TableCell align="right"> {data.date_created}</TableCell>
+                    <TableCell>{data.receipt_number}</TableCell>
+                    <TableCell>
+                      {data.beneficiaries[0].customer_account_name}
+                    </TableCell>
+                    <TableCell>{data.initiator}</TableCell>
+                    <TableCell>{data.category}</TableCell>
+                    <TableCell> {data.date_created}</TableCell>
                   </TableRow>
                 ))}
               </>
