@@ -240,6 +240,7 @@ export function ListLedger() {
           <TableHead>
             <TableRow>
               <TableCell>Date</TableCell>
+              <TableCell align="right">Previous Total</TableCell>
               <TableCell align="right">Currency Total</TableCell>
               <TableCell align="right">Grand Total</TableCell>
               <TableCell align="right">Calculated Profit</TableCell>
@@ -270,7 +271,16 @@ export function ListLedger() {
                         </Link>
                       </TableCell>
                     </>
-
+                    <TableCell align="right">
+                      <NumericFormat
+                        value={row.previous_total}
+                        thousandSeparator={true}
+                        displayType="text"
+                        renderText={(formattedValue) => (
+                          <span>&#8358; {formattedValue}</span>
+                        )}
+                      />
+                    </TableCell>
                     <TableCell align="right">
                       <NumericFormat
                         value={row.currency_total}
@@ -291,6 +301,7 @@ export function ListLedger() {
                         )}
                       />
                     </TableCell>
+
                     <TableCell align="right">
                       <NumericFormat
                         value={row.calculated_profit}
