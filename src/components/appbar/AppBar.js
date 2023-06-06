@@ -61,13 +61,6 @@ function ResponsiveDrawer(props) {
           </IconButton>
           <Box sx={{ flexGrow: 30 }} />
 
-          <Link
-            to={"/profile"}
-            style={{ textDecoration: "none", color: "white" }}
-          >
-            <AccountCircleIcon sx={{ mr: 2, mb: 1 }} />
-          </Link>
-
           <Link to={"/"} style={{ textDecoration: "none", color: "white" }}>
             <LogoutIcon
               fontSize="medium"

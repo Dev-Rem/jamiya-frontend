@@ -22,7 +22,7 @@ export default function DrawerList() {
         <Image src={FxLogo} alt="Logo" />
       </Link>
       <Link to="/dashboard" style={{ textDecoration: "none", color: "black" }}>
-        <ListItemButton button>
+        <ListItemButton>
           <ListItemText primary="Dashboard" />
         </ListItemButton>
       </Link>
@@ -63,7 +63,7 @@ export default function DrawerList() {
             to="/general-ledger"
             style={{ textDecoration: "none", color: "black" }}
           >
-            <ListItemButton button>
+            <ListItemButton>
               <ListItemText primary="General Ledger" />
             </ListItemButton>
           </Link>
@@ -72,7 +72,7 @@ export default function DrawerList() {
             to="/customer-ledger"
             style={{ textDecoration: "none", color: "black" }}
           >
-            <ListItemButton button>
+            <ListItemButton>
               <ListItemText primary="Customer Ledger" />
             </ListItemButton>
           </Link>
@@ -87,7 +87,7 @@ export default function DrawerList() {
             to="/report-logs"
             style={{ textDecoration: "none", color: "black" }}
           >
-            <ListItemButton button>
+            <ListItemButton>
               <ListItemText primary="Report Logs" />
             </ListItemButton>
           </Link>
@@ -96,7 +96,7 @@ export default function DrawerList() {
             to="/transaction-logs"
             style={{ textDecoration: "none", color: "black" }}
           >
-            <ListItemButton button>
+            <ListItemButton>
               <ListItemText primary="Transaction Logs" />
             </ListItemButton>
           </Link>
@@ -105,14 +105,16 @@ export default function DrawerList() {
       ) : (
         <></>
       )}
+      <Link to="/profile" style={{ textDecoration: "none", color: "black" }}>
+        <ListItemButton>
+          <ListItemText
+            primary={`Station: ${
+              JSON.parse(localStorage.getItem("user")).station
+            }`}
+          />
+        </ListItemButton>
+      </Link>
 
-      <ListItemButton>
-        <ListItemText
-          primary={`Station: ${
-            JSON.parse(localStorage.getItem("user")).station
-          }`}
-        />
-      </ListItemButton>
       <Divider />
     </List>
   );
