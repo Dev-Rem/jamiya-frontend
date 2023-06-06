@@ -5,14 +5,12 @@ import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
-import FxLogo from "../../assets/images/logo1.png";
+import FxLogo from "../../assets/images/jamiyafx.png";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Copyright from "../utils/Copyright";
-import SimpleBackdrop from "../utils/Backdrop";
 import axios from "axios";
-import { ErrorAlert } from "../utils/Alerts";
 import { Link, useNavigate, useParams } from "react-router-dom";
 
 const theme = createTheme();
@@ -29,6 +27,7 @@ export default function SignUp() {
     last_name: "",
     password: "",
     station: "",
+    email: "",
   });
 
   // handle user register submit button
@@ -58,8 +57,6 @@ export default function SignUp() {
 
   return (
     <ThemeProvider theme={theme}>
-      <>{alert ? <ErrorAlert message="Passwords do not match" /> : <></>}</>
-      {loading ? <SimpleBackdrop /> : <></>}
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <Box
@@ -72,12 +69,12 @@ export default function SignUp() {
         >
           <Avatar
             src={FxLogo}
-            sx={{ width: 75, height: 56 }}
+            sx={{ width: 388, height: 110, margin: 3 }}
             variant="rounded"
           />
 
           <Typography component="h1" variant="h5">
-            Sign up
+            SIGN UP
           </Typography>
           <Box
             component="form"
@@ -179,7 +176,7 @@ export default function SignUp() {
             <Grid container justifyContent="center">
               <Grid item>
                 Already have an account?
-                <Link to="/login" variant="body2">
+                <Link to="/" variant="body2">
                   Sign in
                 </Link>
               </Grid>

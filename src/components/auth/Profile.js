@@ -1,7 +1,6 @@
 import * as React from "react";
 import PageBox from "../utils/Box";
 import Title from "../utils/Title";
-import { axiosInstance } from "../utils/AxiosInstance";
 import Typography from "@mui/material/Typography";
 
 export function UserProfile() {
@@ -26,7 +25,7 @@ export function UserProfile() {
         </Typography>
         <Typography variant="h6" gutterBottom>
           {" "}
-          Role: {user.station}
+          Station: {user.station}
         </Typography>
       </PageBox>
     </>

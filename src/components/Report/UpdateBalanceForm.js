@@ -8,7 +8,6 @@ import { useLocation, useNavigate } from "react-router-dom";
 import Box from "@mui/material/Box";
 
 export default function UpdateBalanceForm(props) {
-  const navigate = useNavigate();
   const locaction = useLocation();
   const [value, setValue] = React.useState({});
 

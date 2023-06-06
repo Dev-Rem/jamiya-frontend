@@ -39,6 +39,7 @@ export function TransactionList(props) {
                 {data.map((data) => (
                   <TableRow
                     sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                    key={data.id}
                   >
                     <TableCell sx={{ color: "#C9037F" }}>
                       <Link

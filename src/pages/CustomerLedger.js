@@ -3,7 +3,6 @@ import ResponsiveDrawer from "../components/appbar/AppBar";
 import CustomerLedger from "../components/ledgers/CustomerLedger";
 import Title from "../components/utils/Title";
 import {
-  NewCustomerLedger,
   CustomerLedgerForm,
 } from "../components/addComponents/AddCustomerLedger";
 

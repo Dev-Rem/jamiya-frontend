@@ -25,12 +25,7 @@ export default function UpdateRate() {
 
   const handleSubmit = (event) => {
     try {
-      const createdRates = axiosInstance.patch(
-        "/rates/1/",
-        rates,
-        { headers: { "Content-Type": "application/json" } },
-        { withCredentials: true }
-      );
+      const createdRates = axiosInstance.patch("/rates/1/", rates);
       event.preventDefault();
       navigate(-1);
     } catch (error) {

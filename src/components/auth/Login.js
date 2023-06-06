@@ -96,7 +96,7 @@ export default function SignInSide() {
             variant="square"
           />
           <Typography component="h1" variant="h5">
-            Sign in
+            LOG IN
           </Typography>
           <Box
             component="form"
@@ -155,7 +155,6 @@ export default function SignInSide() {
                 bgcolor: "#925098",
                 height: 50,
               }}
-              // onClick={handleClick}
               loading={loading}
             >
               <span>Log in</span>
