@@ -15,6 +15,7 @@ import Button from "@mui/material/Button";
 import { axiosInstance } from "../utils/AxiosInstance";
 import Typography from "@mui/material/Typography";
 import { NumericFormat } from "react-number-format";
+import { createData } from "../utils/Definitions";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -38,19 +39,22 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-export function Report() {
-  const [reportId, setReportId] = React.useState();
+export function Report(props) {
+  const locaction = useLocation();
+  const [reportId, setReportId] = React.useState(() => {
+    if (props.use === "daily-report") {
+      return null;
+    } else {
+      return locaction.state.report.id;
+    }
+  });
   const [values, setValues] = React.useState([]);
   const [station, setStation] = React.useState(
     JSON.parse(localStorage.getItem("user")).station
   );
 
-  const locaction = useLocation();
   const today = new Date();
 
-  function createData(name, ngn, usd, gbp, eur) {
-    return { name, ngn, usd, gbp, eur };
-  }
   const getCompleteReport = async () => {
     const reportData = {
       currencies: { ngn: 0.0, usd: 0.0, gbp: 0.0, eur: 0.0 },
@@ -58,54 +62,52 @@ export function Report() {
       station: station,
       profit: 0.0,
     };
-    try {
+    let response;
+    if (props.use === "daily-report") {
       const createReport = await axiosInstance.post(`/reports/`, reportData);
       setReportId(createReport.data.id);
-      console.log(createReport);
-      const response = await axiosInstance.get(
-        `/reports/${createReport.data.id}/`
-      );
-      const data = [
-        createData(
-          "Opening Balance",
-          response.data.opening_balance.currencies.ngn,
-          response.data.opening_balance.currencies.usd,
-          response.data.opening_balance.currencies.gbp,
-          response.data.opening_balance.currencies.eur
-        ),
-        createData(
-          "Money In",
-          response.data.money_in.currencies.ngn,
-          response.data.money_in.currencies.usd,
-          response.data.money_in.currencies.gbp,
-          response.data.money_in.currencies.eur
-        ),
-        createData(
-          "Report Balance",
-          response.data.report.currencies.ngn,
-          response.data.report.currencies.usd,
-          response.data.report.currencies.gbp,
-          response.data.report.currencies.eur
-        ),
-        createData(
-          "Money Out",
-          response.data.money_out.currencies.ngn,
-          response.data.money_out.currencies.usd,
-          response.data.money_out.currencies.gbp,
-          response.data.money_out.currencies.eur
-        ),
-        createData(
-          "Closing Balance",
-          response.data.closing_balance.currencies.ngn,
-          response.data.closing_balance.currencies.usd,
-          response.data.closing_balance.currencies.gbp,
-          response.data.closing_balance.currencies.eur
-        ),
-      ];
-      setValues(data);
-    } catch (error) {
-      console.log(error);
+      response = await axiosInstance.get(`/reports/${createReport.data.id}/`);
+    } else {
+      response = await axiosInstance.get(`/reports/${reportId}/`);
     }
+    const data = [
+      createData(
+        "Opening Balance",
+        response.data.opening_balance.currencies.ngn,
+        response.data.opening_balance.currencies.usd,
+        response.data.opening_balance.currencies.gbp,
+        response.data.opening_balance.currencies.eur
+      ),
+      createData(
+        "Money In",
+        response.data.money_in.currencies.ngn,
+        response.data.money_in.currencies.usd,
+        response.data.money_in.currencies.gbp,
+        response.data.money_in.currencies.eur
+      ),
+      createData(
+        "Report Balance",
+        response.data.report.currencies.ngn,
+        response.data.report.currencies.usd,
+        response.data.report.currencies.gbp,
+        response.data.report.currencies.eur
+      ),
+      createData(
+        "Money Out",
+        response.data.money_out.currencies.ngn,
+        response.data.money_out.currencies.usd,
+        response.data.money_out.currencies.gbp,
+        response.data.money_out.currencies.eur
+      ),
+      createData(
+        "Closing Balance",
+        response.data.closing_balance.currencies.ngn,
+        response.data.closing_balance.currencies.usd,
+        response.data.closing_balance.currencies.gbp,
+        response.data.closing_balance.currencies.eur
+      ),
+    ];
+    setValues(data);
   };
   React.useEffect(() => {
     setTimeout(getCompleteReport, 1000);
@@ -122,15 +124,6 @@ export function Report() {
         }}
       >
         <Stack spacing={2} direction="row" mb={2}>
-          {/* <Button
-            variant="text"
-            onClick={createNewReport}
-            type="submit"
-            sx={purpleButton}
-          >
-            New Report
-          </Button> */}
-
           <Link
             to={`${locaction.pathname}/update-balances`}
             style={{ textDecoration: "none" }}

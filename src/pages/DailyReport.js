@@ -4,17 +4,17 @@ import { Report } from "../components/report/Report";
 import RecentTransactions from "../components/report/RecentTransactions";
 import Title from "../components/utils/Title";
 
-function FrontDesk() {
+function DailyReport() {
   return (
     <div>
       {" "}
       <ResponsiveDrawer>
         <Title section="Daily Report and Transactions" />
-        <Report />
+        <Report use="daily-report" />
         <RecentTransactions />
       </ResponsiveDrawer>
     </div>
   );
 }
 
-export default FrontDesk;
+export default DailyReport;
