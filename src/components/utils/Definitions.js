@@ -18,3 +18,7 @@ export function calcTotals(objs) {
     .reduce((acc, curr) => acc + curr, 0);
   return { ngnTotal, usdTotal, gbpTotal, eurTotal };
 }
+
+export function createData(name, ngn, usd, gbp, eur) {
+  return { name, ngn, usd, gbp, eur };
+}
