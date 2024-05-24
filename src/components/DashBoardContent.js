@@ -2,7 +2,7 @@ import * as React from "react";
 import Image from "mui-image";
 import DashboardBanner from "../assets/images/dashboard2.png";
 import Toolbar from "@mui/material/Toolbar";
-import { TransactionList } from "./report/TransactionList";
+import { TransactionList } from "./reports/TransactionList";
 import { axiosInstance } from "./utils/AxiosInstance";
 import Pagination from "@mui/material/Pagination";
 import FormStack from "./utils/FormStack";

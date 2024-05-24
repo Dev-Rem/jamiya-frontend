@@ -5,7 +5,7 @@ import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import { styled } from "@mui/material/styles";
-import { TransactionList } from "../report/TransactionList";
+import { TransactionList } from "../reports/TransactionList";
 import { axiosInstance } from "../utils/AxiosInstance";
 import { useLocation } from "react-router-dom";
 import FormStack from "../utils/FormStack";

@@ -5,7 +5,7 @@ import { Filters } from "../components/utils/Filters";
 import {
   TransactionLogComponent,
   SearchedTransaction,
-} from "../components/report/RecentTransactions";
+} from "../components/reports/RecentTransactions";
 
 export function TransactionLog() {
   return (
@@ -43,4 +43,3 @@ export function MyTransactions() {
     </div>
   );
 }
-
