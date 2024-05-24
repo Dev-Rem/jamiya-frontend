@@ -1,6 +1,6 @@
 import React from "react";
 import ResponsiveDrawer from "../components/appbar/AppBar";
-import { Report } from "../components/report/Report";
+import { Report } from "../components/report/ReportDetails";
 import RecentTransactions from "../components/report/RecentTransactions";
 import Title from "../components/utils/Title";
 
