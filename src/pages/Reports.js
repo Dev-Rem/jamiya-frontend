@@ -2,7 +2,7 @@ import React from "react";
 import ResponsiveDrawer from "../components/appbar/AppBar";
 import Title from "../components/utils/Title";
 import { Filters } from "../components/utils/Filters";
-import { ReportsList, SearchedReport } from "../components/report/ReportsList";
+import { ReportsList, SearchedReport } from "../components/reports/ReportsList";
 import { Report } from "../components/reports/ReportDetails";
 
 export function ReportList() {

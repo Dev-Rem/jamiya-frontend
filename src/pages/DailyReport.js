@@ -1,7 +1,7 @@
 import React from "react";
 import ResponsiveDrawer from "../components/appbar/AppBar";
 import { Report } from "../components/reports/ReportDetails";
-import RecentTransactions from "../components/report/RecentTransactions";
+import RecentTransactions from "../components/reports/RecentTransactions";
 import Title from "../components/utils/Title";
 
 function DailyReport() {

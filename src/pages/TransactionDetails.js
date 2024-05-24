@@ -1,7 +1,7 @@
 import React from "react";
 import ResponsiveDrawer from "../components/appbar/AppBar";
 import Title from "../components/utils/Title";
-import { ViewEditDeleteTransaction } from "../components/report/TransactionList";
+import { ViewEditDeleteTransaction } from "../components/reports/TransactionList";
 
 export function TransactionDetails() {
   return (
