@@ -10,10 +10,10 @@ import FxLogo from "../../assets/images/jamiyafx.png";
 
 export default function DrawerList() {
   const [admin, setAdmin] = React.useState(
-    JSON.parse(localStorage.getItem("user")).is_admin
+    JSON.parse(localStorage.getItem("user"))?.is_admin
   );
   const [staff, setStaff] = React.useState(
-    JSON.parse(localStorage.getItem("user")).is_staff
+    JSON.parse(localStorage.getItem("user"))?.is_staff
   );
 
   return (
@@ -109,7 +109,7 @@ export default function DrawerList() {
         <ListItemButton>
           <ListItemText
             primary={`Station: ${
-              JSON.parse(localStorage.getItem("user")).station
+              JSON.parse(localStorage.getItem("user"))?.station
             }`}
           />
         </ListItemButton>

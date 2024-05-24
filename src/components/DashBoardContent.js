@@ -43,7 +43,7 @@ export default function DashBoardContent() {
   }, []);
   return (
     <>
-      {JSON.parse(localStorage.getItem("user")).station === "ONLINE" ? (
+      {JSON.parse(localStorage.getItem("user"))?.station === "ONLINE" ? (
         <>
           <TransactionList
             data={transactions.filter(
@@ -59,7 +59,7 @@ export default function DashBoardContent() {
             onChange={handlePageChange}
           />
         </>
-      ) : JSON.parse(localStorage.getItem("user")).station ===
+      ) : JSON.parse(localStorage.getItem("user"))?.station ===
         "HEAD OF OPERATIONS" ? (
         <>
           <TransactionList

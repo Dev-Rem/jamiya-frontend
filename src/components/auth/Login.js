@@ -39,7 +39,7 @@ export default function SignInSide() {
 
   const getUserInfo = async (accessToken) => {
     const response = await axios.get(
-      "http://127.0.0.1:8000/api/users/detail/",
+      "https://devrem.pythonanywhere.com/api/users/detail/",
 
       {
         headers: {
@@ -57,7 +57,7 @@ export default function SignInSide() {
     try {
       navigate("/dashboard");
       const response = await axios.post(
-        `http://127.0.0.1:8000/api/tokens/`,
+        `https://devrem.pythonanywhere.com/api/tokens/`,
         value,
         { headers: { "Content-Type": "application/json" } },
         { withCredentials: true }

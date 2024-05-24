@@ -44,7 +44,7 @@ export default function App() {
           path={"/:receiptnumber/transaction-receipt"}
           element={<PreviewReceipt />}
         />
-        {JSON.parse(localStorage.getItem("user")).is_staff === false ? (
+        {JSON.parse(localStorage.getItem("user"))?.is_staff === false ? (
           <>
             <Route
               exact
@@ -68,7 +68,7 @@ export default function App() {
           <Route exact path={"/dashboard"} element={<Dashboard />} />
         )}
         {/* admin  routes */}
-        {JSON.parse(localStorage.getItem("user")).is_admin === true ? (
+        {JSON.parse(localStorage.getItem("user"))?.is_admin === true ? (
           <>
             <Route exact path={"/report-logs"} element={<ReportList />} />
             <Route
@@ -92,8 +92,8 @@ export default function App() {
           <Route exact path={"/dashboard"} element={<Dashboard />} />
         )}
         {/* admin and staff routes */}
-        {JSON.parse(localStorage.getItem("user")).is_admin === true &&
-        JSON.parse(localStorage.getItem("user")).is_staff === true ? (
+        {JSON.parse(localStorage.getItem("user"))?.is_admin === true &&
+        JSON.parse(localStorage.getItem("user"))?.is_staff === true ? (
           <>
             <Route exact path={"/general-ledger"} element={<GeneralLedger />} />
             <Route

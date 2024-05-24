@@ -44,7 +44,7 @@ export default function SignUp() {
       delete value.confirm_password;
       navigate("/login");
       const response = await axios.post(
-        "http://127.0.0.1:8000/api/users/register/",
+        "https://devrem.pythonanywhere.com/api/users/register/",
         value,
         { headers: { "Content-Type": "application/json" } },
         { withCredentials: true }
